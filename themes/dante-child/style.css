@@ -1,0 +1,21 @@
+/*
+Theme Name: Dante Child Theme
+Theme URI: http: //icodedark.com
+Description: Child theme Dante
+Author: Icodedark
+Author URI: http://icodedark.com
+Template: dante
+Version: 0.1
+*/
+@import url("../dante/style.css");
+
+
+#logo a.mobile-menu-show {
+position: absolute;
+top: 500px;
+right:20px;
+}
+
+
+
+
