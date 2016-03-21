@@ -14,6 +14,4 @@ RUN cd /usr/src/wordpress/wp-content/plugins && \
     chown -R www-data:www-data /usr/src/wordpress/* && \
     rm /tmp/easy-wp-smtp.zip
 
-RUN ln -s /etc/apache2/mods-available/expires.load /etc/apache2/mods-enabled/expires.load
-
 COPY cache.conf /etc/apache2/conf-enabled/
