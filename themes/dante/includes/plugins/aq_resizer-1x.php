@@ -2,21 +2,33 @@
 if (!function_exists('sf_aq_resize')) {
 	function sf_aq_resize( $url, $width, $height = null, $crop = null, $single = true ) {
 
+        	return array (
+                	0 => $url,
+                	1 => $width,
+                	2 => $height
+        	);
+
 		$debug_mode = false;
 
 		if (isset($_GET['sf_debug'])) {
 			$debug_mode = $_GET['sf_debug'];
 		}
 		
-		/* WPML Fix for Image issue in Different domain per language */
-		if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
-			global $sitepress;
-			$url = $sitepress->convert_url($url,$sitepress->get_default_language());
+		if ( $debug_mode ) {
+			echo 'image debug mode';
 		}
-		
+
 		//validate inputs
-		if (!$width OR !$url) return false;
-		if ($url == "default") {
+		if ( !$width || !$url ) {
+			if ( $debug_mode ) {
+				echo 'inputs not valid';
+			}
+			return false;
+		}	
+		if ( $url == "default" ) {
+			if ( $debug_mode ) {
+				echo 'returning default thumb';
+			}
 			$url = get_template_directory_uri()."/images/default-thumb.png";
 			$image = array (
 				0 => $url,
@@ -57,7 +69,8 @@ if (!function_exists('sf_aq_resize')) {
 
 		//define path of image
 		$rel_path = str_replace( $upload_url, '', $url);
-		$img_path = $upload_dir . $rel_path;
+		//$img_path = $upload_dir . $rel_path;
+                $img_path = $upload_url
 
 		//check if img path exists, and is an image indeed
 		if ( !sf_wpml_activated() ) {
