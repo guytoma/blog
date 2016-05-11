@@ -2,7 +2,7 @@ FROM wordpress:4
 
 VOLUME /var/www/html
 
-COPY themes/* /usr/src/wordpress/wp-content/themes/
+COPY themes /usr/src/wordpress/wp-content/themes
 
 ADD plugin-urls.txt /
 
@@ -13,7 +13,7 @@ RUN apt-get update && \
     wget -P /tmp -i /plugin-urls.txt && \
     cd /usr/src/wordpress/wp-content/plugins && \
     (unzip '/tmp/*.zip' || true) && \
-    chown -R www-data:www-data /usr/src/wordpress/wp-content/plugins/* && \
+    chown -R www-data:www-data /usr/src/wordpress/wp-content/* && \
     apt-get remove -y unzip wget && \
     apt-get autoremove -y && \
     apt-get clean && \
