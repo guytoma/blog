@@ -57,10 +57,6 @@
 						
 		<!--// FRAMEWORK INCLUDES //-->
 		<div id="sf-included" class="<?php echo sf_global_include_classes(); ?>"></div>
-		
-		<?php if ($options['google_analytics'] != "") {
-			echo $options['google_analytics'];
-		} ?>
 			
 		<!--// WORDPRESS FOOTER HOOK //-->
 		<?php wp_footer(); ?>

@@ -5,7 +5,7 @@
 	*	Theme Colour Scheme Functions
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
@@ -697,7 +697,7 @@
 	        'sf_dante_options_schema_action' => 'export_schema',
 	        'nonce' => wp_create_nonce('sf_dante_options_schema_action')
 	    );
-	    $export_url = add_query_arg($args, $site_url);
+	    $export_url = esc_url( add_query_arg($args, $site_url) );
 	    if ($echo === true)
 	        echo $export_url;
 	    elseif ($echo == 'url')

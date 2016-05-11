@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Blog Shortcode
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 
@@ -83,7 +83,7 @@
             $output .= "\n\t".'</div> '.$this->endBlockComment($width);
     	
     		if ($blog_type == "masonry-fw") {
-    			$output = $this->startRow($el_position, '', true) . $output . $this->endRow($el_position, '', true);
+    			$output = $this->startRow($el_position, '', true, "full-width") . $output . $this->endRow($el_position, '', true);
     		} else {
 	            $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
             }

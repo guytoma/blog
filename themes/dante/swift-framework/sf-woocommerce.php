@@ -4,7 +4,7 @@
 	*	WooCommerce Functions & Hooks
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
@@ -14,6 +14,11 @@
 	remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 	remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
 	
+	/* Add Shipping Calculator to after cart action */
+	add_action( 'woocommerce_after_cart_table', 'woocommerce_shipping_calculator', 10 );
+	
+	/* Remove totals from cart collaterals */
+	remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cart_totals', 10 );
 	
 	/* WOOCOMMERCE CONTENT FUNCTIONS
 	================================================== */
@@ -55,7 +60,7 @@
 		
 		    $stars_output .= '<div class="starwrapper" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">';
 		
-		    $stars_output .= '<span class="star-rating" title="'.sprintf(__('Rated %s out of 5', 'woocommerce'), $average).'"><span style="width:'.($average*16).'px"><span itemprop="ratingValue" class="rating">'.$average.'</span> </span></span>';
+		    $stars_output .= '<span class="star-rating" title="'.sprintf(__('Rated %s out of 5', 'swiftframework'), $average).'"><span style="width:'.($average*16).'px"><span itemprop="ratingValue" class="rating">'.$average.'</span> </span></span>';
 		
 		    $stars_output .= '</div>';
 		}
@@ -91,6 +96,24 @@
         
 	}
 	
+	
+	/* REMOVE WOOCOMMERCE PRETTYPHOTO STYLES/SCRIPTS
+    ================================================== */
+    function sf_remove_woo_lightbox_js() {
+    	if ( ! class_exists( 'WC_Quick_View' ) ) {
+	        wp_dequeue_script( 'prettyPhoto' );
+	        wp_dequeue_script( 'prettyPhoto-init' );
+	    }
+    }
+
+    add_action( 'wp_enqueue_scripts', 'sf_remove_woo_lightbox_js', 99 );
+
+    function sf_remove_woo_lightbox_css() {
+        wp_dequeue_style( 'woocommerce_prettyPhoto_css' );
+    }
+
+    add_action( 'wp_enqueue_styles', 'sf_remove_woo_lightbox_css', 99 );
+    
 	
 	/* ADD TO CART HEADER RELOAD
 	================================================== */ 
@@ -147,7 +170,7 @@
 									            	<div class="bag-product-quantity"><?php _e('Quantity:', 'swiftframework'); ?> <?php echo $cart_item['quantity']; ?></div>
 									            </div>
 									            	
-									            <?php echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf('<a href="%s" class="remove" title="%s">&times;</a>', esc_url( $woocommerce->cart->get_remove_url( $cart_item_key ) ), __('Remove this item', 'woocommerce') ), $cart_item_key ); ?>
+									            <?php echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf('<a href="%s" class="remove" title="%s">&times;</a>', esc_url( $woocommerce->cart->get_remove_url( $cart_item_key ) ), __('Remove this item', 'swiftframework') ), $cart_item_key ); ?>
 									            
 									    	</div>
 								    	
@@ -203,9 +226,64 @@
 		add_filter('add_to_cart_fragments', 'sf_woo_header_add_to_cart_fragment'); 
 	}
 	
-	
+	/* WISHLIST BUTTON
+	================================================== */
+	if (!function_exists('sf_wishlist_button')) {
+		function sf_wishlist_button() {
+
+			global $product, $yith_wcwl;
+
+			if ( class_exists( 'YITH_WCWL_UI' ) )  {
+				
+				$product_type = $product->product_type;			
+				
+				//Check Wishlist version 
+				if ( version_compare( get_option('yith_wcwl_version'), "2.0" ) >= 0 ) {   
+					$url = YITH_WCWL()->get_wishlist_url();				
+	        		$default_wishlists = is_user_logged_in() ? YITH_WCWL()->get_wishlists( array( 'is_default' => true ) ) : false;
+			
+					if ( ! empty( $default_wishlists ) ) {
+		        		$default_wishlist = $default_wishlists[0]['ID'];
+	        		}
+	        		else {
+		        		$default_wishlist = false;
+	        		}
+			
+					$exists = YITH_WCWL()->is_product_in_wishlist( $product->id , $default_wishlist);			 
+				}
+				else {
+					$url = $yith_wcwl->get_wishlist_url();
+					$exists = $yith_wcwl->is_product_in_wishlist( $product->id );					
+				}
+				
+				$classes = get_option( 'yith_wcwl_use_button' ) == 'yes' ? 'class="add_to_wishlist single_add_to_wishlist button alt"' : 'class="add_to_wishlist"';
+
+				$html  = '<div class="yith-wcwl-add-to-wishlist">';
+				    $html .= '<div class="yith-wcwl-add-button';  // the class attribute is closed in the next row
+
+				    $html .= $exists ? ' hide" style="display:none;"' : ' show"';
+
+				    $html .= '><a href="' . htmlspecialchars($yith_wcwl->get_addtowishlist_url()) . '" data-product-id="' . $product->id . '" data-product-type="' . $product_type . '" ' . $classes . ' ><i class="fa-star"></i></a>';
+				    $html .= '</div>';
+
+				$html .= '<div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;"><span class="feedback">' . __( 'Product added to wishlist.', 'swiftframework' ) . '</span> <a href="' . $url . '"><i class="fa-check"></i></a></div>';
+				$html .= '<div class="yith-wcwl-wishlistexistsbrowse ' . ( $exists ? 'show' : 'hide' ) . '" style="display:' . ( $exists ? 'block' : 'none' ) . '"><a href="' . $url . '"><i class="fa-check"></i></a></div>';
+				$html .= '<div style="clear:both"></div><div class="yith-wcwl-wishlistaddresponse"></div>';
+
+				$html .= '</div>';
+
+				return $html;
+
+			}
+
+		}
+	}
+
+
+
 	/* WISHLIST BUTTON
 	================================================== */ 
+	/*
 	if (!function_exists('sf_wishlist_button')) {
 		function sf_wishlist_button() {
 		
@@ -237,22 +315,30 @@
 		}
 	}
 	
-	
+	*/
 	/* SHOW PRODUCTS COUNT URL PARAMETER
 	================================================== */ 
 	if (isset($_GET['layout'])) {
 		$page_layout = $_GET['layout'];
 	}
-	if( isset( $_GET['show_products'] ) ){ 
-		if ($_GET['show_products'] == "all") {
-	    	add_filter( 'loop_shop_per_page', create_function( '$cols', 'return -1;' ) );
-	    } else {
-	    	add_filter( 'loop_shop_per_page', create_function( '$cols', 'return '.$_GET['show_products'].';' ) );
-	    }
-	} else {
-	    add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 24;' ) );
+	if ( !function_exists('sf_product_shop_count') ) {
+		function sf_product_shop_count() {
+			$default_count = 24;
+
+			$count = isset($_GET['show_products']) ? $_GET['show_products'] : $default_count;
+
+			if ($count === 'all') {
+				$count = -1;
+			}
+			else if ( ! is_numeric($count)) {
+				$count = $default_count;
+			}
+
+			return $count;
+		}	
 	}
-	
+	add_filter( 'loop_shop_per_page', 'sf_product_shop_count');
+
 	
 	/* SINGLE PRODUCT
 	================================================== */
@@ -452,4 +538,49 @@
 			
 		<?php }
 	}	
+	
+	
+	/* WOO SHIPPING CALC BEFORE
+	================================================== */
+	if ( ! function_exists('sf_cart_shipping_calc_before')){
+		function sf_cart_shipping_calc_before() {
+			echo '<div class="shipping-calc-wrap">';
+			echo '<h4 class="lined-heading">'.__( 'Shipping Calculator', 'swiftframework' ).'</h4>';
+		}
+		add_action( 'woocommerce_before_shipping_calculator', 'sf_cart_shipping_calc_before' );
+	}
+	
+	
+	/* WOO SHIPPING CALC AFTER
+	================================================== */
+	if ( ! function_exists('sf_cart_shipping_calc_after')){
+		function sf_cart_shipping_calc_after() {
+			echo '</div>';
+		}
+		add_action( 'woocommerce_after_shipping_calculator', 'sf_cart_shipping_calc_after' );
+	}
+	
+	
+	/* WOO VARIATION ADD TO CART BUTTON
+	================================================== */
+	remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', 20 );
+	function sf_single_variation_add_to_cart_button() {
+		global $product;
+		$loading_text = __( 'Adding...', 'swiftframework' );
+		$added_text = __( 'Item added', 'swiftframework' );
+		?>
+		<div class="variations_button">
+			<?php woocommerce_quantity_input( array( 'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( $_POST['quantity'] ) : 1 ) ); ?>
+			<?php 
+				$button_text = '<i class="ss-cart"></i>' . apply_filters('single_add_to_cart_text', __("Add to shopping bag", "swiftframework"), $product->product_type);
+			?>	
+			<button type="submit" data-product_id="<?php echo esc_attr($product->id); ?>" data-quantity="1" data-default_text="<?php echo esc_attr($product->single_add_to_cart_text()); ?>" data-default_icon="sf-icon-add-to-cart" data-loading_text="<?php echo esc_attr($loading_text); ?>" data-added_text="<?php echo esc_attr($added_text); ?>" class="single_add_to_cart_button button alt"><span><?php echo $button_text; ?></span></button>
+			<input type="hidden" name="add-to-cart" value="<?php echo absint( $product->id ); ?>" />
+			<input type="hidden" name="product_id" value="<?php echo absint( $product->id ); ?>" />
+			<input type="hidden" name="variation_id" class="variation_id" value="" />
+			<?php echo sf_wishlist_button(); ?>
+		</div>
+		<?php
+	}
+	add_action( 'woocommerce_single_variation', 'sf_single_variation_add_to_cart_button', 20 );
 ?>

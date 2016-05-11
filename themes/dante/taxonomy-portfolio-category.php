@@ -3,7 +3,6 @@
 <?php 
 
 	$options = get_option('sf_dante_options');
-	$default_page_heading_bg_alt = $options['default_page_heading_bg_alt'];
 	
 	$portfolio_archive_display_type = $portfolio_archive_columns = "";
 	
@@ -21,20 +20,6 @@
 	$category_slug = get_query_var('portfolio-category');
 	$category_description = category_description();
 ?>
-
-<div class="container">
-	<div class="row">
-		<div class="page-heading span12 clearfix alt-bg <?php echo $default_page_heading_bg_alt; ?>">
-			<div class="heading-text">
-			<h1><?php single_cat_title(); ?></h1>
-			</div>
-			<?php 
-				// BREADCRUMBS
-				echo sf_breadcrumbs();
-			?>
-		</div>
-	</div>
-</div>
 
 <div class="container">
 	<div class="inner-page-wrap <?php echo $page_wrap_class; ?> clearfix">

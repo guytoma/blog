@@ -31,12 +31,12 @@ global $woocommerce;
 
 		<p id="ship-to-different-address">
 			<input id="ship-to-different-address-checkbox" class="input-checkbox" <?php checked( $ship_to_different_address, 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" />
-			<label for="ship-to-different-address-checkbox" class="checkbox"><?php _e( 'Ship to a different address?', 'woocommerce' ); ?></label>
+			<label for="ship-to-different-address-checkbox" class="checkbox"><?php _e( 'Ship to a different address?', 'swiftframework' ); ?></label>
 		</p>
 
 		<div class="shipping_address">
 			
-			<h4 class="lined-heading"><span><?php _e( 'Shipping Address', 'woocommerce' ); ?></span></h4>
+			<h4 class="lined-heading"><span><?php _e( 'Shipping Address', 'swiftframework' ); ?></span></h4>
 	
 			<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 	
@@ -58,7 +58,7 @@ global $woocommerce;
 	
 		<?php if ( ! WC()->cart->needs_shipping() || WC()->cart->ship_to_billing_address_only() ) : ?>
 	
-			<h3><?php _e( 'Additional Information', 'woocommerce' ); ?></h3>
+			<h3><?php _e( 'Additional Information', 'swiftframework' ); ?></h3>
 	
 		<?php endif; ?>
 	
@@ -91,12 +91,12 @@ global $woocommerce;
 	
 		<p class="form-row" id="shiptobilling">
 			<input id="shiptobilling-checkbox" class="input-checkbox" <?php checked($shiptobilling, 1); ?> type="checkbox" name="shiptobilling" value="1" />
-			<label for="shiptobilling-checkbox" class="checkbox"><?php _e( 'Ship to billing address?', 'woocommerce' ); ?></label>
+			<label for="shiptobilling-checkbox" class="checkbox"><?php _e( 'Ship to billing address?', 'swiftframework' ); ?></label>
 		</p>
 	
 		<div class="shipping_address">
 		
-			<h4 class="lined-heading"><span><?php _e( 'Shipping Address', 'woocommerce' ); ?></span></h4>
+			<h4 class="lined-heading"><span><?php _e( 'Shipping Address', 'swiftframework' ); ?></span></h4>
 	
 			<?php do_action('woocommerce_before_checkout_shipping_form', $checkout); ?>
 	
@@ -118,7 +118,7 @@ global $woocommerce;
 	
 		<?php if ($woocommerce->cart->ship_to_billing_address_only()) : ?>
 	
-			<h3><?php _e( 'Additional Information', 'woocommerce' ); ?></h3>
+			<h3><?php _e( 'Additional Information', 'swiftframework' ); ?></h3>
 	
 		<?php endif; ?>
 	

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <!--// OPEN HTML //-->
 <html <?php language_attributes(); ?>>
 
@@ -236,26 +237,71 @@
 			
 			<!--// HEADER //-->
 			<div class="header-wrap<?php echo $header_wrap_class; ?>">
-				
-				<?php if ($enable_top_bar) { ?>
-					<!--// TOP BAR //-->
-					<?php echo sf_top_bar(); ?>
-				<?php } ?>	
-				<?php 
-				if (is_home()) { ?>
-					<div class="slider-post">
-						<?php 
-						//var_dump(do_shortcode('[advps-slideshow optset="1"]'));
-						echo do_shortcode('[advps-slideshow optset="1"]'); ?>
-					</div>	
-				<?php 
-				}
-				 ?>	
-				
+				<?php
+					$args = array(
+						'post_type' => 'post',
+						'posts_per_page' => '1',
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'featured_post_type',
+								'field' => 'slug',
+								'terms' => array('featured_post')
+							)
+						),
+					);
+					$my_query = new WP_Query($args);
+					$ca_fetured_bg = '';
+					$ca_have_featured = false;
+					if($my_query->have_posts()) {
+						$my_query->the_post();
+						$ca_have_featured = true;
+						if(has_post_thumbnail())
+						{
+							$thumb_id = get_post_thumbnail_id();
+							$thumb_url = wp_get_attachment_image_src($thumb_id,'full', true);
+							$ca_fetured_bg = $thumb_url[0];
+						}
+					}
+					if ($enable_top_bar) {
+						$ca_sf_top_bar = sf_top_bar();
+						$ca_sf_top_bar = str_replace('<div class="tb-right col-sm-6 clearfix">', '<div class="tb-right col-sm-6 clearfix"><a href="#" class="visible-sm visible-xs mobile-menu-show"><i class="ss-rows"></i></a>', $ca_sf_top_bar);						
+						echo $ca_have_featured ? $ca_sf_top_bar : sf_top_bar();
+					}
+					if($ca_have_featured) :
+						if(is_front_page()) :
+				?>
+							<div class="ca_jumbotron" style="background-image: url('<?php echo $ca_fetured_bg; ?>');">
+								<div class="container">
+									<div class="row">
+									<div class="jumbotron col-lg-10 col-md-10 col-sm-9 col-xs-10">
+										<h1><?php the_title(); ?></h1>
+										<p><?php echo wp_trim_words(get_the_content(), 20, ' ...'); ?></p>
+									</div>
+									</div>
+									<a href="<?php the_permalink(); ?>" alt=""><?php pll_e('Read More'); ?></a>
+								</div>
+							</div>
+					<?php
+						endif;
+					?>
+							<style>
+								#header-section header {
+									display: none;
+								}
+								.visible-sm {
+									color: #fff;
+									float: right;
+									font-size: 26px;
+									margin-left: 0.5em;
+								}
+							</style>
+				<?php
+					endif;
+				?>
 				<div id="header-section" class="<?php echo $header_layout; ?> <?php echo $logo_class; ?>">
 					<?php echo sf_header($header_layout); ?>
 				</div>
-				
+
 			</div>
 			
 			<!--// OPEN #main-container //-->

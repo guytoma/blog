@@ -36,18 +36,20 @@ class SwiftPageBuilderShortcode_tweets_slider extends SwiftPageBuilderShortcode 
 
         $el_class .= ' testimonial';
         
-        if ($alt_background == "none") {
-		$output .= "\n\t".'<div class="spb_tweets_slider_widget '.$width.$el_class.'">';
-        } else {
-        $output .= "\n\t".'<div class="spb_tweets_slider_widget alt-bg '.$alt_background.' '.$width.$el_class.'">';            
+        // Full width setup
+        $fullwidth = false;
+        if ($alt_background != "none") {
+        $fullwidth = true;
         }
+        
+       	$output .= "\n\t".'<div class="spb_tweets_slider_widget '.$width.$el_class.'">';
         $output .= "\n\t\t".'<div class="spb_wrapper slider-wrap text-'.$text_size.'">';
         $output .= ($title != '' ) ? "\n\t\t\t".'<div class="heading-wrap"><h3 class="spb-heading spb-center-heading"><span>'.$title.'</span></h3></div>' : '';
         $output .= "\n\t\t\t".$items;
         $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
         $output .= "\n\t".'</div> '.$this->endBlockComment($width);
 
-        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
+        $output = $this->startRow($el_position, $width, $fullwidth, false, $alt_background) . $output . $this->endRow($el_position, $width, $fullwidth, false);
         
         global $sf_include_carousel;
         $sf_include_carousel = true;

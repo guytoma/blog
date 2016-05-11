@@ -67,7 +67,8 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
     		$columns = 4;
     		}
     		    		
-			$items .= '<div class="carousel-overflow"><ul id="carousel-'.$sf_carouselID.'" class="portfolio-items carousel-items clearfix" data-columns="'.$columns.'" data-auto="false">';
+			$items .= '<div class="carousel-wrap">';    		
+			$items .= '<div id="carousel-'.$sf_carouselID.'" class="portfolio-items carousel-items clearfix" data-columns="'.$columns.'">';
 	
 			while ( $portfolio_items->have_posts() ) : $portfolio_items->the_post();
 								
@@ -113,14 +114,14 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
 					$link_config = 'href="'.$thumb_link_url.'" class="link-to-url" target="_blank"';
 					$item_icon = "ss-link";
 				} else if ($thumb_link_type == "lightbox_thumb") {
-					$link_config = 'href="'.$thumb_img_url.'" class="view"';
+					$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_image") {
 					$lightbox_image_url = '';
 					foreach ($thumb_lightbox_image as $image) {
 						$lightbox_image_url = $image['full_url'];
 					}
-					$link_config = 'href="'.$lightbox_image_url.'" class="view"';	
+					$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';	
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_video") {
 					$link_config = 'data-video="'.$thumb_lightbox_video_url.'" href="#" class="fw-video-link"';
@@ -130,7 +131,7 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
 					$item_icon = "ss-navigateright";
 				}
 				    					   	
-				$items .= '<li itemscope data-id="id-'. $count .'" class="clearfix carousel-item portfolio-item '.$item_class.'">';
+				$items .= '<div itemscope data-id="id-'. $count .'" class="clearfix carousel-item portfolio-item '.$item_class.'">';
 				
 				$items .= '<figure class="animated-overlay">';
 						
@@ -181,16 +182,16 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
 					$items .= '<div class="portfolio-item-excerpt" itemprop="description">'. $post_excerpt .'</div>'. "\n";
 				}
 
-				$items .= '</li>';
+				$items .= '</div>';
 				$count++;
 			
 			endwhile;
 			
 			wp_reset_query();
 			
-			$items .= '</ul>';
+			$items .= '</div>';
     		
-    		$items .= '<a href="#" class="prev"><i class="ss-navigateleft"></i></a><a href="#" class="next"><i class="ss-navigateright"></i></a>';
+    		$items .= '<a href="#" class="carousel-prev"><i class="ss-navigateleft"></i></a><a href="#" class="carousel-next"><i class="ss-navigateright"></i></a>';
         	
         	$options = get_option('sf_dante_options');
         	if ($options['enable_swipe_indicators']) {
@@ -201,13 +202,14 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
         	
         	$width = spb_translateColumnWidthToSpan($width);
     		$el_class = $this->getExtraClass($el_class);
+    		
+    		// Full width setup
+    		$fullwidth = false;
+    		if ($alt_background != "none" && $sidebar_config == "no-sidebars" && $width == "col-sm-12") {
+    		$fullwidth = true;
+    		}
                  
-            if ($alt_background == "none" || $sidebar_config != "no-sidebars" || $width != "col-sm-12") {
-            $output .= "\n\t".'<div class="spb_portfolio_carousel_widget spb_content_element '.$width.$el_class.'">';
-            } else {
-            $output .= "\n\t".'<div class="spb_portfolio_carousel_widget spb_content_element alt-bg '.$alt_background.' '.$width.$el_class.'">';            
-            }
-            
+            $output .= "\n\t".'<div class="spb_portfolio_carousel_widget spb_content_element '.$width.$el_class.'">';     
             $output .= "\n\t\t".'<div class="spb_wrapper carousel-wrap">';
             if ($title != '') {
             	if ($width == "col-sm-12") {
@@ -221,7 +223,7 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
             $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
             $output .= "\n\t".'</div> '.$this->endBlockComment($width);
     
-            $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
+            $output = $this->startRow($el_position, $width, $fullwidth, false, $alt_background) . $output . $this->endRow($el_position, $width, $fullwidth, false);
             
             global $sf_include_carousel, $sf_include_isotope;
             $sf_include_carousel = true;

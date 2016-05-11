@@ -5,13 +5,123 @@
 	*	Swift Page Builder - Helpers Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2013 - http://www.swiftideas.net
 	*
 	*/
 	
+	/* GET POST TYPES
+	================================================== */
+	if ( ! function_exists( 'spb_get_post_types' ) ) {
+		function spb_get_post_types() {
+			$args       = array(
+			    'public' => true
+			);
+		    $post_types = get_post_types($args);
+		    array_unshift($post_types, "");
+
+		    // Unset specfic results
+		    unset($post_types['attachment']);
+		    unset($post_types['spb-section']);
+		    unset($post_types['swift-slider']);
+
+		    return $post_types;
+		}
+	}
+
+	/* GET PRODUCTS
+	================================================== */
+	if ( ! function_exists( 'spb_get_products' ) ) {
+		function spb_get_products() {
+	
+			if ( !is_admin() ) {
+				return;
+			}
+	
+		    $attr = array(
+		    	'post_type'       => array( 'product', 'product_variation' ),
+	            'fields'          => 'ids',
+		    	"orderby"		   => "name",
+		    	"order"			   => "asc",
+		    	'posts_per_page'   => -1
+		    );
+		    $results = get_posts($attr);
+			$products_array = array();
+	
+			$products_array[] = "";
+		    foreach ($results as $id) {
+	            $title = get_the_title($id);
+		    	$products_array[$id] = $title;
+		    }
+	
+	        wp_cache_flush();
+	
+		    return $products_array;
+		}
+	}
+
+    /* GET THEME NAME
+    ================================================== */
+    if ( ! function_exists( 'spb_get_theme_name' ) ) {
+        function spb_get_theme_name() {
+            return get_option( 'sf_theme');
+        }
+    }
+
+	/* GET PRODUCT CATEGORIES
+	================================================== */
+	if ( ! function_exists( 'spb_get_product_categories' ) ) {
+		function spb_get_product_categories() {
+
+			if ( !is_admin() ) {
+				return;
+			}
+
+		    $categories = get_terms('product_cat');
+			$categories_array = array();
+
+			$categories_array[] = "";
+			foreach ($categories as $category) {
+			      $categories_array[$category->term_id] = $category->name;
+			}
+
+		    return $categories_array;
+		}
+	}
+
+	/* FORMAT CONTENT
+	================================================== */
+    function spb_format_content( $content ) {
+        $content = do_shortcode( shortcode_unautop( $content ) );
+        $content = preg_replace( '#^<\/p>|^<br \/>|<p>$#', '', $content );
+
+        return $content;
+    }
+
+    if ( ! function_exists( 'shortcode_exists' ) ) {
+        /**
+         * Check if a shortcode is registered in WordPress.
+         * Examples: shortcode_exists( 'caption' ) - will return true.
+         * shortcode_exists( 'blah' ) - will return false.
+         */
+        function shortcode_exists( $shortcode = false ) {
+            global $shortcode_tags;
+
+            if ( ! $shortcode ) {
+                return false;
+            }
+
+            if ( array_key_exists( $shortcode, $shortcode_tags ) ) {
+                return true;
+            }
+
+            return false;
+        }
+    }
+	    
+	
 	function spb_map ( $attributes ) {
 	    if( !isset($attributes['base']) ) {
-	        trigger_error("Wrong spb_map object. Base attribute is required", E_USER_ERROR);
+	        trigger_error(__("Wrong spb_map object. Base attribute is required", "swiftframework"), E_USER_ERROR);
 	        die();
 	    }
 	    SPBMap::map($attributes['base'], $attributes);
@@ -38,19 +148,19 @@
 	
 	    if ( $thumbnail == '' &&  $attach_id ) {
 	        if ( is_string($thumb_size) ) {
-	            $thumb_size = str_replace(array( 'px', ' ', '*', '&times;' ), array( '', '', 'x', 'x' ), $thumb_size);
+	            $thumb_size = str_replace(array( 'px', ' ', '*', '×' ), array( '', '', 'x', 'x' ), $thumb_size);
 	            $thumb_size = explode("x", $thumb_size);
 	        }
-	        $p_img = "";
 	        // Resize image to custom size
-			if (isset($thumb_size[0]) && isset($thumb_size[1])) {
-	        $p_img = spb_resize($attach_id, null, $thumb_size[0], $thumb_size[1], true);
-			}
-			
+	        $p_img = "";
+            if ( isset( $thumb_size[0] ) && isset( $thumb_size[1] ) ) {
+                $p_img = spb_resize( $attach_id, null, $thumb_size[0], $thumb_size[1], true );
+            }
+	
 	        /*if ( spb_debug() ) {
 	              var_dump($p_img);
 	          }*/
-	        if ( $p_img != "") {
+	        if ( $p_img ) {
 	            $img_class = '';
 	            //if ( $grid_layout == 'thumbnail' ) $img_class = ' no_bottom_margin'; class="'.$img_class.'"
 	            $thumbnail = '<img src="'.$p_img['url'].'" width="'.$p_img['width'].'" height="'.$p_img['height'].'" />';
@@ -61,211 +171,220 @@
 	    return array( 'thumbnail' => $thumbnail, 'p_img_large' => $p_img_large );
 	}
 	
-	function spb_getColumnControls($width) {
-	    switch ( $width ) {
-	    	
-	    	case "span2" :
-	    	    $w = "1/6";
-	    	    break;
-	        
-	        case "span3" :
-	            $w = "1/4";
-	            break;
-	
-	        case "span4" :
-	            $w = "1/3";
-	            break;
-	
-	        case "span6" :
-	            $w = "1/2";
-	            break;
-	
-	        case "span8" :
-	            $w = "2/3";
-	            break;
-	
-	        case "span9" :
-	            $w = "3/4";
-	            break;
-	
-	        case "span12" :
-	            $w = "1/1";
-	            break;
-	
-	        default :
-	            $w = $width;
-	    }
-	    return $w;
-	}
-	/* Convert span3 to 1/4
-	---------------------------------------------------------- */
-	function spb_translateColumnWidthToFractional($width) {
-	    switch ( $width ) {
-	        
-	        case "span2" :
-	            $w = "1/6";
-	            break;
-	        
-	        case "span3" :
-	            $w = "1/4";
-	            break;
-	
-	        case "span4" :
-	            $w = "1/3";
-	            break;
-	
-	        case "span6" :
-	            $w = "1/2";
-	            break;
-	
-	        case "span8" :
-	            $w = "2/3";
-	            break;
-	
-	        case "span9" :
-	            $w = "3/4";
-	            break;
-	
-	        case "span12" :
-	            $w = "1/1";
-	            break;
-	
-	        default :
-	            $w = $width;
-	    }
-	    return $w;
-	}
-	
-	/* Convert 2 to
-	---------------------------------------------------------- */
-	function spb_translateColumnsCountToSpanClass($grid_columns_count) {
-	    $teaser_width = '';
-	    switch ($grid_columns_count) {
-	        case '1' :
-	            $teaser_width = 'span12';
-	            break;
-	        case '2' :
-	            $teaser_width = 'span6';
-	            break;
-	        case '3' :
-	            $teaser_width = 'span4';
-	            break;
-	        case '4' :
-	            $teaser_width = 'span3';
-	            break;
-	        case '6' :
-	            $teaser_width = 'span2';
-	            break;
-	    }
-	    return $teaser_width;
-	}
-	
-	function spb_translateColumnWidthToSpanEditor($width) {
-					
-	    switch ( $width ) {
-	        
-	        case "1/6" :
-	            
-	            $w = "span2";
-	                        
-	            break;
-	        
-	        case "1/4" :
-	            
-	            $w = "span3";
-	                        
-	            break;
-	
-	        case "1/3" :
-	        	
-	        	$w = "span4";
-	          
-	            break;
-	
-	        case "1/2" :
-	        	
-	        	$w = "span6";
-	            
-	            break;
-	
-	        case "2/3" :
-	        	
-	        	$w = "span8";
-	        	
-	            break;
-	
-	        case "3/4" :
-	        	
-	        	$w = "span9";
-	            
-	            break;
-	
-	        case "1/1" :
-	        
-	        	$w = "span12";
-	            
-	            break;
-	
-	        default :
-	            $w = $width;
-	    }
-	    return $w;
-	}
-	
-	
-	function spb_translateColumnWidthToSpan($width) {
-			
-	    switch ( $width ) {
-	        
-	        case "1/6" :
-	               	
-	        	$w = "col-sm-2";
-	                        
-	            break;
-	        
-	        case "1/4" :
-	               	
-	        	$w = "col-sm-3";
-	                        
-	            break;
-	
-	        case "1/3" :
-	        	
-	        	$w = "col-sm-4";
-	            
-	            break;
-	
-	        case "1/2" :
-	        	
-	            $w = "col-sm-6";
-	            
-	            break;
-	
-	        case "2/3" :
-	        	
-	        	$w = "col-sm-8";
-	        	
-	            break;
-	
-	        case "3/4" :
-	        	
-	            $w = "col-sm-9";
-	            
-	            break;
-	
-	        case "1/1" :
-	        
-	            $w = "col-sm-12";
-	            
-	            break;
-	
-	        default :
-	            $w = $width;
-	    }
-	    return $w;
-	}
-	
-	function spb_format_content($content) {
+   
+   /* GET COLUMN CONTROLS
+   ================================================== */
+   function spb_getColumnControls( $width ) {
+       switch ( $width ) {
+
+           case "span2" :
+               $w = "1/6";
+               break;
+
+           case "span3" :
+               $w = "1/4";
+               break;
+
+           case "span4" :
+               $w = "1/3";
+               break;
+
+           case "span6" :
+               $w = "1/2";
+               break;
+
+           case "span8" :
+               $w = "2/3";
+               break;
+
+           case "span9" :
+               $w = "3/4";
+               break;
+
+           case "span12" :
+               $w = "1/1";
+               break;
+
+           default :
+               $w = $width;
+       }
+
+       return $w;
+   }
+
+   /* CONVERT COLUMN TO FRACTIONAL
+   ================================================== */
+   function spb_translateColumnWidthToFractional( $width ) {
+       switch ( $width ) {
+
+           case "span2" :
+               $w = "1/6";
+               break;
+
+           case "span3" :
+               $w = "1/4";
+               break;
+
+           case "span4" :
+               $w = "1/3";
+               break;
+
+           case "span6" :
+               $w = "1/2";
+               break;
+
+           case "span8" :
+               $w = "2/3";
+               break;
+
+           case "span9" :
+               $w = "3/4";
+               break;
+
+           case "span12" :
+               $w = "1/1";
+               break;
+
+           default :
+               $w = $width;
+       }
+
+       return $w;
+   }
+
+   /* Convert 2 to
+   ---------------------------------------------------------- */
+   function spb_translateColumnsCountToSpanClass( $grid_columns_count ) {
+       $teaser_width = '';
+       switch ( $grid_columns_count ) {
+           case '1' :
+               $teaser_width = 'span12';
+               break;
+           case '2' :
+               $teaser_width = 'span6';
+               break;
+           case '3' :
+               $teaser_width = 'span4';
+               break;
+           case '4' :
+               $teaser_width = 'span3';
+               break;
+           case '6' :
+               $teaser_width = 'span2';
+               break;
+       }
+
+       return $teaser_width;
+   }
+
+   function spb_translateColumnWidthToSpanEditor( $width ) {
+
+       switch ( $width ) {
+
+           case "1/6" :
+
+               $w = "span2";
+
+               break;
+
+           case "1/4" :
+
+               $w = "span3";
+
+               break;
+
+           case "1/3" :
+
+               $w = "span4";
+
+               break;
+
+           case "1/2" :
+
+               $w = "span6";
+
+               break;
+
+           case "2/3" :
+
+               $w = "span8";
+
+               break;
+
+           case "3/4" :
+
+               $w = "span9";
+
+               break;
+
+           case "1/1" :
+
+               $w = "span12";
+
+               break;
+
+           default :
+               $w = $width;
+       }
+
+       return $w;
+   }
+
+
+   function spb_translateColumnWidthToSpan( $width ) {
+
+       switch ( $width ) {
+
+           case "1/6" :
+
+               $w = "col-sm-2";
+
+               break;
+
+           case "1/4" :
+
+               $w = "col-sm-3";
+
+               break;
+
+           case "1/3" :
+
+               $w = "col-sm-4";
+
+               break;
+
+           case "1/2" :
+
+               $w = "col-sm-6";
+
+               break;
+
+           case "2/3" :
+
+               $w = "col-sm-8";
+
+               break;
+
+           case "3/4" :
+
+               $w = "col-sm-9";
+
+               break;
+
+           case "1/1" :
+
+               $w = "col-sm-12";
+
+               break;
+
+           default :
+               $w = $width;
+       }
+
+       return $w;
+   }
+	    
+	function spb_js_remove_wpautop($content) {
 	    $content = do_shortcode( shortcode_unautop($content) );
 	    $content = preg_replace( '#^<\/p>|^<br \/>|<p>$#', '', $content );
 	    return $content;
@@ -291,35 +410,6 @@
 	    }
 	}
 	
-	/* Helper function which returs list of site attached images,
-	   and if image is attached to the current post it adds class
-	   'added'
-	---------------------------------------------------------- */
-	if (!function_exists('spb_siteAttachedImages')) {
-	    function spb_siteAttachedImages($att_ids = array()) {
-	        $output = '';
-	
-	        global $wpdb;
-	        $media_images = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_type = 'attachment' order by ID desc");
-	        foreach ( $media_images as $image_post ) {
-	            $thumb_src = wp_get_attachment_image_src($image_post->ID, 'thumbnail');
-	            $thumb_src = $thumb_src[0];
-	
-	            $class = (in_array($image_post->ID, $att_ids)) ? ' class="added"' : '';
-	
-	            $output .= '<li'.$class.'>
-							<img rel="'.$image_post->ID.'" src="'. $thumb_src .'" />
-							<span class="img-added">'. __('Added', "swift-framework-admin") .'</span>
-						</li>';
-	        }
-	
-	        if ( $output != '' ) {
-	            $output = '<ul class="gallery_widget_img_select">' . $output . '</ul>';
-	        }
-	        return $output;
-	    } // end spb_siteAttachedImages()
-	}
-	
 	function spb_fieldAttachedImages($att_ids = array()) {
 	    $output = '';
 	    foreach ( $att_ids as $th_id ) {
@@ -329,7 +419,7 @@
 	            $output .= '
 				<li class="added">
 					<img rel="'.$th_id.'" src="'. $thumb_src .'" />
-					<span class="img-added">'. __('Added', "swift-framework-admin") .'</span>
+					<span class="img-added">'. __('Added', "swiftframework") .'</span>
 				</li>';
 	        }
 	    }
@@ -395,7 +485,7 @@
 	
 	        // the image path without the extension
 	        $no_ext_path = $file_info['dirname'].'/'.$file_info['filename'];
-			
+	
 	        $cropped_img_path = $no_ext_path.'-'.$width.'x'.$height.$extension;
 	
 	        // checking if the file size is larger than the target size

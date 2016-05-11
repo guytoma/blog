@@ -71,7 +71,7 @@ class SwiftPageBuilderShortcode_portfolio extends SwiftPageBuilderShortcode {
             $output .= "\n\t".'</div> '.$this->endBlockComment($width);
     
     		if ($display_type == "masonry-fw" || $display_type == "masonry-gallery-fw") {
-    			$output = $this->startRow($el_position, '', true) . $output . $this->endRow($el_position, '', true);
+    			$output = $this->startRow($el_position, '', true, "full-width") . $output . $this->endRow($el_position, '', true);
     		} else {
     		    $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
     		}

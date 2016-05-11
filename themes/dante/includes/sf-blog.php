@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Blog Items Function Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_blog_items()
 	*	sf_blog_aux()
@@ -226,9 +226,9 @@
 			$blog_aux_output .= '</ul>'; // close .blog-aux-options
 			$blog_aux_output .= '</div>'; // close .blog-aux-wrap
 			
-			$blog_aux_output .= '<div class="container">';
 			$blog_aux_output .= '<div class="filter-wrap slideout-filter blog-filter-wrap row clearfix">'; // open .blog-filter-wrap
-			$blog_aux_output .= '<div class="filter-slide-wrap col-sm-12 alt-bg '.$filter_wrap_bg.'">';
+			$blog_aux_output .= '<div class="container">';
+			$blog_aux_output .= '<div class="filter-slide-wrap col-sm-12 asset-bg '.$filter_wrap_bg.'">';
 			
 			if ($category_list != '') {  
 			    $blog_aux_output .= '<ul class="aux-list aux-categories row clearfix">'.$category_list.'</ul>';  

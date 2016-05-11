@@ -125,6 +125,7 @@ function embedSelectedShortcode() {
 		var modal_button_type = document.getElementById('modal-button-type').value;
 		var modal_button_colour = document.getElementById('modal-button-colour').value;
 		var modal_button_text = document.getElementById('modal-button-text').value;
+		var modal_button_icon = document.getElementById('modal-button-icon').value;
 		var modal_header = document.getElementById('modal-header').value;
 
 		// Fullscreen Video
@@ -319,7 +320,7 @@ function embedSelectedShortcode() {
 				
 		if (shortcode_select == 'shortcode-modal') {
 			
-			shortcodeHTML = '[sf_modal header="' + modal_header + '" btn_colour="'+modal_button_colour+'" btn_type="'+modal_button_type+'" btn_size="'+modal_button_size+'" btn_text="'+modal_button_text+'"]<br/>ENTER THE MODAL BODY HERE<br/>[/sf_modal]<br/>';
+			shortcodeHTML = '[sf_modal header="' + modal_header + '" btn_colour="'+modal_button_colour+'" btn_type="'+modal_button_type+'" btn_size="'+modal_button_size+'" btn_icon="'+modal_button_icon+'" btn_text="'+modal_button_text+'"]<br/>ENTER THE MODAL BODY HERE<br/>[/sf_modal]<br/>';
 		
 		}
 		

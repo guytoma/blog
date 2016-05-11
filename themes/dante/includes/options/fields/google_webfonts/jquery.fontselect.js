@@ -514,7 +514,7 @@ jQuery(document).ready(function ($) {
 		'Inika:400',
 		'Inika:700',
 		'Irish Grover:400',
-		'Istok Web:400',
+		'Istok Web:500',
 		'Istok Web:italic',
 		'Istok Web:700',
 		'Istok Web:700italic',

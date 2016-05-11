@@ -1,6 +1,6 @@
 <?php
 
-class SwiftPageBuilderShortcode_jobs extends SwiftPageBuilderShortcode {
+class SwiftPageBuilderShortcode_spb_jobs extends SwiftPageBuilderShortcode {
 
     public function content( $atts, $content = null ) {
 
@@ -105,9 +105,9 @@ class SwiftPageBuilderShortcode_jobs extends SwiftPageBuilderShortcode {
     }
 }
 
-SPBMap::map( 'jobs', array(
+SPBMap::map( 'spb_jobs', array(
     "name"		=> __("Jobs", "swift-framework-admin"),
-    "base"		=> "jobs",
+    "base"		=> "spb_jobs",
     "class"		=> "",
     "icon"      => "spb-icon-jobs",
     "wrapper_class" => "clearfix",

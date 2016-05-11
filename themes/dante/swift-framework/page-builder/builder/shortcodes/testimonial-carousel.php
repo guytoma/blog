@@ -131,7 +131,8 @@ class SwiftPageBuilderShortcode_testimonial_carousel extends SwiftPageBuilderSho
         	}
         }
                 
-        $items .= '<div class="carousel-overflow"><ul id="carousel-'.$sf_carouselID.'" class="testimonials carousel-items clearfix" data-columns="1" data-auto="false">';
+        $items .= '<div class="carousel-wrap">';
+        $items .= '<div id="carousel-'.$sf_carouselID.'" class="testimonials carousel-items clearfix" data-columns="1">';
         
         // TESTIMONIAL LOOP
         
@@ -154,7 +155,7 @@ class SwiftPageBuilderShortcode_testimonial_carousel extends SwiftPageBuilderSho
         	
         	$testimonial_image = sf_aq_resize( $testimonial_image_url, 70, 70, true, false);
         	
-        	$items .= '<li class="testimonial carousel-item '.$item_class.' clearfix">';
+        	$items .= '<div class="testimonial carousel-item '.$item_class.' clearfix">';
         	$items .= '<div class="testimonial-text">'.do_shortcode($testimonial_text).'</div>'; 
         	$items .= '<div class="testimonial-cite">';		
         	if ($testimonial_image) {
@@ -164,16 +165,14 @@ class SwiftPageBuilderShortcode_testimonial_carousel extends SwiftPageBuilderSho
         	$items .= '<div class="cite-text"><span class="cite-name">'.$testimonial_cite.'</span><span>'.$testimonial_cite_subtext.'</span></div>';
         	}
         	$items .= '</div>';
-        	$items .= '</li>';
+        	$items .= '</div>';
         	        
         endwhile;
         
-        wp_reset_postdata();
-        		
-        $items .= '</ul>';
-       	
-       	$items .= '<a href="#" class="prev"><i class="ss-navigateleft"></i></a><a href="#" class="next"><i class="ss-navigateright"></i></a>';
-       	
+        $items .= '</div>';
+        	
+        $items .= '<a href="#" class="carousel-prev"><i class="fa-chevron-left"></i></a><a href="#" class="carousel-next"><i class="fa-chevron-right"></i></a>';
+        
        	$options = get_option('sf_dante_options');
        	if ($options['enable_swipe_indicators']) {
        	$items .= '<div class="sf-swipe-indicator"></div>';

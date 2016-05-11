@@ -5,16 +5,16 @@
 	*	Custom Video Widget
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 
 	class sf_video_widget extends WP_Widget {
 		
-		function sf_video_widget() {			
+		function __construct() {			
 			$widget_ops = array( 'classname' => 'widget-video', 'description' => 'Embedded video from YouTube, Vimeo, etc' );
 			$control_ops = array( 'width' => 250, 'height' => 200, 'id_base' => 'video-widget' ); //default width = 250
-			$this->WP_Widget( 'video-widget', 'Swift Framework Video Widget', $widget_ops, $control_ops );
+			parent::__construct( 'video-widget', 'Swift Framework Video Widget', $widget_ops, $control_ops );
 		}
 	
 		function form($instance) {

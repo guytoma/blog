@@ -5,7 +5,7 @@
 	*	Swift Framework Sidebar Functions
 	*	------------------------------------------------
 	*	Swift Framework v2.0
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_setup_sidebars()
 	*	sf_sidebars_array()
@@ -26,6 +26,7 @@
 				$footer_config = 'footer-1';
 				}
 			    register_sidebar(array(
+			    	'id' => 'sidebar-1',
 			        'name' => 'Sidebar One',
 			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 			        'after_widget' => '</section>',
@@ -33,6 +34,7 @@
 			        'after_title' => '</span></h4></div>',
 			    ));
 			    register_sidebar(array(
+			    	'id' => 'sidebar-2',
 			        'name' => 'Sidebar Two',
 			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 			        'after_widget' => '</section>',
@@ -40,6 +42,7 @@
 			        'after_title' => '</span></h4></div>',
 			    ));
 				register_sidebar(array(
+					'id' => 'sidebar-3',
 					'name' => 'Sidebar Three',
 					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 					'after_widget' => '</section>',
@@ -47,6 +50,7 @@
 					'after_title' => '</span></h4></div>',
 				));
 				register_sidebar(array(
+					'id' => 'sidebar-4',
 					'name' => 'Sidebar Four',
 					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 					'after_widget' => '</section>',
@@ -54,6 +58,7 @@
 					'after_title' => '</span></h4></div>',
 				));
 				register_sidebar(array(
+					'id' => 'sidebar-5',
 				    'name' => 'Sidebar Five',
 				    'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 				    'after_widget' => '</section>',
@@ -61,6 +66,7 @@
 				    'after_title' => '</span></h4></div>',
 				));
 				register_sidebar(array(
+					'id' => 'sidebar-6',
 				    'name' => 'Sidebar Six',
 				    'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 				    'after_widget' => '</section>',
@@ -68,6 +74,7 @@
 				    'after_title' => '</span></h4></div>',
 				));
 				register_sidebar(array(
+					'id' => 'sidebar-7',
 					'name' => 'Sidebar Seven',
 					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 					'after_widget' => '</section>',
@@ -75,6 +82,7 @@
 					'after_title' => '</span></h4></div>',
 				));
 				register_sidebar(array(
+					'id' => 'sidebar-8',
 					'name' => 'Sidebar Eight',
 					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
 					'after_widget' => '</section>',

@@ -4,7 +4,7 @@
 	*	Swift Page Builder - Imapact Text Shortcode
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 
@@ -79,12 +79,18 @@
 	        	$button = '<a class="sf-button sf-button '. $color .' '. $type .'" href="'.$href.'" target="'.$target.'"><span>' . $title . '</span></a>';
 	        }
 	        
-	        if ($alt_background == "none" || $sidebars != "no-sidebars") {
-	        $output .= '<div class="spb_impact_text spb_content_element clearfix '.$width.' '.$position.$el_class.'">'. "\n";
-	        } else {
-	        $output .= '<div class="spb_impact_text spb_content_element clearfix alt-bg '.$alt_background.' '.$width.' '.$position.$el_class.'">'. "\n";
+	        // Full width setup
+	        $fullwidth = false;
+	        if ($alt_background != "none" && $sidebars == "no-sidebars") {
+	        $fullwidth = true;
 	        }
-	        $output .= '<div class="impact-text-wrap clearfix">'. "\n";
+	             
+	        $output .= "\n\t".'<div class="spb_impact_text spb_content_element '.$width.$el_class.'">'; 
+	        if ($alt_background != "none") {
+	        $output .= '<div class="impact-text-wrap '.$position.' asset-bg '.$alt_background.' clearfix">'. "\n";
+	        } else {    
+	        $output .= '<div class="impact-text-wrap '.$position.' clearfix">'. "\n";
+	        }
 	        $output .= '<div class="spb_call_text">'. spb_format_content($content) . '</div>'. "\n";
 	        if ($include_button == "yes") {
 	        $output .= $button. "\n";
@@ -92,7 +98,7 @@
 	        $output .= '</div>'. "\n";
 	        $output .= '</div> ' . $this->endBlockComment('.spb_impact_text') . "\n";
 			
-			$output = $this->startRow($el_position) . $output . $this->endRow($el_position);
+			$output = $this->startRow($el_position, $width, false, false, $alt_background) . $output . $this->endRow($el_position, $width, false, false);
 			
 	        return $output;
 	    }

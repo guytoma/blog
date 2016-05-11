@@ -4,17 +4,17 @@
 	*	Theme Styling Functions
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_custom_styles()
 	*	sf_custom_script()
 	*
 	*/
-	
-			
+
+
  	/* CUSTOM CSS OUTPUT
  	================================================== */
- 	if (!function_exists('sf_custom_styles')) { 
+ 	if (!function_exists('sf_custom_styles')) {
 		function sf_custom_styles() {
 			$options = get_option('sf_dante_options');
 			$enable_responsive = $options['enable_responsive'];
@@ -22,13 +22,13 @@
 			if (isset($options['site_maxwidth']) && $options['site_maxwidth'] == "940") {
 			$site_maxwidth = "940";
 			}
-			
+
 			// Standard Styling
 			$accent_color = get_option('accent_color', '#1dc6df');
 			$accent_alt_color = get_option('accent_alt_color', '#ffffff');
 			$secondary_accent_color = get_option('secondary_accent_color', '#222222');
 			$secondary_accent_alt_color = get_option('secondary_accent_alt_color', '#ffffff');
-			
+
 			// Page Styling
 			$page_bg_color = get_option('page_bg_color', '#222222');
 			$inner_page_bg_color = get_option('inner_page_bg_color', '#FFFFFF');
@@ -49,7 +49,7 @@
 			$overlay_opacity = $options['overlay_opacity'];
 			$hover_overlay_rgb = sf_hex2rgb($accent_color);
 			}
-			
+
 			// Header Styling
 			$header_aux_text_color = get_option('header_aux_text_color', '#fff');
 			$topbar_bg_color = get_option('topbar_bg_color', '#1dc6df');
@@ -60,9 +60,9 @@
 			$header_bg_color1 = get_option('header_bg_color1', '#ffffff');
 			$header_bg_color2 = get_option('header_bg_color2', '#ffffff');
 			$header_border_color = get_option('header_border_color', '#e4e4e4');
-			$header_opacity = $options['header_opacity'];	
+			$header_opacity = $options['header_opacity'];
 			$header_layout = $options['header_layout'];
-			
+
 			// Navigation Styling
 			$nav_text_color = get_option('nav_text_color', '#252525');
 			$nav_text_hover_color = get_option('nav_text_hover_color', '#07c1b6');
@@ -75,17 +75,17 @@
 			$nav_sm_selected_text_color = get_option('nav_sm_selected_text_color', '#000000');
 			$nav_divider = get_option('nav_divider', 'solid');
 			$nav_divider_color = get_option('nav_divider_color', '#f0f0f0');
-			
+
 			// Promo Bar Styling
 			$promo_bar_bg_color = get_option('promo_bar_bg_color', '#e4e4e4');
 			$promo_bar_text_color = get_option('promo_bar_text_color', '#222');
-					
+
 			// Page Heading Styling
 			$breadcrumb_text_color = get_option('breadcrumb_text_color', '#333333');
 			$breadcrumb_link_color = get_option('breadcrumb_link_color', '#333333');
 			$page_heading_bg_color = get_option('page_heading_bg_color', '#f7f7f7');
 			$page_heading_text_color = get_option('page_heading_text_color', '#222222');
-			
+
 			// Body Styling
 			$body_text_color = get_option('body_color', '#222222');
 			$body_alt_text_color = get_option('body_alt_color', '#222222');
@@ -98,7 +98,7 @@
 			$h5_text_color = get_option('h5_color', '#222222');
 			$h6_text_color = get_option('h6_color', '#222222');
 			$impact_text_color = get_option('impact_text_color', '#222222');
-		
+
 			// Shortcode Stying
 			$pt_primary_bg_color = get_option('pt_primary_bg_color', '#07c1b6');
 			$pt_secondary_bg_color = get_option('pt_secondary_bg_color', '#fd9d96');
@@ -113,7 +113,7 @@
 			$icon_color = get_option('sf_icon_color', '#1dc6df');
 			$icon_alt_color = get_option('sf_icon_alt_color', '#ffffff');
 			$boxed_content_color = get_option('boxed_content_color', '#07c1b6');
-			
+
 			// Extra Icon Styling
 			$icon_one_color = get_option('icon_one_color', '#FF9900');
 			$icon_one_alt_color = get_option('icon_one_alt_color', '#ffffff');
@@ -123,7 +123,7 @@
 			$icon_three_alt_color = get_option('icon_three_alt_color', '#222222');
 			$icon_four_color = get_option('icon_four_color', '#6633ff');
 			$icon_four_alt_color = get_option('icon_four_alt_color', '#ffffff');
-			
+
 			// Footer Styling
 			$footer_bg_color = get_option('footer_bg_color', '#222222');
 			$footer_text_color = get_option('footer_text_color', '#cccccc');
@@ -133,7 +133,7 @@
 			$copyright_text_color = get_option('copyright_text_color', '#999999');
 			$copyright_link_color = get_option('copyright_link_color', '#ffffff');
 			$copyright_link_hover_color = get_option('copyright_link_hover_color', '#e4e4e4');
-			
+
 			// Logo/Nav Spacing
 			$logo_width = $logo_height = $logo_resized_height = $logo_resized_width = $nav_top_spacing = "";
 			$logo_width = $options['logo_width'];
@@ -151,8 +151,8 @@
 			if (isset($options['nav_top_spacing'])) {
 			$nav_top_spacing = $options['nav_top_spacing'];
 			}
-			
-				
+
+
 			// Font
 			$body_font_option = $options['body_font_option'];
 			$standard_font = $options['web_body_font'];
@@ -173,18 +173,18 @@
 				$google_font_two = str_replace("+", " ", $google_heading_font[0]);
 				if (isset($google_heading_font[1])) {
 					$google_font_two_style = strpos($google_heading_font[1],'italic') ? "italic" : "normal";
-					$google_font_two_weight = str_replace('italic', '', $google_heading_font[1]);					
+					$google_font_two_weight = str_replace('italic', '', $google_heading_font[1]);
 				}
 			}
 			$menu_font_option = $menu_font = $fontdeck_menu_font = "";
-			
+
 			$fontdeck_heading_font = $options['fontdeck_heading_font'];
 			if (isset($options['menu_font_option'])) {
 			$menu_font_option = $options['menu_font_option'];
 			}
 			if (isset($options['web_menu_font'])) {
 			$menu_font = $options['web_menu_font'];
-			}		
+			}
 			if (isset($options['google_menu_font'])) {
 				$google_menu_font = explode(':', $options['google_menu_font']);
 				$google_font_three = str_replace("+", " ", $google_menu_font[0]);
@@ -196,7 +196,7 @@
 			if (isset($options['fontdeck_menu_font'])) {
 			$fontdeck_menu_font = $options['fontdeck_menu_font'];
 			}
-			
+
 			// Font Sizing
 			$menu_font_size = "";
 			$body_font_size = $options['body_font_size'];
@@ -216,7 +216,7 @@
 			$h5_font_line_height = $options['h5_font_line_height'];
 			$h6_font_size = $options['h6_font_size'];
 			$h6_font_line_height = $options['h6_font_line_height'];
-			
+
 			// Alt Background Setup
 			$alt_one_bg_color = $options['alt_one_bg_color'];
 			$alt_one_text_color = $options['alt_one_text_color'];
@@ -278,7 +278,7 @@
 			$alt_ten_bg_image = $options['alt_ten_bg_image'];
 			}
 			$alt_ten_bg_image_size = $options['alt_ten_bg_image_size'];
-			
+
 			// PAGE BACKGROUND IMAGE //
 			$bg_image_url = $inner_bg_image_url = "";
 			$page_background_image = rwmb_meta('sf_background_image', 'type=image&size=full');
@@ -295,18 +295,18 @@
 					break;
 				}
 			}
-			
+
 			global $post;
 			if ($post) {
 			$background_image_size = sf_get_post_meta($post->ID, 'sf_background_image_size', true);
 			}
-			
+
 			// Custom CSS
 			$custom_css = $options['custom_css'];
-			
+
 			// OPEN STYLE TAG
 			echo '<style type="text/css">'. "\n";
-			
+
 			// 940PX OPTION
 			if ($site_maxwidth == "940") {
 				echo '@media only screen and (min-width: 1200px) {
@@ -371,12 +371,7 @@
 				.span-bs-threequarter {
 					width: 340px;
 				}
-				.alt-bg {
-					margin-left: -410px!important;
-					padding-left: 410px;
-					padding-right: 410px;
-				}
-				
+
 				/* PRODUCTS */
 				body .has-no-sidebar ul.products li.product {
 					width: 212px;
@@ -385,10 +380,7 @@
 				body .has-one-sidebar ul.products li.product {
 					width: 140px;
 				}
-				body.woocommerce .has-one-sidebar .upsells.products ul.products li.product, body.woocommerce .has-one-sidebar .related.products ul.products li.product  {
-					width: 139px;
-				}
-				body.woocommerce .has-no-sidebar ul.products li.product, body.woocommerce .has-no-sidebar .upsells.products ul.products li.product, body.woocommerce .has-no-sidebar .related.products ul.products li.product, body.woocommerce .has-one-sidebar ul.products li.product {
+				body.woocommerce .has-no-sidebar ul.products li.product, body.woocommerce .has-one-sidebar ul.products li.product {
 					width: 212px
 				}
 				body .has-one-sidebar .products-standard.span8 ul.products li.product {
@@ -418,7 +410,7 @@
 				}
 				';
 			}
-			
+
 			// NON-RESPONSIVE STYLES
 			if (!$enable_responsive) {
 			echo '
@@ -695,16 +687,16 @@
 				body .has-both-sidebars .products-mini ul.products li.product {
 					width: 170px;
 				}
-				body.woocommerce .has-no-sidebar ul.products li.product, body.woocommerce .has-no-sidebar .upsells.products ul.products li.product {
+				body.woocommerce .has-no-sidebar ul.products li.product {
 					width: 262px;
 				}
-				body.woocommerce .has-one-sidebar ul.products li.product, body.woocommerce .has-one-sidebar .upsells.products ul.products li.product {
+				body.woocommerce .has-one-sidebar ul.products li.product {
 					width: 270px;
 				}
 				body.woocommerce .has-both-sidebars ul.products li.product, body.woocommerce .has-both-sidebars ul.products li.product {
 					width: 252px;
 				}
-				
+
 				/* WIDGETS */
 				.caroufredsel_wrapper {
 					margin-left: -30px!important;
@@ -712,29 +704,9 @@
 				.spb_portfolio_carousel_widget.span12 .caroufredsel_wrapper {
 					min-width: 1200px;
 				}
-				@media only screen and (min-width: 1200px) {
-					.alt-bg {
-						padding-left: 210px;
-						padding-right: 210px;
-					}
-				}
-				@media only screen and (min-width: 1500px) {
-					.alt-bg {
-						margin-left: -410px!important;
-						padding-left: 410px;
-						padding-right: 410px;
-					}
-				}
-				@media only screen and (min-width: 1980px) {
-					.alt-bg {
-						margin-left: -750px!important;
-						padding-left: 750px;
-						padding-right: 750px;
-					}
-				}
 				'."\n";
 			}
-			
+
 			// FONT SIZING
 			echo 'body, p, #commentform label, .contact-form label {font-size: '.$body_font_size.'px;line-height: '.$body_font_line_height.'px;}';
 			echo 'h1 {font-size: '.$h1_font_size.'px;line-height: '.$h1_font_line_height.'px;}';
@@ -742,11 +714,11 @@
 			echo 'h3, .blog-item .quote-excerpt {font-size: '.$h3_font_size.'px;line-height: '.$h3_font_line_height.'px;}';
 			echo 'h4, .body-content.quote, #respond-wrap h3, #respond h3 {font-size: '.$h4_font_size.'px;line-height: '.$h4_font_line_height.'px;}';
 			echo 'h5 {font-size: '.$h5_font_size.'px;line-height: '.$h5_font_line_height.'px;}';
-			echo 'h6 {font-size: '.$h6_font_size.'px;line-height: '.$h6_font_line_height.'px;}'; 
+			echo 'h6 {font-size: '.$h6_font_size.'px;line-height: '.$h6_font_line_height.'px;}';
 			echo 'nav .menu li {font-size: '.$menu_font_size.'px;}';
-			
+
 			// CUSTOM COLOUR STYLES
-			echo '::selection, ::-moz-selection {background-color: '.$accent_color.'; color: #fff;}'; 
+			echo '::selection, ::-moz-selection {background-color: '.$accent_color.'; color: #fff;}';
 			echo '.recent-post figure, span.highlighted, span.dropcap4, .loved-item:hover .loved-count, .flickr-widget li, .portfolio-grid li, input[type="submit"], .wpcf7 input.wpcf7-submit[type="submit"], .gform_wrapper input[type="submit"], .mymail-form input[type="submit"], .woocommerce-page nav.woocommerce-pagination ul li span.current, .woocommerce nav.woocommerce-pagination ul li span.current, figcaption .product-added, .woocommerce .wc-new-badge, .yith-wcwl-wishlistexistsbrowse a, .yith-wcwl-wishlistaddedbrowse a, .woocommerce .widget_layered_nav ul li.chosen > *, .woocommerce .widget_layered_nav_filters ul li a, .sticky-post-icon, .fw-video-close:hover {background-color: '.$accent_color.'!important; color: '.$accent_alt_color.';}';
 			echo 'a:hover, #sidebar a:hover, .pagination-wrap a:hover, .carousel-nav a:hover, .portfolio-pagination div:hover > i, #footer a:hover, #copyright a, .beam-me-up a:hover span, .portfolio-item .portfolio-item-permalink, .read-more-link, .blog-item .read-more, .blog-item-details a:hover, .author-link, #reply-title small a, #respond .form-submit input:hover, span.dropcap2, .spb_divider.go_to_top a, love-it-wrapper:hover .love-it, .love-it-wrapper:hover span.love-count, .love-it-wrapper .loved, .comments-likes .loved span.love-count, .comments-likes a:hover i, .comments-likes .love-it-wrapper:hover a i, .comments-likes a:hover span, .love-it-wrapper:hover a i, .item-link:hover, #header-translation p a, #swift-slider .flex-caption-large h1 a:hover, .wooslider .slide-title a:hover, .caption-details-inner .details span > a, .caption-details-inner .chart span, .caption-details-inner .chart i, #swift-slider .flex-caption-large .chart i, #breadcrumbs a:hover, .ui-widget-content a:hover, .yith-wcwl-add-button a:hover, #product-img-slider li a.zoom:hover, .woocommerce .star-rating span, .article-body-wrap .share-links a:hover, ul.member-contact li a:hover, .price ins, .bag-product a.remove:hover, .bag-product-title a:hover, #back-to-top:hover,  ul.member-contact li a:hover, .fw-video-link-image:hover i, .ajax-search-results .all-results:hover, .search-result h5 a:hover .ui-state-default a:hover {color: '.$link_hover_color.';}';
 			echo '.carousel-wrap > a:hover, #mobile-menu ul li:hover > a {color: '.$accent_color.'!important;}';
@@ -763,7 +735,7 @@
 			echo 'a[rel="tooltip"], ul.member-contact li a, .blog-item-details a, .post-info a, a.text-link, .tags-wrap .tags a, .logged-in-as a, .comment-meta-actions .edit-link, .comment-meta-actions .comment-reply, .read-more {border-color: '.$accent_color.';}';
 			echo '.super-search-go {border-color: '.$accent_color.'!important;}';
 			echo '.super-search-go:hover {background: '.$accent_color.'!important;border-color: '.$accent_color.'!important;}';
-			
+
 			// MAIN STYLES
 			echo 'body {color: '.$body_text_color.';}';
 			echo '.pagination-wrap a, .search-pagination a {color: '.$body_text_color.';}';
@@ -774,7 +746,7 @@
 				} else if ($body_preset_bg) {
 					echo 'body {background: '.$page_bg_color.' url('.$body_preset_bg.') repeat center top fixed;}';
 				}
-				echo 'body {background-color: '.$page_bg_color.';background-size: '.$bg_size.';}';	
+				echo 'body {background-color: '.$page_bg_color.';background-size: '.$bg_size.';}';
 			} else {
 				echo 'body {background-color: '.$page_bg_color.';}';
 			}
@@ -787,16 +759,16 @@
 			echo 'input[type="text"], input[type="password"], input[type="email"], input[type="tel"], textarea, select {border-color: '.$section_divide_color.';background: '.$alt_bg_color.';}';
 			echo 'textarea:focus, input:focus {border-color: #999!important;}';
 			echo '.modal-header {background: '.$alt_bg_color.';}';
-			echo '.recent-post .post-details, .team-member .team-member-position, .portfolio-item h5.portfolio-subtitle, .mini-items .blog-item-details, .standard-post-content .blog-item-details, .masonry-items .blog-item .blog-item-details, .jobs > li .job-date, .search-item-content time, .search-item-content span, .blog-item-details a, .portfolio-details-wrap .date {color: '.$body_alt_text_color.';}';
+			echo '.recent-post .post-details, .team-member .team-member-position, .portfolio-item h5.portfolio-subtitle, .mini-items .blog-item-details, .standard-post-content .blog-item-details, .masonry-items .blog-item .blog-item-details, .jobs > li .job-date, .search-item-content time, .search-item-content span, .blog-item-details a, .portfolio-details-wrap .date,  .portfolio-details-wrap .tags-link-wrap {color: '.$body_alt_text_color.';}';
 			echo 'ul.bar-styling li.facebook > a:hover {color: #fff!important;background: #3b5998;border-color: #3b5998;}';
 			echo 'ul.bar-styling li.twitter > a:hover {color: #fff!important;background: #4099FF;border-color: #4099FF;}';
 			echo 'ul.bar-styling li.google-plus > a:hover {color: #fff!important;background: #d34836;border-color: #d34836;}';
 			echo 'ul.bar-styling li.pinterest > a:hover {color: #fff!important;background: #cb2027;border-color: #cb2027;}';
-					
+
 			// HEADER STYLES
 			echo '#header-search input, #header-search a, .super-search-close, #header-search i.ss-search {color: '.$header_aux_text_color.';}';
 			echo '#header-search a:hover, .super-search-close:hover {color: '.$accent_color.';}';
-			echo '.sf-super-search, .spb_supersearch_widget.alt-bg {background-color: '.$secondary_accent_color.';}';
+			echo '.sf-super-search, .spb_supersearch_widget.asset-bg {background-color: '.$secondary_accent_color.';}';
 			echo '.sf-super-search .search-options .ss-dropdown > span, .sf-super-search .search-options input {color: '.$accent_color.'; border-bottom-color: '.$accent_color.';}';
 			echo '.sf-super-search .search-options .ss-dropdown ul li .fa-check {color: '.$accent_color.';}';
 			echo '.sf-super-search-go:hover, .sf-super-search-close:hover { background-color: '.$accent_color.'; border-color: '.$accent_color.'; color: '.$accent_alt_color.';}';
@@ -811,13 +783,14 @@
 			echo '#header-section:before, #header .is-sticky .sticky-header, #header-section .is-sticky #main-nav.sticky-header, #header-section.header-6 .is-sticky #header.sticky-header, .ajax-search-wrap {background-color: '.$header_bg_color1.';background: -webkit-gradient(linear, 0% 0%, 0% 100%, from('.$header_bg_color2.'), to('.$header_bg_color1.'));background: -webkit-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -moz-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -ms-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -o-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');}';
 			echo '#logo img {padding-top: '.$logo_spacing_top.'px;padding-bottom: '.$logo_spacing_bottom.'px;}';
 			if ($logo_width > 0) {
-			echo '#logo.logo-left, #logo img, #logo img.retina {width: '.$logo_width.'px;}';
+			echo '#logo img, #logo img.retina {width: '.$logo_width.'px;}';
 			}
 			if ($logo_height && $logo_height > 0) {
 			$logo_row_height = $logo_height + 20;
 			echo '#logo {height: '.$logo_height.'px!important;}';
 			echo '#logo img {height: '.$logo_height.'px;min-height:'.$logo_height.'px;}';
 			echo '.header-container > .row, .header-5 header .container > .row, .header-6 header > .container > .row {height: '.$logo_row_height.'px;}';
+			echo '@media only screen and (max-width: 991px) {#logo img {max-height:'.$logo_height.'px;}}';
 			} else {
 			echo '#logo {max-height: 42px;}';
 			}
@@ -847,10 +820,10 @@
 			if ($header_bg_color1 != "#ffffff") {
 			echo '.search-item-content time {color: '.$nav_divider_color.';}';
 			}
-			echo '@media only screen and (max-width: 767px) {
+			echo '@media only screen and (max-width: 991px) {
 			.naked-header #header-section, .naked-header #header-section:before, .naked-header #header .is-sticky .sticky-header, .naked-header .is-sticky #header.sticky-header {background-color: '.$header_bg_color1.';background: -webkit-gradient(linear, 0% 0%, 0% 100%, from('.$header_bg_color2.'), to('.$header_bg_color1.'));background: -webkit-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -moz-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -ms-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -o-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');}
 			}';
-			
+
 			// NAVIGATION STYLES
 			echo 'nav#main-navigation .menu > li > a span.nav-line {background-color: '.$nav_pointer_color.';}';
 			echo '.show-menu {background-color: '.$secondary_accent_color.';color: '.$secondary_accent_alt_color.';}';
@@ -860,7 +833,7 @@
 			echo 'nav .menu ul.sub-menu li {border-bottom-color: '.$nav_divider_color.';border-bottom-style: '.$nav_divider.';}';
 			echo 'nav.mega-menu li .mega .sub .sub-menu, nav.mega-menu li .mega .sub .sub-menu li, nav.mega-menu li .sub-container.non-mega li, nav.mega-menu li .sub li.mega-hdr {border-top-color: '.$nav_divider_color.';border-top-style: '.$nav_divider.';}';
 			echo 'nav.mega-menu li .sub li.mega-hdr {border-right-color: '.$nav_divider_color.';border-right-style: '.$nav_divider.';}';
-			echo 'nav .menu > li.menu-item > a, #menubar-controls a, nav.search-nav .menu>li>a {color: '.$nav_text_color.';}';
+			echo 'nav .menu > li.menu-item > a, #menubar-controls a, nav.search-nav .menu>li>a, .naked-header .is-sticky nav .menu > li a {color: '.$nav_text_color.';}';
 			echo 'nav .menu > li.menu-item:hover > a {color: '.$nav_text_hover_color.';}';
 			echo 'nav .menu ul.sub-menu li.menu-item > a, nav .menu ul.sub-menu li > span, #top-bar nav .menu ul li > a {color: '.$nav_sm_text_color.';}';
 			echo 'nav .menu ul.sub-menu li.menu-item:hover > a {color: '.$nav_sm_text_hover_color.'!important; background: '.$nav_sm_bg_hover_color.';}';
@@ -878,19 +851,19 @@
 			echo '.shopping-bag:before, nav .menu ul.sub-menu li:first-child:before {border-bottom-color: '.$nav_pointer_color.';}';
 			echo 'nav ul.menu > li.menu-item.sf-menu-item-btn > a {background-color: '.$nav_text_hover_color.';color: '.$nav_text_color.';}';
 			echo 'nav ul.menu > li.menu-item.sf-menu-item-btn:hover > a {color: '.$nav_text_hover_color.';background-color: '.$nav_text_color.';}';
-			
+
 			// PROMO BAR STYLES
 			echo '#base-promo {background-color: '.$promo_bar_bg_color.';}';
 			echo '#base-promo > p, #base-promo.footer-promo-text > a, #base-promo.footer-promo-arrow > a {color: '.$promo_bar_text_color.';}';
 			echo '#base-promo.footer-promo-arrow:hover, #base-promo.footer-promo-text:hover {background-color: '.$accent_color.';color: '.$accent_alt_color.';}';
 			echo '#base-promo.footer-promo-arrow:hover > *, #base-promo.footer-promo-text:hover > * {color: '.$accent_alt_color.';}';
-			
+
 			// PAGE HEADING STYLES
 			echo '.page-heading {background-color: '.$page_heading_bg_color.';border-bottom-color: '.$section_divide_color.';}';
 			echo '.page-heading h1, .page-heading h3 {color: '.$page_heading_text_color.';}';
 			echo '#breadcrumbs {color: '.$breadcrumb_text_color.';}';
 			echo '#breadcrumbs a, #breadcrumb i {color: '.$breadcrumb_link_color.';}';
-			
+
 			// BODY STYLES
 			echo 'body, input[type="text"], input[type="password"], input[type="email"], textarea, select, .ui-state-default a {color: '.$body_text_color.';}';
 			echo 'h1, h1 a {color: '.$h1_text_color.';}';
@@ -901,7 +874,7 @@
 			echo 'h6, h6 a {color: '.$h6_text_color.';}';
 			echo '.spb_impact_text .spb_call_text, .impact-text, .impact-text-large {color: '.$impact_text_color.';}';
 			echo '.read-more i, .read-more em {color: transparent;}';
-			
+
 			// CONTENT STYLES
 			echo '.pb-border-bottom, .pb-border-top, .read-more-button {border-color: '.$section_divide_color.';}';
 			echo '#swift-slider ul.slides {background: '.$secondary_accent_color.';}';
@@ -924,13 +897,13 @@
 			echo 'h4.spb-heading:before, h3.spb-heading:before, h4.lined-heading:before {border-top-color: '.$section_divide_color.'}';
 			echo '.spb_parallax_asset h4.spb-heading {border-bottom-color: '.$h4_text_color.'}';
 			echo '.testimonials.carousel-items li .testimonial-text {background-color: '.$alt_bg_color.';}';
-			
+
 			// SIDEBAR STYLES
 			echo '.sidebar .widget-heading h4 {color: '.$h4_text_color.';}';
 			echo '.widget ul li, .widget.widget_lip_most_loved_widget li {border-color: '.$section_divide_color.';}';
 			echo '.widget.widget_lip_most_loved_widget li {background: '.$inner_page_bg_color.'; border-color: '.$section_divide_color.';}';
 			echo '.widget_lip_most_loved_widget .loved-item > span {color: '.$body_alt_text_color.';}';
-			
+
 			echo '.widget_search form input {background: '.$inner_page_bg_color.';}';
 			echo '.widget .wp-tag-cloud li a {background: '.$alt_bg_color.'; border-color: '.$section_divide_color.';}';
 			echo '.widget .tagcloud a:hover, .widget ul.wp-tag-cloud li:hover > a {background-color: '.$accent_color.'; color: '.$accent_alt_color.';}';
@@ -949,14 +922,14 @@
 			echo '.widget_sf_infocus_widget .infocus-item h5 a:hover {color: '.$accent_color.';}';
 			echo '.sidebar .widget hr {border-color: '.$section_divide_color.';}';
 			echo '.widget ul.flickr_images li a:after, .portfolio-grid li a:after {color: '.$accent_alt_color.';}';
-			
+
 			// PORTFOLIO STYLES
 			echo '.slideout-filter .select:after {background: '.$inner_page_bg_color.';}';
 			echo '.slideout-filter ul li a {color: '.$accent_alt_color.';}';
 			echo '.slideout-filter ul li a:hover {color: '.$accent_color.';}';
 			echo '.slideout-filter ul li.selected a {color: '.$accent_alt_color.';background: '.$accent_color.';}';
 			echo 'ul.portfolio-filter-tabs li.selected a {background: '.$alt_bg_color.';}';
-			echo '.filter-slide-wrap {background-color: #222;}';
+			echo '.spb_blog_widget .filter-wrap {background-color: #222;}';
 			echo '.portfolio-item {border-bottom-color: '.$section_divide_color.';}';
 			echo '.masonry-items .portfolio-item-details {background: '.$alt_bg_color.';}';
 			echo '.spb_portfolio_carousel_widget .portfolio-item {background: '.$inner_page_bg_color.';}';
@@ -965,7 +938,7 @@
 			echo '.masonry-items .portfolio-item figure {border-color: '.$section_divide_color.';}';
 			echo '.portfolio-details-wrap span span {color: #666;}';
 			echo '.share-links > a:hover {color: '.$accent_color.';}';
-			
+
 			// BLOG STYLES
 			echo '.blog-aux-options li.selected a {background: '.$accent_color.';border-color: '.$accent_color.';color: '.$accent_alt_color.';}';
 			echo '.blog-filter-wrap .aux-list li:hover {border-bottom-color: transparent;}';
@@ -985,7 +958,7 @@
 			echo '.recent-post {background: '.$inner_page_bg_color.';}';
 			echo '.recent-post .post-item-details {border-top-color: '.$section_divide_color.';color: '.$section_divide_color.';}';
 			echo '.post-item-details span, .post-item-details a, .post-item-details .comments-likes a i, .post-item-details .comments-likes a span {color: '.$body_alt_text_color.';}';
-			
+
 			// SHORTCODE STYLES
 			echo '.sf-button.accent {color: '.$accent_alt_color.'; background-color: '.$accent_color.';}';
 			echo '.sf-button.sf-icon-reveal.accent {color: '.$accent_alt_color.'!important; background-color: '.$accent_color.'!important;}';
@@ -1045,10 +1018,10 @@
 			echo '.sf-icon-box[class*="sf-icon-box-boxed-"] .sf-icon-cont.sf-icon-icon-four:after {border-top-color: '.$icon_four_color.';border-left-color: '.$icon_four_color.';}';
 			echo '.sf-icon-cont.sf-icon-icon-four:hover .sf-icon, .sf-hover .sf-icon-cont.sf-icon-icon-four .sf-icon, .sf-icon-box.sf-icon-box-boxed-one.sf-icon-icon-four .sf-icon, .sf-icon-box.sf-icon-box-boxed-three.sf-icon-icon-four .sf-icon {color: '.$icon_four_alt_color.';}';
 			echo '.sf-icon-box-animated .back.sf-icon-icon-four {background: '.$icon_four_color.'; border-color: '.$icon_four_color.';}';
-			echo '.sf-icon-box-animated .back.sf-icon-icon-four, .sf-icon-box-animated .back.sf-icon-icon-four h3 {color: '.$icon_four_alt_color.'!important;}';			
+			echo '.sf-icon-box-animated .back.sf-icon-icon-four, .sf-icon-box-animated .back.sf-icon-icon-four h3 {color: '.$icon_four_alt_color.'!important;}';
 			echo 'span.dropcap3 {background: #000;color: #fff;}';
 			echo 'span.dropcap4 {color: #fff;}';
-			echo '.spb_divider, .spb_divider.go_to_top_icon1, .spb_divider.go_to_top_icon2, .testimonials > li, .jobs > li, .spb_impact_text, .tm-toggle-button-wrap, .tm-toggle-button-wrap a, .portfolio-details-wrap, .spb_divider.go_to_top a, .impact-text-wrap, .widget_search form input, .alt-bg.spb_divider {border-color: '.$section_divide_color.';}';
+			echo '.spb_divider, .spb_divider.go_to_top_icon1, .spb_divider.go_to_top_icon2, .testimonials > li, .jobs > li, .spb_impact_text, .tm-toggle-button-wrap, .tm-toggle-button-wrap a, .portfolio-details-wrap, .spb_divider.go_to_top a, .impact-text-wrap, .widget_search form input, .asset-bg.spb_divider {border-color: '.$section_divide_color.';}';
 			echo '.spb_divider.go_to_top_icon1 a, .spb_divider.go_to_top_icon2 a {background: '.$inner_page_bg_color.';}';
 			echo '.spb_tabs .ui-tabs .ui-tabs-panel, .spb_content_element .ui-tabs .ui-tabs-nav, .ui-tabs .ui-tabs-nav li {border-color: '.$section_divide_color.';}';
 			echo '.spb_tabs .ui-tabs .ui-tabs-panel, .ui-tabs .ui-tabs-nav li.ui-tabs-active a {background: '.$inner_page_bg_color.'!important;}';
@@ -1086,8 +1059,8 @@
 			echo '.progress .bar {background-color: '.$accent_color.';}';
 			echo '.progress.standard .bar {background: '.$accent_color.';}';
 			echo '.progress-bar-wrap .progress-value {color: '.$accent_color.';}';
-			echo '.alt-bg-detail {background:'.$inner_page_bg_color.';border-color:'.$section_divide_color.';}';
-					
+			echo '.asset-bg-detail {background:'.$inner_page_bg_color.';border-color:'.$section_divide_color.';}';
+
 			// FOOTER STYLES
 			echo '#footer {background: '.$footer_bg_color.';}';
 			echo '#footer, #footer p {color: '.$footer_text_color.';}';
@@ -1096,13 +1069,13 @@
 			echo '#footer .widget ul li, #footer .widget_categories ul, #footer .widget_archive ul, #footer .widget_nav_menu ul, #footer .widget_recent_comments ul, #footer .widget_meta ul, #footer .widget_recent_entries ul, #footer .widget_product_categories ul {border-color: '.$footer_border_color.';}';
 			echo '#copyright {background-color: '.$copyright_bg_color.';border-top-color: '.$footer_border_color.';}';
 			echo '#copyright p {color: '.$copyright_text_color.';}';
-			echo '#copyright a {color: '.$copyright_link_color.';}';			
+			echo '#copyright a {color: '.$copyright_link_color.';}';
 			echo '#copyright a:hover {color: '.$copyright_link_hover_color.';}';
 			echo '#copyright nav .menu li {border-left-color: '.$footer_border_color.';}';
 			echo '#footer .widget_calendar #calendar_wrap, #footer .widget_calendar th, #footer .widget_calendar tbody tr > td, #footer .widget_calendar tbody tr > td.pad {border-color: '.$footer_border_color.';}';
 			echo '.widget input[type="email"] {background: #f7f7f7; color: #999}';
 			echo '#footer .widget hr {border-color: '.$footer_border_color.';}';
-			
+
 			// WOOCOMMERCE STYLES
 			echo '.woocommerce nav.woocommerce-pagination ul li a, .woocommerce nav.woocommerce-pagination ul li span, .modal-body .comment-form-rating, .woocommerce form .form-row input.input-text, ul.checkout-process, #billing .proceed, ul.my-account-nav > li, .woocommerce #payment, .woocommerce-checkout p.thank-you, .woocommerce .order_details, .woocommerce-page .order_details, .woocommerce ul.products li.product figure figcaption .yith-wcwl-add-to-wishlist, #product-accordion .panel, .review-order-wrap { border-color: '.$section_divide_color.' ;}';
 			echo 'nav.woocommerce-pagination ul li span.current, nav.woocommerce-pagination ul li a:hover {background:'.$accent_color.'!important;border-color:'.$accent_color.';color: '.$accent_alt_color.'!important;}';
@@ -1117,9 +1090,10 @@
 			echo 'ul.products li.product .product-details .posted_in a {color: '.$body_alt_text_color.';}';
 			echo '.woocommerce ul.products li.product figure figcaption .shop-actions > a:hover, ul.products li.product .product-details .posted_in a:hover {color: '.$accent_color.';}';
 			echo '.woocommerce form.cart button.single_add_to_cart_button, .woocommerce p.cart a.single_add_to_cart_button, .woocommerce input[name="save_account_details"] { background: '.$alt_bg_color.'!important; color: '.$body_text_color.' ;}'. "\n";
-			echo '.woocommerce form.cart button.single_add_to_cart_button:hover{ background: '.$accent_color.'!important; color: '.$accent_alt_color.' ;}'. "\n";
-			echo '.woocommerce p.cart a.single_add_to_cart_button:hover {background: '.$secondary_accent_color.'; color: '.$accent_color.' ;}';
-			echo '.woocommerce table.shop_table tr td.product-remove .remove:hover, .woocommerce .coupon input.apply-coupon:hover, .woocommerce .shipping-calculator-form .update-totals-button button:hover, .woocommerce .quantity .plus:hover, .woocommerce .quantity .minus:hover, .add_review a:hover, .woocommerce #review_form #respond .form-submit input:hover, .lost_reset_password p.form-row input[type="submit"]:hover, .track_order p.form-row input[type="submit"]:hover, .change_password_form p input[type="submit"]:hover, .woocommerce table.my_account_orders .order-actions .button:hover, .woocommerce .widget_price_filter .price_slider_amount .button:hover, .woocommerce.widget .buttons a:hover, .woocommerce .wishlist_table tr td.product-add-to-cart a:hover, .woocommerce input.button[name="save_address"]:hover, .woocommerce input[name="apply_coupon"]:hover, .woocommerce form.register input[type="submit"]:hover, .woocommerce form.cart button.single_add_to_cart_button:hover, .woocommerce form.cart .yith-wcwl-add-to-wishlist a:hover, .load-more-btn:hover, .woocommerce-account input[name="change_password"]:hover {background: '.$accent_color.'; color: '.$accent_alt_color.';}';
+			echo '.woocommerce form.cart button.single_add_to_cart_button:disabled, .woocommerce form.cart button.single_add_to_cart_button:disabled[disabled] { background: '.$alt_bg_color.'!important; color: '.$body_text_color.' ;}'. "\n";
+			echo '.woocommerce form.cart button.single_add_to_cart_button:hover, .woocommerce .button.checkout-button, .woocommerce .wc-proceed-to-checkout > a.checkout-button { background: '.$accent_color.'!important; color: '.$accent_alt_color.' ;}'. "\n";
+			echo '.woocommerce p.cart a.single_add_to_cart_button:hover, .woocommerce .button.checkout-button:hover, .woocommerce .wc-proceed-to-checkout > a.checkout-button:hover {background: '.$secondary_accent_color.'!important; color: '.$accent_color.'!important;}';
+			echo '.woocommerce table.shop_table tr td.product-remove .remove:hover, .woocommerce .coupon input.apply-coupon:hover, .woocommerce .shipping-calculator-form .update-totals-button button:hover, .woocommerce .quantity .plus:hover, .woocommerce .quantity .minus:hover, .add_review a:hover, .woocommerce #review_form #respond .form-submit input:hover, .lost_reset_password p.form-row input[type="submit"]:hover, .track_order p.form-row input[type="submit"]:hover, .change_password_form p input[type="submit"]:hover, .woocommerce table.my_account_orders .order-actions .button:hover, .woocommerce .widget_price_filter .price_slider_amount .button:hover, .woocommerce.widget .buttons a:hover, .woocommerce .wishlist_table tr td.product-add-to-cart a:hover, .woocommerce input.button[name="save_address"]:hover, .woocommerce input[name="apply_coupon"]:hover, .woocommerce .cart input[name="update_cart"]:hover, .woocommerce form.register input[type="submit"]:hover, .woocommerce form.cart button.single_add_to_cart_button:hover, .woocommerce form.cart .yith-wcwl-add-to-wishlist a:hover, .load-more-btn:hover, .woocommerce-account input[name="change_password"]:hover {background: '.$accent_color.'; color: '.$accent_alt_color.';}';
 			echo '.woocommerce #account_details .login, .woocommerce #account_details .login h4.lined-heading span, .my-account-login-wrap .login-wrap, .my-account-login-wrap .login-wrap h4.lined-heading span, .woocommerce div.product form.cart table div.quantity {background: '.$alt_bg_color.';}';
 			echo '.woocommerce .help-bar ul li a:hover, .woocommerce .continue-shopping:hover, .woocommerce .address .edit-address:hover, .my_account_orders td.order-number a:hover, .product_meta a.inline:hover { border-bottom-color: '.$accent_color.';}';
 			echo '.woocommerce .order-info, .woocommerce .order-info mark {background: '.$accent_color.'; color: '.$accent_alt_color.';}';
@@ -1133,16 +1107,16 @@
 			echo '.woocommerce ul.products li.product-category a:hover .product-cat-info {background: '.$accent_color.'; color: '.$accent_alt_color.';}';
 			echo '.woocommerce ul.products li.product-category a:hover .product-cat-info h3 {color: '.$accent_alt_color.'!important;}';
 			echo '.woocommerce ul.products li.product-category a:hover .product-cat-info:before {border-bottom-color:'.$accent_color.';}';
-			echo '.woocommerce input[name="apply_coupon"], .woocommerce-account input[name="change_password"] {background: '.$alt_bg_color.'!important; color: '.$secondary_accent_color.'!important}';
-			echo '.woocommerce input[name="apply_coupon"]:hover, .woocommerce-account input[name="change_password"]:hover, .woocommerce input[name="save_account_details"]:hover {background: '.$accent_color.'!important; color: '.$accent_alt_color.'!important;}';
-			
+			echo '.woocommerce input[name="apply_coupon"], .woocommerce .cart input[name="update_cart"], .woocommerce .shipping-calc-wrap button[name="calc_shipping"], .woocommerce-account input[name="change_password"] {background: '.$alt_bg_color.'!important; color: '.$secondary_accent_color.'!important}';
+			echo '.woocommerce input[name="apply_coupon"]:hover, .woocommerce .cart input[name="update_cart"]:hover, .woocommerce .shipping-calc-wrap button[name="calc_shipping"]:hover, .woocommerce-account input[name="change_password"]:hover, .woocommerce input[name="save_account_details"]:hover {background: '.$accent_color.'!important; color: '.$accent_alt_color.'!important;}';
+
 			// BUDDYPRESS STYLES
 			echo '#buddypress .activity-meta a, #buddypress .acomment-options a, #buddypress #member-group-links li a {border-color: '.$section_divide_color.';}';
 			echo '#buddypress .activity-meta a:hover, #buddypress .acomment-options a:hover, #buddypress #member-group-links li a:hover {border-color: '.$accent_color.';}';
 			echo '#buddypress .activity-header a, #buddypress .activity-read-more a {border-color: '.$accent_color.';}';
 			echo '#buddypress #members-list .item-meta .activity, #buddypress .activity-header p {color: '.$body_alt_text_color.';}';
 			echo '#buddypress .pagination-links span, #buddypress .load-more.loading a {background-color: '.$accent_color.';color: '.$accent_alt_color.';border-color: '.$accent_color.';}';
-			
+
 			// BBPRESS STYLES
 			echo 'span.bbp-admin-links a, li.bbp-forum-info .bbp-forum-content {color: '.$body_alt_text_color.';}';
 			echo 'span.bbp-admin-links a:hover {color: '.$accent_color.';}';
@@ -1151,132 +1125,132 @@
 			echo '#bbp-user-navigation ul li.current a, .bbp-pagination-links span.current {border-color: '.$accent_color.';background: '.$accent_color.'; color: '.$accent_alt_color.';}';
 			echo '#bbpress-forums fieldset.bbp-form button[type="submit"], #bbp_user_edit_submit {background: '.$alt_bg_color.'; color: '.$secondary_accent_color.'}';
 			echo '#bbpress-forums fieldset.bbp-form button[type="submit"]:hover, #bbp_user_edit_submit:hover {background: '.$accent_color.'; color: '.$accent_alt_color.';}';
-			
+
 			// ASSET BACKGROUND STYLES
-			echo '.alt-bg {border-color: '.$section_divide_color.';}';
-			echo '.alt-bg.alt-one {background-color: '.$alt_one_bg_color.';}';
+			echo '.asset-bg {border-color: '.$section_divide_color.';}';
+			echo '.asset-bg.alt-one {background-color: '.$alt_one_bg_color.';}';
 			if (isset($options['alt_one_bg_image']) && $alt_one_bg_image != "") {
 				if ($alt_one_bg_image_size == "cover") {
-					echo '.alt-bg.alt-one {background-image: url('.$alt_one_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-one {background-image: url('.$alt_one_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-one {background-image: url('.$alt_one_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-one {background-image: url('.$alt_one_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-one, .alt-bg.alt-one h1, .alt-bg.alt-one h2, .alt-bg.alt-one h3, .alt-bg.alt-one h3, .alt-bg.alt-one h4, .alt-bg.alt-one h5, .alt-bg.alt-one h6, .alt-one .carousel-wrap > a {color: '.$alt_one_text_color.';}';
-			echo '.alt-bg.alt-one h4.spb-center-heading span:before, .alt-bg.alt-one h4.spb-center-heading span:after {border-color: '.$alt_one_text_color.';}';
-			echo '.alt-one.full-width-text:after {border-top-color:'.$alt_one_bg_color.';}';
+			echo '.asset-bg.alt-one, .asset-bg .alt-one, .asset-bg.alt-one h1, .asset-bg.alt-one h2, .asset-bg.alt-one h3, .asset-bg.alt-one h3, .asset-bg.alt-one h4, .asset-bg.alt-one h5, .asset-bg.alt-one h6, .alt-one .carousel-wrap > a {color: '.$alt_one_text_color.';}';
+			echo '.asset-bg.alt-one h4.spb-center-heading span:before, .asset-bg.alt-one h4.spb-center-heading span:after {border-color: '.$alt_one_text_color.';}';
+			echo '.alt-one .full-width-text:after {border-top-color:'.$alt_one_bg_color.';}';
 			echo '.alt-one h4.spb-text-heading, .alt-one h4.spb-heading {border-bottom-color:'.$alt_one_text_color.';}';
-			echo '.alt-bg.alt-two {background-color: '.$alt_two_bg_color.';}';
+			echo '.asset-bg.alt-two {background-color: '.$alt_two_bg_color.';}';
 			if (isset($options['alt_two_bg_image']) && $alt_two_bg_image != "") {
 				if ($alt_two_bg_image_size == "cover") {
-					echo '.alt-bg.alt-two {background-image: url('.$alt_two_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-two {background-image: url('.$alt_two_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-two {background-image: url('.$alt_two_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-two {background-image: url('.$alt_two_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-two, .alt-bg.alt-two h1, .alt-bg.alt-two h2, .alt-bg.alt-two h3, .alt-bg.alt-two h3, .alt-bg.alt-two h4, .alt-bg.alt-two h5, .alt-bg.alt-two h6, .alt-two .carousel-wrap > a {color: '.$alt_two_text_color.';}';
-			echo '.alt-bg.alt-two h4.spb-center-heading span:before, .alt-bg.alt-two h4.spb-center-heading span:after {border-color: '.$alt_two_text_color.';}';
-			echo '.alt-two.full-width-text:after {border-top-color:'.$alt_two_bg_color.';}';	
+			echo '.asset-bg.alt-two, .asset-bg .alt-two, .asset-bg.alt-two h1, .asset-bg.alt-two h2, .asset-bg.alt-two h3, .asset-bg.alt-two h3, .asset-bg.alt-two h4, .asset-bg.alt-two h5, .asset-bg.alt-two h6, .alt-two .carousel-wrap > a {color: '.$alt_two_text_color.';}';
+			echo '.asset-bg.alt-two h4.spb-center-heading span:before, .asset-bg.alt-two h4.spb-center-heading span:after {border-color: '.$alt_two_text_color.';}';
+			echo '.alt-two .full-width-text:after {border-top-color:'.$alt_two_bg_color.';}';
 			echo '.alt-two h4.spb-text-heading, .alt-two h4.spb-heading {border-bottom-color:'.$alt_two_text_color.';}';
-			echo '.alt-bg.alt-three {background-color: '.$alt_three_bg_color.';}';
+			echo '.asset-bg.alt-three {background-color: '.$alt_three_bg_color.';}';
 			if (isset($options['alt_three_bg_image']) && $alt_three_bg_image != "") {
 				if ($alt_three_bg_image_size == "cover") {
-					echo '.alt-bg.alt-three {background-image: url('.$alt_three_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-three {background-image: url('.$alt_three_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-three {background-image: url('.$alt_three_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-three {background-image: url('.$alt_three_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-three, .alt-bg.alt-three h1, .alt-bg.alt-three h2, .alt-bg.alt-three h3, .alt-bg.alt-three h3, .alt-bg.alt-three h4, .alt-bg.alt-three h5, .alt-bg.alt-three h6, .alt-three .carousel-wrap > a {color: '.$alt_three_text_color.';}';
-			echo '.alt-bg.alt-three h4.spb-center-heading span:before, .alt-bg.alt-three h4.spb-center-heading span:after {border-color: '.$alt_three_text_color.';}';
-			echo '.alt-three.full-width-text:after {border-top-color:'.$alt_three_bg_color.';}';	
+			echo '.asset-bg.alt-three, .asset-bg .alt-three, .asset-bg.alt-three h1, .asset-bg.alt-three h2, .asset-bg.alt-three h3, .asset-bg.alt-three h3, .asset-bg.alt-three h4, .asset-bg.alt-three h5, .asset-bg.alt-three h6, .alt-three .carousel-wrap > a {color: '.$alt_three_text_color.';}';
+			echo '.asset-bg.alt-three h4.spb-center-heading span:before, .asset-bg.alt-three h4.spb-center-heading span:after {border-color: '.$alt_three_text_color.';}';
+			echo '.alt-three .full-width-text:after {border-top-color:'.$alt_three_bg_color.';}';
 			echo '.alt-three h4.spb-text-heading, .alt-three h4.spb-heading {border-bottom-color:'.$alt_three_text_color.';}';
-			echo '.alt-bg.alt-four {background-color: '.$alt_four_bg_color.';}';
+			echo '.asset-bg.alt-four {background-color: '.$alt_four_bg_color.';}';
 			if (isset($options['alt_four_bg_image']) && $alt_four_bg_image != "") {
 				if ($alt_four_bg_image_size == "cover") {
-					echo '.alt-bg.alt-four {background-image: url('.$alt_four_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-four {background-image: url('.$alt_four_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-four {background-image: url('.$alt_four_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-four {background-image: url('.$alt_four_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-four, .alt-bg.alt-four h1, .alt-bg.alt-four h2, .alt-bg.alt-four h3, .alt-bg.alt-four h3, .alt-bg.alt-four h4, .alt-bg.alt-four h5, .alt-bg.alt-four h6, .alt-four .carousel-wrap > a {color: '.$alt_four_text_color.';}';
-			echo '.alt-bg.alt-four h4.spb-center-heading span:before, .alt-bg.alt-four h4.spb-center-heading span:after {border-color: '.$alt_four_text_color.';}';
-			echo '.alt-four.full-width-text:after {border-top-color:'.$alt_four_bg_color.';}';	
+			echo '.asset-bg.alt-four, .asset-bg .alt-four, .asset-bg.alt-four h1, .asset-bg.alt-four h2, .asset-bg.alt-four h3, .asset-bg.alt-four h3, .asset-bg.alt-four h4, .asset-bg.alt-four h5, .asset-bg.alt-four h6, .alt-four .carousel-wrap > a {color: '.$alt_four_text_color.';}';
+			echo '.asset-bg.alt-four h4.spb-center-heading span:before, .asset-bg.alt-four h4.spb-center-heading span:after {border-color: '.$alt_four_text_color.';}';
+			echo '.alt-four .full-width-text:after {border-top-color:'.$alt_four_bg_color.';}';
 			echo '.alt-four h4.spb-text-heading, .alt-four h4.spb-heading {border-bottom-color:'.$alt_four_text_color.';}';
-			echo '.alt-bg.alt-five {background-color: '.$alt_five_bg_color.';}';
+			echo '.asset-bg.alt-five {background-color: '.$alt_five_bg_color.';}';
 			if (isset($options['alt_five_bg_image']) && $alt_five_bg_image != "") {
 				if ($alt_five_bg_image_size == "cover") {
-					echo '.alt-bg.alt-five {background-image: url('.$alt_five_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-five {background-image: url('.$alt_five_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-five {background-image: url('.$alt_five_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-five {background-image: url('.$alt_five_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-five, .alt-bg.alt-five h1, .alt-bg.alt-five h2, .alt-bg.alt-five h3, .alt-bg.alt-five h3, .alt-bg.alt-five h4, .alt-bg.alt-five h5, .alt-bg.alt-five h6, .alt-five .carousel-wrap > a {color: '.$alt_five_text_color.';}';
-			echo '.alt-bg.alt-five h4.spb-center-heading span:before, .alt-bg.alt-five h4.spb-center-heading span:after {border-color: '.$alt_five_text_color.';}';
-			echo '.alt-five.full-width-text:after {border-top-color:'.$alt_five_bg_color.';}';			
+			echo '.asset-bg.alt-five, .asset-bg .alt-five, .asset-bg.alt-five h1, .asset-bg.alt-five h2, .asset-bg.alt-five h3, .asset-bg.alt-five h3, .asset-bg.alt-five h4, .asset-bg.alt-five h5, .asset-bg.alt-five h6, .alt-five .carousel-wrap > a {color: '.$alt_five_text_color.';}';
+			echo '.asset-bg.alt-five h4.spb-center-heading span:before, .asset-bg.alt-five h4.spb-center-heading span:after {border-color: '.$alt_five_text_color.';}';
+			echo '.alt-five .full-width-text:after {border-top-color:'.$alt_five_bg_color.';}';
 			echo '.alt-five h4.spb-text-heading, .alt-five h4.spb-heading {border-bottom-color:'.$alt_five_text_color.';}';
-			echo '.alt-bg.alt-six {background-color: '.$alt_six_bg_color.';}';
+			echo '.asset-bg.alt-six {background-color: '.$alt_six_bg_color.';}';
 			if (isset($options['alt_six_bg_image']) && $alt_six_bg_image != "") {
 				if ($alt_six_bg_image_size == "cover") {
-					echo '.alt-bg.alt-six {background-image: url('.$alt_six_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-six {background-image: url('.$alt_six_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-six {background-image: url('.$alt_six_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-six {background-image: url('.$alt_six_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-six, .alt-bg.alt-six h1, .alt-bg.alt-six h2, .alt-bg.alt-six h3, .alt-bg.alt-six h3, .alt-bg.alt-six h4, .alt-bg.alt-six h5, .alt-bg.alt-six h6, .alt-six .carousel-wrap > a {color: '.$alt_six_text_color.';}';
-			echo '.alt-bg.alt-six h4.spb-center-heading span:before, .alt-bg.alt-six h4.spb-center-heading span:after {border-color: '.$alt_six_text_color.';}';
-			echo '.alt-six.full-width-text:after {border-top-color:'.$alt_six_bg_color.';}';
+			echo '.asset-bg.alt-six, .asset-bg .alt-six, .asset-bg.alt-six h1, .asset-bg.alt-six h2, .asset-bg.alt-six h3, .asset-bg.alt-six h3, .asset-bg.alt-six h4, .asset-bg.alt-six h5, .asset-bg.alt-six h6, .alt-six .carousel-wrap > a {color: '.$alt_six_text_color.';}';
+			echo '.asset-bg.alt-six h4.spb-center-heading span:before, .asset-bg.alt-six h4.spb-center-heading span:after {border-color: '.$alt_six_text_color.';}';
+			echo '.alt-six .full-width-text:after {border-top-color:'.$alt_six_bg_color.';}';
 			echo '.alt-six h4.spb-text-heading, .alt-six h4.spb-heading {border-bottom-color:'.$alt_six_text_color.';}';
-			echo '.alt-bg.alt-seven {background-color: '.$alt_seven_bg_color.';}';
+			echo '.asset-bg.alt-seven {background-color: '.$alt_seven_bg_color.';}';
 			if (isset($options['alt_seven_bg_image']) && $alt_seven_bg_image != "") {
 				if ($alt_seven_bg_image_size == "cover") {
-					echo '.alt-bg.alt-seven {background-image: url('.$alt_seven_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-seven {background-image: url('.$alt_seven_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-seven {background-image: url('.$alt_seven_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-seven {background-image: url('.$alt_seven_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-seven, .alt-bg.alt-seven h1, .alt-bg.alt-seven h2, .alt-bg.alt-seven h3, .alt-bg.alt-seven h3, .alt-bg.alt-seven h4, .alt-bg.alt-seven h5, .alt-bg.alt-seven h6, .alt-seven .carousel-wrap > a {color: '.$alt_seven_text_color.';}';
-			echo '.alt-bg.alt-seven h4.spb-center-heading span:before, .alt-bg.alt-seven h4.spb-center-heading span:after {border-color: '.$alt_seven_text_color.';}';
-			echo '.alt-seven.full-width-text:after {border-top-color:'.$alt_seven_bg_color.';}';
+			echo '.asset-bg.alt-seven, .asset-bg .alt-seven, .asset-bg.alt-seven h1, .asset-bg.alt-seven h2, .asset-bg.alt-seven h3, .asset-bg.alt-seven h3, .asset-bg.alt-seven h4, .asset-bg.alt-seven h5, .asset-bg.alt-seven h6, .alt-seven .carousel-wrap > a {color: '.$alt_seven_text_color.';}';
+			echo '.asset-bg.alt-seven h4.spb-center-heading span:before, .asset-bg.alt-seven h4.spb-center-heading span:after {border-color: '.$alt_seven_text_color.';}';
+			echo '.alt-seven .full-width-text:after {border-top-color:'.$alt_seven_bg_color.';}';
 			echo '.alt-seven h4.spb-text-heading, .alt-seven h4.spb-heading {border-bottom-color:'.$alt_seven_text_color.';}';
-			echo '.alt-bg.alt-eight {background-color: '.$alt_eight_bg_color.';}';
+			echo '.asset-bg.alt-eight {background-color: '.$alt_eight_bg_color.';}';
 			if (isset($options['alt_eight_bg_image']) && $alt_eight_bg_image != "") {
 				if ($alt_eight_bg_image_size == "cover") {
-					echo '.alt-bg.alt-eight {background-image: url('.$alt_eight_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-eight {background-image: url('.$alt_eight_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-eight {background-image: url('.$alt_eight_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-eight {background-image: url('.$alt_eight_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-eight, .alt-bg.alt-eight h1, .alt-bg.alt-eight h2, .alt-bg.alt-eight h3, .alt-bg.alt-eight h3, .alt-bg.alt-eight h4, .alt-bg.alt-eight h5, .alt-bg.alt-eight h6, .alt-eight .carousel-wrap > a {color: '.$alt_eight_text_color.';}';
-			echo '.alt-bg.alt-eight h4.spb-center-heading span:before, .alt-bg.alt-eight h4.spb-center-heading span:after {border-color: '.$alt_eight_text_color.';}';
-			echo '.alt-eight.full-width-text:after {border-top-color:'.$alt_eight_bg_color.';}';
+			echo '.asset-bg.alt-eight, .asset-bg .alt-eight, .asset-bg.alt-eight h1, .asset-bg.alt-eight h2, .asset-bg.alt-eight h3, .asset-bg.alt-eight h3, .asset-bg.alt-eight h4, .asset-bg.alt-eight h5, .asset-bg.alt-eight h6, .alt-eight .carousel-wrap > a {color: '.$alt_eight_text_color.';}';
+			echo '.asset-bg.alt-eight h4.spb-center-heading span:before, .asset-bg.alt-eight h4.spb-center-heading span:after {border-color: '.$alt_eight_text_color.';}';
+			echo '.alt-eight .full-width-text:after {border-top-color:'.$alt_eight_bg_color.';}';
 			echo '.alt-eight h4.spb-text-heading, .alt-eight h4.spb-heading {border-bottom-color:'.$alt_eight_text_color.';}';
-			echo '.alt-bg.alt-nine {background-color: '.$alt_nine_bg_color.';}';
+			echo '.asset-bg.alt-nine {background-color: '.$alt_nine_bg_color.';}';
 			if (isset($options['alt_nine_bg_image']) && $alt_nine_bg_image != "") {
 				if ($alt_nine_bg_image_size == "cover") {
-					echo '.alt-bg.alt-nine {background-image: url('.$alt_nine_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-nine {background-image: url('.$alt_nine_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-nine {background-image: url('.$alt_nine_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-nine {background-image: url('.$alt_nine_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-nine, .alt-bg.alt-nine h1, .alt-bg.alt-nine h2, .alt-bg.alt-nine h3, .alt-bg.alt-nine h3, .alt-bg.alt-nine h4, .alt-bg.alt-nine h5, .alt-bg.alt-nine h6, .alt-nine .carousel-wrap > a {color: '.$alt_nine_text_color.';}';
-			echo '.alt-bg.alt-nine h4.spb-center-heading span:before, .alt-bg.alt-nine h4.spb-center-heading span:after {border-color: '.$alt_nine_text_color.';}';
-			echo '.alt-nine.full-width-text:after {border-top-color:'.$alt_nine_bg_color.';}';
-			echo '.alt-nine h4.spb-text-heading, .alt-nine h4.spb-heading {border-bottom-color:'.$alt_nine_text_color.';}';				
-			echo '.alt-bg.alt-ten {background-color: '.$alt_ten_bg_color.';}';
+			echo '.asset-bg.alt-nine, .asset-bg .alt-nine, .asset-bg.alt-nine h1, .asset-bg.alt-nine h2, .asset-bg.alt-nine h3, .asset-bg.alt-nine h3, .asset-bg.alt-nine h4, .asset-bg.alt-nine h5, .asset-bg.alt-nine h6, .alt-nine .carousel-wrap > a {color: '.$alt_nine_text_color.';}';
+			echo '.asset-bg.alt-nine h4.spb-center-heading span:before, .asset-bg.alt-nine h4.spb-center-heading span:after {border-color: '.$alt_nine_text_color.';}';
+			echo '.alt-nine .full-width-text:after {border-top-color:'.$alt_nine_bg_color.';}';
+			echo '.alt-nine h4.spb-text-heading, .alt-nine h4.spb-heading {border-bottom-color:'.$alt_nine_text_color.';}';
+			echo '.asset-bg.alt-ten {background-color: '.$alt_ten_bg_color.';}';
 			if (isset($options['alt_ten_bg_image']) && $alt_ten_bg_image != "") {
 				if ($alt_ten_bg_image_size == "cover") {
-					echo '.alt-bg.alt-ten {background-image: url('.$alt_ten_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
+					echo '.asset-bg.alt-ten {background-image: url('.$alt_ten_bg_image.'); background-repeat: no-repeat; background-position: center center; background-size:cover;}';
 				} else {
-					echo '.alt-bg.alt-ten {background-image: url('.$alt_ten_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
-				}	
+					echo '.asset-bg.alt-ten {background-image: url('.$alt_ten_bg_image.'); background-repeat: repeat; background-position: center top; background-size:auto;}';
+				}
 			}
-			echo '.alt-bg.alt-ten, .alt-bg.alt-ten h1, .alt-bg.alt-ten h2, .alt-bg.alt-ten h3, .alt-bg.alt-ten h3, .alt-bg.alt-ten h4, .alt-bg.alt-ten h5, .alt-bg.alt-ten h6, .alt-ten .carousel-wrap > a {color: '.$alt_ten_text_color.';}';
-			echo '.alt-bg.alt-ten h4.spb-center-heading span:before, .alt-bg.alt-ten h4.spb-center-heading span:after {border-color: '.$alt_ten_text_color.';}';
-			echo '.alt-ten.full-width-text:after {border-top-color:'.$alt_ten_bg_color.';}';
+			echo '.asset-bg.alt-ten, .asset-bg .alt-ten, .asset-bg.alt-ten h1, .asset-bg.alt-ten h2, .asset-bg.alt-ten h3, .asset-bg.alt-ten h3, .asset-bg.alt-ten h4, .asset-bg.alt-ten h5, .asset-bg.alt-ten h6, .alt-ten .carousel-wrap > a {color: '.$alt_ten_text_color.';}';
+			echo '.asset-bg.alt-ten h4.spb-center-heading span:before, .asset-bg.alt-ten h4.spb-center-heading span:after {border-color: '.$alt_ten_text_color.';}';
+			echo '.alt-ten .full-width-text:after {border-top-color:'.$alt_ten_bg_color.';}';
 			echo '.alt-ten h4.spb-text-heading, .alt-ten h4.spb-heading {border-bottom-color:'.$alt_ten_text_color.';}';
-			echo '.alt-bg.light-style, .alt-bg.light-style h1, .alt-bg.light-style h2, .alt-bg.light-style h3, .alt-bg.light-style h3, .alt-bg.light-style h4, .alt-bg.light-style h5, .alt-bg.light-style h6 {color: #fff!important;}';
-			echo '.alt-bg.dark-style, .alt-bg.dark-style h1, .alt-bg.dark-style h2, .alt-bg.dark-style h3, .alt-bg.dark-style h3, .alt-bg.dark-style h4, .alt-bg.dark-style h5, .alt-bg.dark-style h6 {color: #222!important;}';
-			
+			echo '.asset-bg.light-style, .asset-bg.light-style h1, .asset-bg.light-style h2, .asset-bg.light-style h3, .asset-bg.light-style h3, .asset-bg.light-style h4, .asset-bg.light-style h5, .asset-bg.light-style h6 {color: #fff!important;}';
+			echo '.asset-bg.dark-style, .asset-bg.dark-style h1, .asset-bg.dark-style h2, .asset-bg.dark-style h3, .asset-bg.dark-style h3, .asset-bg.dark-style h4, .asset-bg.dark-style h5, .asset-bg.dark-style h6 {color: #222!important;}';
+
 			// PAGE BACKGROUND STYLES
 			if ($bg_image_url != "") {
 				if ($background_image_size == "cover") {
@@ -1285,14 +1259,14 @@
 				echo 'body { background: transparent url("'.$bg_image_url.'") repeat center top fixed; background-size: auto; }';
 				}
 			}
-	
-			// INNER PAGE BACKGROUND STYLES		
+
+			// INNER PAGE BACKGROUND STYLES
 			if ($inner_bg_image_url != "") {
 				echo '#main-container { background: transparent url("'.$inner_bg_image_url.'") repeat center top; background-size: auto; }';
 				echo '.standard-post-content, .blog-aux-options li a, .blog-aux-options li form input, .masonry-items .blog-item .masonry-item-wrap, .widget .wp-tag-cloud li a, ul.portfolio-filter-tabs li.selected a, .masonry-items .portfolio-item-details {background: '.$inner_page_bg_color.';}';
 				echo '.format-quote .standard-post-content:before, .standard-post-content.no-thumb:before {border-left-color: '.$inner_page_bg_color.';}';
 			}
-		
+
 			// CUSTOM FONT STYLES
 			if ($body_font_option == "standard") {
 			echo 'body, h6, #sidebar .widget-heading h3, #header-search input, .header-items h3.phone-number, .related-wrap h4, #comments-list > h3, .item-heading h1, .sf-button, button, input[type="submit"], input[type="email"], input[type="reset"], input[type="button"], .spb_accordion_section h3, #header-login input, #mobile-navigation > div, .search-form input, input, button, select, textarea {font-family: "'.$standard_font.'", Arial, Helvetica, Tahoma, sans-serif;}';
@@ -1331,7 +1305,7 @@
 			$fd_menu_output = str_replace("div {", $replace_with, $fontdeck_menu_font);
 			echo $fd_menu_output;
 			}
-			
+
 			// RESPONSIVE STYLES
 			if ($enable_responsive) {
 			echo '@media only screen and (max-width: 767px) {';
@@ -1339,30 +1313,30 @@
 			echo 'nav .menu > li {border-top-color: '.$section_divide_color.';}';
 			echo '}';
 			}
-			
+
 			// USER STYLES
 			if ($custom_css) {
 			echo "\n".'/*========== User Custom CSS Styles ==========*/'."\n";
 			echo $custom_css;
 			}
-			
+
 			// CLOSE STYLE TAG
 			echo "</style>". "\n";
 		}
-	
+
 		add_action('wp_head', 'sf_custom_styles');
 	}
-	
+
 	/* CUSTOM JS OUTPUT
 	================================================== */
 	function sf_custom_script() {
 		$options = get_option('sf_dante_options');
 		$custom_js = $options['custom_js'];
-		
+
 		if ($custom_js) {
 		echo $custom_js;
 		}
 	}
-	
+
 	add_action('wp_footer', 'sf_custom_script');
 ?>

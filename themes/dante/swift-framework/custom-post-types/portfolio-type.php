@@ -62,9 +62,9 @@
 	        				'with_front' => false,
 	        				'feeds' => true )
 	        			: false,
-	        'supports' => array('title', 'editor', 'thumbnail'),
+	        'supports' => array('title', 'editor', 'thumbnail', 'revisions'),
 	        'has_archive' => true,
-	        'taxonomies' => array('portfolio-category')
+	        'taxonomies' => array('portfolio-category', 'post_tag')
 	       );  
 	  
 	    register_post_type( 'portfolio' , $args );  

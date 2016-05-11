@@ -3,7 +3,7 @@
 *	Admin jQuery Functions
 *	------------------------------------------------
 *	Swift Framework
-* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 *
 */
 
@@ -506,12 +506,13 @@ jQuery(function(jQuery) {
 		
 	//create the menu with javascript
 	function sf_setup_metatabs() {
+	
+		var sfMetaBox = jQuery('#sf_meta_box');
 		
-		if(jQuery('#swift_page_builder').length > 0) {
-			jQuery('#swift_page_builder').after('<div class="sf-meta-tabs-wrap postbox"><div class="handlediv" title="Click to toggle"><br></div><h3 class="hndle"><span>Meta Options</span></h3><div id="sf-tabbed-meta-boxes"></div></div>');
-		} else {
-			jQuery('#normal-sortables').after('<div class="sf-meta-tabs-wrap postbox"><div class="handlediv" title="Click to toggle"><br></div><h3 class="hndle"><span>Meta Options</span></h3><div id="sf-tabbed-meta-boxes"></div></div>');
+		if ( sfMetaBox.length === 0 ) {
+			return;
 		}
+		
 		jQuery(tabBoxes).appendTo('#sf-tabbed-meta-boxes');
 		jQuery(tabBoxes).hide().removeClass('hide-if-no-js'); 
 					
@@ -527,26 +528,36 @@ jQuery(function(jQuery) {
 			var tab_name = jQuery(tabBoxes[i]).find('.hndle > span').text();
 			var tab_class = "";
 			
-//			if (jQuery(tabBoxes[i]).hasClass('hide-if-js')) {
-//				tab_class = "user-hidden";
-//				total_hidden++;
-//			}
+			if (jQuery(tabBoxes[i]).hasClass('hide-if-js')) {
+				//tab_class = "user-hidden";
+				total_hidden++;
+			}
 			
 			menu_html = menu_html + '\n<li id="li-'+ target_id +'" class="'+tab_class+'"><a href="#" rel="editor-tab' + i + '">' + tab_name + '</a></li>';
 		}
 		menu_html = menu_html + '\n</ul>';
 		
 		if (tabBoxes.length === total_hidden) {
-			jQuery('.sf-meta-tabs-wrap').addClass('all-hidden');
+			//jQuery('.sf-meta-tabs-wrap').addClass('all-hidden');
 		}
 		
 		jQuery('#sf-tabbed-meta-boxes').before(menu_html);
 		jQuery('#sf-meta-box-tabs a:first').addClass('active');	
 	}
+	
 	if (tabBoxes.length > 0) {
 		sf_setup_metatabs();
-		jQuery('.editor-tab0').addClass('active').show(); 
+		jQuery('.editor-tab0').addClass('active').show();
 	}
+	
+	jQuery('.sf-meta-tabs-wrap').on('click', '.handlediv', function() {
+		var metaBoxWrap = jQuery(this).parent();
+		if (metaBoxWrap.hasClass('closed')) {
+			metaBoxWrap.removeClass('closed');
+		} else {
+			metaBoxWrap.addClass('closed');
+		}		
+	});
 	
 	jQuery('#sf-meta-box-tabs li').on('click', 'a', function() {
 		jQuery(tabBoxes).removeClass('active').hide();
@@ -560,23 +571,23 @@ jQuery(function(jQuery) {
 		return false;
 	});
 	
-	jQuery('.hide-postbox-tog').on('click', function() { 
-		var target = jQuery(this).attr('value');		
-		if (jQuery(this).is(':checked')) { 		
-			jQuery('#li-' + target).removeClass('user-hidden');
-			jQuery('#'+ target).removeClass('hide-if-js');
-		} else {
-			jQuery('#li-' + target).addClass('user-hidden'); 
-			jQuery('#'+ target).addClass('hide-if-js');			
-		}
-		var total_hidden = jQuery('#sf-meta-box-tabs').find('.user-hidden').length;
-		var total_boxes = jQuery('#sf-tabbed-meta-boxes').find('> div').length;
-		if (tabBoxes.length > total_hidden) {
-			jQuery('.sf-meta-tabs-wrap').removeClass('all-hidden');
-		} else {
-			jQuery('.sf-meta-tabs-wrap').addClass('all-hidden');
-		}
-		return true;
-	});
+//	jQuery('.hide-postbox-tog').on('click', function() { 
+//		var target = jQuery(this).attr('value');		
+//		if (jQuery(this).is(':checked')) { 		
+//			jQuery('#li-' + target).removeClass('user-hidden');
+//			jQuery('#'+ target).removeClass('hide-if-js');
+//		} else {
+//			jQuery('#li-' + target).addClass('user-hidden'); 
+//			jQuery('#'+ target).addClass('hide-if-js');			
+//		}
+//		var total_hidden = jQuery('#sf-meta-box-tabs').find('.user-hidden').length;
+//		var total_boxes = jQuery('#sf-tabbed-meta-boxes').find('> div').length;
+//		if (tabBoxes.length > total_hidden) {
+//			jQuery('.sf-meta-tabs-wrap').removeClass('all-hidden');
+//		} else {
+//			jQuery('.sf-meta-tabs-wrap').addClass('all-hidden');
+//		}
+//		return true;
+//	});
 
 });

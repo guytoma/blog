@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Products Function Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*	
 	*	sf_mini_product_items()
 	*	sf_product_items()
@@ -175,7 +175,7 @@
 		           	    if ( $count > 0 ) {
 		           	
 		           	        $average = number_format($rating / $count, 2);	           			
-		           	        $rating_output = '<div class="star-rating" title="'.sprintf(__('Rated %s out of 5', 'woocommerce'), $average).'"><span style="width:'.($average*16).'px"><span class="rating">'.$average.'</span> '.__('out of 5', 'woocommerce').'</span></div>';
+		           	        $rating_output = '<div class="star-rating" title="'.sprintf(__('Rated %s out of 5', 'swiftframework'), $average).'"><span style="width:'.($average*16).'px"><span class="rating">'.$average.'</span> '.__('out of 5', 'swiftframework').'</span></div>';
 		           	
 		           	    }
 		           	}
@@ -199,7 +199,7 @@
 		       		} else {
 		            
 	            		$size = sizeof( get_the_terms( $post->ID, 'product_cat' ) );
-	            		$product_output .= $product->get_categories( ', ', '<span class="product-cats">' . _n( '', '', $size, 'woocommerce' ) . ' ', '</span>' );
+	            		$product_output .= $product->get_categories( ', ', '<span class="product-cats">' . _n( '', '', $size, 'swiftframework' ) . ' ', '</span>' );
 	            	
 	            	}
 	            	if (!$sf_catalog_mode) {
@@ -411,23 +411,20 @@
 			   
 				<?php if ($carousel == "yes") { ?>
 					
-					<div class="product-carousel" data-columns="<?php echo $columns; ?>">
-						
-						<div class="carousel-overflow">
+					<div class="product-carousel carousel-wrap">
 										
-							<ul class="products list-<?php echo $asset_type; ?>" id="carousel-<?php echo $sf_carouselID; ?>">
-							
-								<?php while ( $products->have_posts() ) : $products->the_post(); ?>
-							
-									<?php woocommerce_get_template_part( 'content', 'product' ); ?>
-							
-								<?php endwhile; // end of the loop. ?>
-							 
-							</ul>
-												
-						</div>
+						<ul class="products list-<?php echo $asset_type; ?> carousel-items"
+						     id="carousel-<?php echo $sf_carouselID; ?>" data-columns="<?php echo $columns; ?>">
 						
-						<a href="#" class="prev"><i class="ss-navigateleft"></i></a><a href="#" class="next"><i class="ss-navigateright"></i></a>
+							<?php while ( $products->have_posts() ) : $products->the_post(); ?>
+						
+								<?php woocommerce_get_template_part( 'content', 'product' ); ?>
+						
+							<?php endwhile; // end of the loop. ?>
+						 
+						</ul>
+						
+						<a href="#" class="carousel-prev"><i class="ss-navigateleft"></i></a><a href="#" class="carousel-next"><i class="ss-navigateright"></i></a>
 						
 					</div>
 					

@@ -60,13 +60,40 @@ class SwiftPageBuilderShortcode_testimonial_slider extends SwiftPageBuilderShort
         	$testimonial_cite = sf_get_post_meta($post->ID, 'sf_testimonial_cite', true);
         	$testimonial_cite_subtext = sf_get_post_meta($post->ID, 'sf_testimonial_cite_subtext', true);
         	
-        	$items .= '<li class="testimonial">';
-        	$items .= '<div class="testimonial-text text-'.$text_size.'">'.do_shortcode($testimonial_text).'</div>'; 
-        	if ($testimonial_cite_subtext != "") {
-        	$items .= '<cite>'.$testimonial_cite.'<span>'.$testimonial_cite_subtext.'</span></cite>';
-        	} else {
-        	$items .= '<cite>'.$testimonial_cite.'</cite>';
+        	$testimonial_image = rwmb_meta('sf_testimonial_cite_image', 'type=image', $post->ID);
+        			
+        	foreach ($testimonial_image as $detail_image) {
+        		$testimonial_image_url = $detail_image['url'];
+        		break;
         	}
+        									
+        	if (!$testimonial_image) {
+        		$testimonial_image = get_post_thumbnail_id();
+        		$testimonial_image_url = wp_get_attachment_url( $testimonial_image, 'full' );
+        	}
+        	
+        	$testimonial_image = sf_aq_resize( $testimonial_image_url, 70, 70, true, false);
+        	
+        	$items .= '<li class="testimonial">';
+        	$items .= '<div class="testimonial-text text-'.$text_size.'">'.do_shortcode($testimonial_text).'</div>';
+        	if ($testimonial_image) {
+        		$items .= '<div class="testimonial-cite has-image">';		
+        		$items .= '<img src="'.$testimonial_image[0].'" width="'.$testimonial_image[1].'" height="'.$testimonial_image[2].'" alt="'.$testimonial_cite.'" />';
+        		if ($testimonial_cite_subtext != "") {
+        		$items .= '<cite>'.$testimonial_cite.'<span>'.$testimonial_cite_subtext.'</span></cite>';
+        		} else {
+        		$items .= '<cite>'.$testimonial_cite.'</cite>';
+        		}
+        	} else {
+        		$items .= '<div class="testimonial-cite">';		
+        		if ($testimonial_cite_subtext != "") {
+        		$items .= '<cite>'.$testimonial_cite.'<span>'.$testimonial_cite_subtext.'</span></cite>';
+        		} else {
+        		$items .= '<cite>'.$testimonial_cite.'</cite>';
+        		}
+        	}
+        	$items .= '</div>';
+        	
         	$items .= '</li>';
         	        
         endwhile;
@@ -91,18 +118,20 @@ class SwiftPageBuilderShortcode_testimonial_slider extends SwiftPageBuilderShort
 
         $el_class .= ' testimonial';
         
-        if ($alt_background == "none" || $sidebars != "no-sidebars") {
-		$output .= "\n\t".'<div class="spb_testimonial_slider_widget spb_content_element '.$width.$el_class.'">';
-        } else {
-        $output .= "\n\t".'<div class="spb_testimonial_slider_widget spb_content_element alt-bg '.$alt_background.' '.$width.$el_class.'">';            
+        // Full width setup
+        $fullwidth = false;
+        if ($alt_background != "none") {
+        $fullwidth = true;
         }
+        
+        $output .= "\n\t".'<div class="spb_testimonial_slider_widget spb_content_element '.$width.$el_class.'">';
         $output .= "\n\t\t".'<div class="spb_wrapper slider-wrap">';
         $output .= ($title != '' ) ? "\n\t\t\t".'<div class="heading-wrap"><h3 class="spb-heading spb-center-heading"><span>'.$title.'</span></h3></div>' : '';
         $output .= "\n\t\t\t".$items;
         $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
         $output .= "\n\t".'</div> '.$this->endBlockComment($width);
 
-        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
+        $output = $this->startRow($el_position, $width, $fullwidth, false, $alt_background) . $output . $this->endRow($el_position, $width, $fullwidth, false);
         
         global $sf_include_carousel;
         $sf_include_carousel = true;

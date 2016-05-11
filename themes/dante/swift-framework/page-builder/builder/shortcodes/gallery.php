@@ -55,7 +55,7 @@
 		       	foreach ( $gallery_images as $image ) {
 		       		
 		       		if ($enable_lightbox == "yes") {
-		       	    $main_slider .= "<li><a href='{$image['url']}' class='view' rel='gallery-{$gallery_id}'><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' /></a>";
+		       	    $main_slider .= "<li><a href='{$image['url']}' class='ilightbox' data-rel='ilightbox[gallery-{$gallery_id}]'><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' /></a>";
 
 		       		} else {
 		       	    $main_slider .= "<li><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' />";		       		

@@ -74,7 +74,8 @@ class SwiftPageBuilderShortcode_posts_carousel extends SwiftPageBuilderShortcode
     		$columns = 4;
     		}
     				
-			$items .= '<div class="carousel-overflow"><ul id="carousel-'.$sf_carouselID.'" class="blog-items carousel-items clearfix" data-columns="'.$columns.'" data-auto="false">';
+			$items .= '<div class="carousel-wrap">';		
+			$items .= '<div id="carousel-'.$sf_carouselID.'" class="blog-items carousel-items clearfix" data-columns="'.$columns.'">';
 	
 			while ( $blog_items->have_posts() ) : $blog_items->the_post();
 								
@@ -124,14 +125,14 @@ class SwiftPageBuilderShortcode_posts_carousel extends SwiftPageBuilderShortcode
 					$link_config = 'href="'.$thumb_link_url.'" class="link-to-url" target="_blank"';
 					$item_icon = "ss-link";
 				} else if ($thumb_link_type == "lightbox_thumb") {
-					$link_config = 'href="'.$thumb_img_url.'" class="view"';
+					$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox['.$post_ID.']"';
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_image") {
 					$lightbox_image_url = '';
 					foreach ($thumb_lightbox_image as $image) {
 						$lightbox_image_url = $image['full_url'];
 					}
-					$link_config = 'href="'.$lightbox_image_url.'" class="view"';	
+					$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox['.$post_ID.']"';	
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_video") {
 					$link_config = 'data-video="'.$thumb_lightbox_video_url.'" href="#" class="fw-video-link"';
@@ -141,7 +142,7 @@ class SwiftPageBuilderShortcode_posts_carousel extends SwiftPageBuilderShortcode
 					$item_icon = "ss-navigateright";
 				}
 				 				   	
-				$items .= '<li itemscope data-id="id-'. $count .'" class="clearfix carousel-item recent-post '.$item_class.'">';
+				$items .= '<div itemscope data-id="id-'. $count .'" class="clearfix carousel-item recent-post '.$item_class.'">';
 				
 				$items .= '<figure class="animated-overlay overlay-alt">';
 						
@@ -213,7 +214,7 @@ class SwiftPageBuilderShortcode_posts_carousel extends SwiftPageBuilderShortcode
 				}
 				
 				$items .= '</div>';
-				$items .= '</li>';
+				$items .= '</div>';
 				
 				$count++;
 			
@@ -222,9 +223,9 @@ class SwiftPageBuilderShortcode_posts_carousel extends SwiftPageBuilderShortcode
 			wp_reset_query();
 			wp_reset_postdata();
 					
-			$items .= '</ul>';
+			$items .= '</div>';
 			
-			$items .= '<a href="#" class="prev"><i class="ss-navigateleft"></i></a><a href="#" class="next"><i class="ss-navigateright"></i></a>';
+			$items .= '<a href="#" class="carousel-prev"><i class="ss-navigateleft"></i></a><a href="#" class="carousel-next"><i class="ss-navigateright"></i></a>';
 			
 			$options = get_option('sf_dante_options');
 			if ($options['enable_swipe_indicators']) {

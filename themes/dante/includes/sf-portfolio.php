@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Portfolio Items Function Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_portfolio_items()
 	*	sf_portfolio_filter()
@@ -146,9 +146,9 @@
 				    				    				
 				if ($columns == "2") {
 					if ($sidebars == "both-sidebars") {
-					$item_class = "col-sm-3 ";
+					$item_class = "col-sm-6 ";
 					} else if ($sidebars == "one-sidebar") {
-					$item_class = "col-sm-4 ";
+					$item_class = "col-sm-6 ";
 					} else {
 					$item_class = "col-sm-6 ";
 					$thumb_width = 800;
@@ -157,9 +157,9 @@
 					}
 				} else if ($columns == "3") {
 					if ($sidebars == "both-sidebars") {
-					$item_class = "col-sm-2 ";
+					$item_class = "col-sm-4 ";
 					} else if ($sidebars == "one-sidebar") {
-					$item_class = "span-third ";
+					$item_class = "col-sm-4 ";
 					} else {
 					$item_class = "col-sm-4 ";
 					$thumb_width = 600;
@@ -170,7 +170,7 @@
 					if ($sidebars == "both-sidebars") {
 					$item_class = "col-sm-3 ";
 					} else if ($sidebars == "one-sidebar") {
-					$item_class = "col-sm-2 ";
+					$item_class = "col-sm-3 ";
 					} else {
 					$item_class = "col-sm-3 ";
 					}
@@ -202,9 +202,9 @@
 					$item_icon = "ss-link";
 				} else if ($thumb_link_type == "lightbox_thumb") {
 					if ($enable_portfolio_gallery) {
-					$link_config = 'href="'.$thumb_img_url.'" class="view" rel="item-gallery"';
+					$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';
 					} else {
-					$link_config = 'href="'.$thumb_img_url.'" class="view"';
+					$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox['.$post->ID.']"';
 					}					
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_image") {
@@ -213,9 +213,9 @@
 						$lightbox_image_url = $image['full_url'];
 					}
 					if ($enable_portfolio_gallery) {
-					$link_config = 'href="'.$lightbox_image_url.'" class="view" rel="item-gallery"';
+					$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';
 					} else {
-					$link_config = 'href="'.$lightbox_image_url.'" class="view"';
+					$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox['.$post->ID.']"';
 					}			
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_video") {
@@ -312,7 +312,7 @@
 						if ($enable_portfolio_gallery) {
 							$portfolio_items_output .= '<h3 class="portfolio-item-title" itemprop="name headline"><a href="'.$permalink.'" class="link-to-post">'. $item_title .'</a></h3>'. "\n";
 						} else {
-							$portfolio_items_output .= '<h3 class="portfolio-item-title" itemprop="name headline"><a '.$link_config.'>'. $item_title .'</a></h3>'. "\n";
+							$portfolio_items_output .= '<h3 class="portfolio-item-title" itemprop="name headline"><a href="'.$permalink.'" class="link-to-post">'. $item_title .'</a></h3>'. "\n";
 						}
 					}
 					if ($show_subtitle == "yes" && $item_subtitle) {
@@ -377,11 +377,11 @@
 			
 		    $filter_output .= '<div class="filter-wrap slideout-filter row clearfix">'. "\n";
 		    $filter_output .= '<a href="#" class="select"><i class="fa-justify"></i>'. __("Filter our work", "swiftframework") .'</a>'. "\n";
-		    $filter_output .= '<div class="filter-slide-wrap col-sm-12 alt-bg '.$filter_wrap_bg.'">'. "\n";
+		    $filter_output .= '<div class="filter-slide-wrap col-sm-12 asset-bg '.$filter_wrap_bg.'">'. "\n";
 		    $filter_output .= '<ul class="portfolio-filter filtering row clearfix">'. "\n";
 		    $filter_output .= '<li class="all selected col-sm-2"><a data-filter="*" href="#"><span class="item-name">'. __("All", "swiftframework").'</span><span class="item-count">0</span></a></li>'. "\n";
 			foreach ($tax_terms as $tax_term) {
-				$term = get_term_by('slug', $tax_term, 'portfolio-category');				
+				$term = get_term_by('name', $tax_term, 'portfolio-category');				
 				if ($term) {
 				$filter = preg_replace( "/[^A-Za-z0-9-]/i", "", ( strtolower( $term->slug ) ) );
 				$filter_output .= '<li class="col-sm-2"><a href="#" title="View all ' . $term->name . ' items" class="' . $filter . '" data-filter=".' . $filter . '"><span class="item-name">' . $term->name . '</span><span class="item-count">0</span></a></li>'. "\n";

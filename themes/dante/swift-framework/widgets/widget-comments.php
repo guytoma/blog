@@ -5,7 +5,7 @@
 	*	Custom Comments Widget
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
@@ -14,8 +14,9 @@
 	function init_sf_recent_comments() { return register_widget('sf_recent_comments'); }
 	
 	class sf_recent_comments extends WP_Widget {
-		function sf_recent_comments() {
-			parent::WP_Widget( 'sf_recent_custom_comments', $name = 'Swift Framework Recent Comments' );
+	
+		function __construct() {
+			parent::__construct( 'sf_recent_custom_comments', $name = 'Swift Framework Recent Comments' );
 		}
 	
 		function widget( $args, $instance ) {
