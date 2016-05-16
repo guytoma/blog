@@ -10,12 +10,12 @@ ADD wp-offload-s3-1.1.3.zip /tmp/
 
 RUN apt-get update && \
     apt-get install -y unzip wget && \
-    wget -P /tmp -i /plugin-urls.txt && \
+    wget --progress=dot -P /tmp -i /plugin-urls.txt && \
     cd /usr/src/wordpress/wp-content/plugins && \
     (unzip '/tmp/*.zip' || true) && \
     chown -R www-data:www-data /usr/src/wordpress/wp-content/* && \
     cd /tmp && \
-    wget https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb && \
+    wget --progress=dot https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb && \
     dpkg -i mod-pagespeed-stable_current_amd64.deb && \
     apt-get -f install && \
     rm mod-pagespeed-stable_current_amd64.deb && \
