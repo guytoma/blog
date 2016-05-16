@@ -14,6 +14,11 @@ RUN apt-get update && \
     cd /usr/src/wordpress/wp-content/plugins && \
     (unzip '/tmp/*.zip' || true) && \
     chown -R www-data:www-data /usr/src/wordpress/wp-content/* && \
+    cd /tmp && \
+    wget https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb && \
+    dpkg -i mod-pagespeed-stable_current_amd64.deb && \
+    apt-get -f install && \
+    rm mod-pagespeed-stable_current_amd64.deb && \
     apt-get remove -y unzip wget && \
     apt-get autoremove -y && \
     apt-get clean && \
