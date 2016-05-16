@@ -1,4 +1,9 @@
 <?php
+function remove_style_id($link) {
+        return preg_replace("/id='.*-css'/", "", $link);
+}
+add_filter('style_loader_tag', 'remove_style_id');
+
 function theme_enqueue_parent_styles() {
 	$parent_style = 'parent-style';
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
