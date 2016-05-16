@@ -11,6 +11,7 @@ docker build --pull -t partup/blogcache:$imgtag cache
 
 tag=$(git describe --exact-match 2>/dev/null || echo "")
 if [ $tag ]; then
+  echo "On a tag, setting tags as well for tag '$tag'"
   docker tag partup/blog:$imgtag partup/blog:$tag
   docker tag partup/blogcache:$imgtag partup/blogcache:$tag
 
