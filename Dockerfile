@@ -26,3 +26,5 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY cache.conf /etc/apache2/conf-enabled/
+
+RUN ln -s /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
