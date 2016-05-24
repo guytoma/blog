@@ -1,12 +1,12 @@
 https://downloads.wordpress.org/plugin/easy-wp-smtp.zip
-https://downloads.wordpress.org/plugin/akismet.3.1.10.zip
+https://downloads.wordpress.org/plugin/akismet.3.1.11.zip
 https://downloads.wordpress.org/plugin/amazon-web-services.zip
 https://downloads.wordpress.org/plugin/contact-form-7.4.4.2.zip
 https://downloads.wordpress.org/plugin/disqus-comment-system.zip
 https://downloads.wordpress.org/plugin/google-analytics-dashboard-for-wp.4.9.3.1.zip
 https://downloads.wordpress.org/plugin/insert-headers-and-footers.zip
 https://downloads.wordpress.org/plugin/intercom.zip
-https://downloads.wordpress.org/plugin/polylang.1.9.zip
+https://downloads.wordpress.org/plugin/polylang.1.9.1.zip
 https://downloads.wordpress.org/plugin/quick-pagepost-redirect-plugin.5.1.8.zip
 https://downloads.wordpress.org/plugin/selection-sharer.0.3.zip
 https://downloads.wordpress.org/plugin/shareaholic.7.8.0.3.zip
