@@ -4,9 +4,22 @@ VOLUME /var/www/html
 
 COPY themes /usr/src/wordpress/wp-content/themes
 
-ADD plugin-urls.txt /
+COPY plugin-urls.txt /
 
-ADD private-blog-plugins/* /tmp/
+RUN apt-get update && \
+    apt-get install -y libxml2 libxml2-dev php-soap && \
+    cd /usr/src/php/ext/soap && \
+    phpize && \
+    ./configure && \
+    make && \
+    make install && \
+    apt-get remove -y libxml2-dev && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+COPY private-blog-plugins/* /tmp/
 
 RUN apt-get update && \
     apt-get install -y unzip wget && \
@@ -19,7 +32,7 @@ RUN apt-get update && \
     dpkg -i mod-pagespeed-stable_current_amd64.deb && \
     apt-get -f install && \
     rm mod-pagespeed-stable_current_amd64.deb && \
-    apt-get remove -y unzip wget && \
+    apt-get remove -y unzip wget libxml2-dev && \
     apt-get autoremove -y && \
     apt-get clean && \
     apt-get autoclean && \
@@ -28,3 +41,5 @@ RUN apt-get update && \
 COPY cache.conf /etc/apache2/conf-enabled/
 
 RUN ln -s /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
+
+COPY php-blog-additions.ini /usr/local/etc/php/conf.d/
