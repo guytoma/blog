@@ -6,7 +6,7 @@ COPY themes /usr/src/wordpress/wp-content/themes
 
 ADD plugin-urls.txt /
 
-ADD wp-offload-s3-1.1.3.zip /tmp/
+ADD private-blog-plugins/* /tmp/
 
 RUN apt-get update && \
     apt-get install -y unzip wget && \

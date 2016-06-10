@@ -6,6 +6,10 @@ set -eu
 branch=${GIT_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}
 imgtag=${branch#*/}
 
+# Getting private plugins from s3 bucket..
+mkdir -p private-blog-plugins
+aws s3 cp --recursive s3://partops/private-blog-plugins/ private-blog-plugins/
+
 docker build --pull -t partup/blog:$imgtag .
 docker build --pull -t partup/blogcache:$imgtag cache
 
