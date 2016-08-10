@@ -7,12 +7,8 @@ COPY themes /usr/src/wordpress/wp-content/themes
 COPY plugin-urls.txt /
 
 RUN apt-get update && \
-    apt-get install -y libxml2 libxml2-dev php-soap && \
-    cd /usr/src/php/ext/soap && \
-    phpize && \
-    ./configure && \
-    make && \
-    make install && \
+    apt-get install -y libxml2-dev && \
+    docker-php-ext-install soap && docker-php-ext-enable soap && \
     apt-get remove -y libxml2-dev && \
     apt-get autoremove -y && \
     apt-get clean && \
@@ -41,5 +37,3 @@ RUN apt-get update && \
 COPY cache.conf /etc/apache2/conf-enabled/
 
 RUN ln -s /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
-
-COPY php-blog-additions.ini /usr/local/etc/php/conf.d/
