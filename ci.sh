@@ -8,6 +8,7 @@ imgtag=${branch#*/}
 
 # Getting private plugins from s3 bucket..
 mkdir -p private-blog-plugins
+rm -rf private-blog-plugins/*
 aws s3 cp --recursive s3://partops/private-blog-plugins/ private-blog-plugins/
 
 docker build --pull -t partup/blog:$imgtag .
