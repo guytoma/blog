@@ -37,3 +37,7 @@ RUN apt-get update && \
 COPY cache.conf /etc/apache2/conf-enabled/
 
 RUN ln -s /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
+
+ADD partup-consts.php /usr/src/wordpress
+
+RUN echo "\nrequire_once(ABSPATH . 'partup-consts.php');" >> /usr/src/wordpress/wp-config-sample.php
