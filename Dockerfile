@@ -1,7 +1,5 @@
 FROM wordpress:4
 
-VOLUME /var/www/html
-
 COPY themes /usr/src/wordpress/wp-content/themes
 
 COPY plugin-urls.txt /
@@ -28,7 +26,7 @@ RUN apt-get update && \
     dpkg -i mod-pagespeed-stable_current_amd64.deb && \
     apt-get -f install && \
     rm mod-pagespeed-stable_current_amd64.deb && \
-    apt-get remove -y unzip wget libxml2-dev && \
+    apt-get remove -y unzip wget && \
     apt-get autoremove -y && \
     apt-get clean && \
     apt-get autoclean && \
@@ -41,3 +39,5 @@ RUN ln -s /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/
 ADD partup-consts.php /usr/src/wordpress
 
 RUN echo "\nrequire_once(ABSPATH . 'partup-consts.php');" >> /usr/src/wordpress/wp-config-sample.php
+
+VOLUME /var/www/html
