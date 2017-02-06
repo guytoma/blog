@@ -1,4 +1,4 @@
-FROM wordpress:4
+FROM wordpress:4.7.2
 
 COPY themes /usr/src/wordpress/wp-content/themes
 
