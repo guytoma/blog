@@ -11,3 +11,4 @@ https://downloads.wordpress.org/plugin/shareaholic.7.8.0.4.zip
 https://downloads.wordpress.org/plugin/sumome.zip
 https://downloads.wordpress.org/plugin/w3-total-cache.0.9.5.2.zip
 https://downloads.wordpress.org/plugin/wordpress-seo.4.2.1.zip
+https://downloads.wordpress.org/plugin/my-custom-functions.4.4.1.zip
