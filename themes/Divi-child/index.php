@@ -42,7 +42,7 @@
 		</div>
 	<?php endwhile; ?>
 </div><!--eind laatste posts-->
-
+<?php wpbeginner_numeric_posts_nav(); ?>
 </div> <!-- #left-area -->
 
 			<?php get_sidebar(); ?>
