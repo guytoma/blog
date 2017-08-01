@@ -5,7 +5,7 @@
 	*	Theme Customizer Options
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_customize_register()
 	*	sf_customize_preview()

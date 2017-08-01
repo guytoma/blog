@@ -6,7 +6,7 @@
 	 *
 	 * @author 		WooThemes
 	 * @package 	WooCommerce/Templates
-	 * @version     2.1.0
+	 * @version     2.5.0
 	 */
 	
 	if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -82,7 +82,7 @@
 		
 			} else if ($product->is_on_sale()) {
 				
-				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale!', 'woocommerce' ).'</span>', $post, $product);				
+				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale!', 'swiftframework' ).'</span>', $post, $product);				
 			
 			} else if ( ( time() - ( 60 * 60 * 24 * $newness ) ) < $postdatestamp ) {
 				
@@ -190,7 +190,7 @@
 		<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		<?php
 			$size = sizeof( get_the_terms( $post->ID, 'product_cat' ) );
-			echo $product->get_categories( ', ', '<span class="posted_in">' . _n( '', '', $size, 'woocommerce' ) . ' ', '</span>' );
+			echo $product->get_categories( ', ', '<span class="posted_in">' . _n( '', '', $size, 'swiftframework' ) . ' ', '</span>' );
 		?>
 	</div>
 	

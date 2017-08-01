@@ -5,7 +5,7 @@
 	*	Swift Framework Formatting Functions
 	*	------------------------------------------------
 	*	Swift Framework v2.0
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_content_filter()
 	*	sf_get_the_content_with_formatting()
@@ -130,9 +130,9 @@
 	if ( ! function_exists( 'sf_custom_feed_content' ) ) {
 	    function sf_custom_feed_content( $content ) {
 	    	global $post;
-	    	$pb_status = get_post_meta($post->ID, '_spb_js_status', true);
+	    	$pb_active = get_post_meta($post->ID, '_spb_js_status', true);
 	    	
-	    	if ($pb_status) {
+	    	if ($pb_active == "true") {
 	    		$custom_excerpt = get_post_meta( $post->ID, 'sf_custom_excerpt', true );
 	    		return $custom_excerpt;
 	    	} else {

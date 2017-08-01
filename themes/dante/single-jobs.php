@@ -1,25 +1,19 @@
-<?php get_header(); ?>
+<?php 
 
-<div class="container">
-	<div class="row">
-		<div class="page-heading col-sm-12 clearfix alt-bg <?php echo $page_title_bg; ?>">
-			<div class="heading-text">
-				<h1><?php the_title(); ?></h1>
-			</div>
-			<?php 
-				// BREADCRUMBS
-				echo sf_breadcrumbs();
-			?>
-		</div>
-	</div>
-</div>
+	get_header();
+
+	$same_category_navigation = false;
+	if ( isset($options['same_category_navigation']) ) {
+		$same_category_navigation = $options['same_category_navigation'];
+	}
+?>
 
 <?php if (have_posts()) : the_post(); ?>
 	
 	<?php		
 		$post_author = get_the_author_link();
 		$post_date = get_the_date();
-		$post_categories = get_the_category_list(', ');
+		$post_categories = get_the_term_list( $post->ID, 'jobs-category', '',', ','' )
 	?>
 	
 	<div class="container">
@@ -33,8 +27,8 @@
 				<div class="page-content col-sm-12 clearfix">
 					
 					<ul class="post-pagination-wrap curved-bar-styling clearfix">
-						<li class="prev"><?php next_post_link('%link', __('<i class="ss-navigateleft"></i> <span class="nav-text">%title</span>', 'swiftframework'), FALSE); ?></li>
-						<li class="next"><?php previous_post_link('%link', __('<span class="nav-text">%title</span><i class="ss-navigateright"></i>', 'swiftframework'), FALSE); ?></li>
+						<li class="prev"><?php next_post_link('%link', __('<i class="ss-navigateleft"></i> <span class="nav-text">%title</span>', 'swiftframework'), $same_category_navigation, '', 'jobs-category'); ?></li>
+						<li class="next"><?php previous_post_link('%link', __('<span class="nav-text">%title</span><i class="ss-navigateright"></i>', 'swiftframework'), $same_category_navigation, '', 'jobs-category'); ?></li>
 					</ul>
 					
 					<div class="post-info clearfix">

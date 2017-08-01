@@ -6,8 +6,8 @@
 	$page_layout = $options['page_layout'];
 	$default_page_heading_bg_alt = $options['default_page_heading_bg_alt'];
 	$sidebar_config = $options['archive_sidebar_config'];
-	$left_sidebar = $options['archive_sidebar_left'];
-	$right_sidebar = $options['archive_sidebar_right'];
+	$left_sidebar = strtolower($options['archive_sidebar_left']);
+	$right_sidebar = strtolower($options['archive_sidebar_right']);
 	$blog_type = $options['archive_display_type'];
 	
 	$page_wrap_class = '';
@@ -66,7 +66,7 @@
 	<div class="container">
 	<?php } ?>
 
-	<div class="inner-page-wrap <?php echo $page_wrap_class; ?> clearfix">
+	<div class="inner-page-wrap <?php echo $page_wrap_class; ?> blog-type-<?php echo $blog_type; ?> clearfix">
 	
 		<!-- OPEN page -->
 		<?php if ($sidebar_config == "left-sidebar" || $sidebar_config == "right-sidebar") { ?>

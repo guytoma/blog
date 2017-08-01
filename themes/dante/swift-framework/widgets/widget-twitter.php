@@ -28,13 +28,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class Twitter_Widget extends WP_Widget {
 
 
-	function Twitter_Widget() {
+	function __construct() {
 								
 		// Widget settings
 		$widget_ops = array('classname' => 'twitter-widget', 'description' => 'Display your latest tweets.');
 
 		// Create the widget
-		$this->WP_Widget('twitter-widget', 'Swift Framework Tweets', $widget_ops);
+		parent::__construct('twitter-widget', 'Swift Framework Tweets', $widget_ops);
 	}
 	
 	

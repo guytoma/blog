@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Blog Shortcode
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 
@@ -108,7 +108,7 @@
 	
 	        $iner = '';
 	        foreach ($this->settings['params'] as $param) {
-	            $param_value = isset($$param['param_name']) ? $$param['param_name'] : null;
+	            $param_value = isset(${$param['param_name']}) ? ${$param['param_name']} : null;
 	
 	            if ( is_array($param_value)) {
 	                // Get first element from the array

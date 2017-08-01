@@ -5,7 +5,7 @@
 	*	Custom In Focus Widget
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
@@ -14,8 +14,9 @@
 	function init_sf_infocus() { return register_widget('sf_infocus'); }
 	
 	class sf_infocus extends WP_Widget {
-		function sf_infocus() {
-			parent::WP_Widget( 'sf_infocus_widget', $name = 'Swift Framework In Focus' );
+		
+		function __construct() {
+			parent::__construct( 'sf_infocus_widget', $name = 'Swift Framework In Focus' );
 		}
 	
 		function widget( $args, $instance ) {

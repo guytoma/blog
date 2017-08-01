@@ -4,7 +4,7 @@
 	*	Swift Page Builder - Main Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2013 - http://www.swiftideas.net
 	*
 	*/
 
@@ -23,7 +23,7 @@
 	    'SPB_BUILDER_LIB'  => SPB_PATH . '/builder/lib/',
 	    'SPB_BUILDER_SHORTCODES'  => SPB_PATH . '/builder/shortcodes/'
 	);
-
+	define( 'SPB_SHORTCODES', $spb_settings['SPB_BUILDER_SHORTCODES'] );
 	
 	/* INCLUDE PAGE BUILDER INCLUDES
 	================================================== */ 

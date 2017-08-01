@@ -16,13 +16,13 @@ $customer_id = get_current_user_id();
 if ( ! wc_ship_to_billing_address_only() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) {
 	$page_title = apply_filters( 'woocommerce_my_account_my_address_title', __( 'Address Book', 'swiftframework' ) );
 	$get_addresses    = array(
-		'billing' => __( 'Billing Address', 'woocommerce' ),
-		'shipping' => __( 'Shipping Address', 'woocommerce' )
+		'billing' => __( 'Billing Address', 'swiftframework' ),
+		'shipping' => __( 'Shipping Address', 'swiftframework' )
 	);
 } else {
 	$page_title = apply_filters( 'woocommerce_my_account_my_address_title', __( 'Address Book', 'swiftframework' ) );
 	$get_addresses    = array(
-		'billing' =>  __( 'Billing Address', 'woocommerce' )
+		'billing' =>  __( 'Billing Address', 'swiftframework' )
 	);
 }
 $col = 1;
@@ -31,7 +31,7 @@ $col = 1;
 <h3><?php echo $page_title; ?></h3>
 
 <p class="myaccount_address">
-	<?php echo apply_filters( 'woocommerce_my_account_my_address_description', __( 'The following addresses will be used on the checkout page by default.', 'woocommerce' ) ); ?>
+	<?php echo apply_filters( 'woocommerce_my_account_my_address_description', __( 'The following addresses will be used on the checkout page by default.', 'swiftframework' ) ); ?>
 </p>
 
 <?php if ( ! wc_ship_to_billing_address_only() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '<div class="col2-set addresses">'; ?>
@@ -63,7 +63,7 @@ $col = 1;
 				}
 
 				if ( ! $formatted_address )
-					_e( 'You have not set up this type of address yet.', 'woocommerce' );
+					_e( 'You have not set up this type of address yet.', 'swiftframework' );
 				else
 					echo $formatted_address;
 					

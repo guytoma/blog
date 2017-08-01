@@ -16,11 +16,11 @@ global $woocommerce;
 
 	<?php if ( WC()->cart->ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
 	
-		<h4 class="lined-heading"><span><?php _e( 'Billing &amp; Shipping', 'woocommerce' ); ?></span></h4>
+		<h4 class="lined-heading"><span><?php _e( 'Billing &amp; Shipping', 'swiftframework' ); ?></span></h4>
 	
 	<?php else : ?>
 	
-		<h4 class="lined-heading"><span><?php _e( 'Billing Address', 'woocommerce' ); ?></span></h4>
+		<h4 class="lined-heading"><span><?php _e( 'Billing Address', 'swiftframework' ); ?></span></h4>
 	
 	<?php endif; ?>
 	
@@ -39,7 +39,7 @@ global $woocommerce;
 		<?php if ( $checkout->enable_guest_checkout ) : ?>
 	
 			<p class="form-row form-row-wide create-account">
-				<input class="input-checkbox" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true) ?> type="checkbox" name="createaccount" value="1" /> <label for="createaccount" class="checkbox"><?php _e( 'Create an account?', 'woocommerce' ); ?></label>
+				<input class="input-checkbox" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true) ?> type="checkbox" name="createaccount" value="1" /> <label for="createaccount" class="checkbox"><?php _e( 'Create an account?', 'swiftframework' ); ?></label>
 			</p>
 	
 		<?php endif; ?>
@@ -50,7 +50,7 @@ global $woocommerce;
 	
 			<div class="create-account">
 	
-				<p><?php _e( 'Create an account by entering the information below. If you are a returning customer please login at the top of the page.', 'woocommerce' ); ?></p>
+				<p><?php _e( 'Create an account by entering the information below. If you are a returning customer please login at the top of the page.', 'swiftframework' ); ?></p>
 	
 				<?php foreach ( $checkout->checkout_fields['account'] as $key => $field ) : ?>
 	
@@ -72,11 +72,11 @@ global $woocommerce;
 	
 	<?php if ( $woocommerce->cart->ship_to_billing_address_only() && $woocommerce->cart->needs_shipping() ) : ?>
 	
-		<h4 class="lined-heading"><span><?php _e( 'Billing &amp; Shipping', 'woocommerce' ); ?></span></h4>
+		<h4 class="lined-heading"><span><?php _e( 'Billing &amp; Shipping', 'swiftframework' ); ?></span></h4>
 	
 	<?php else : ?>
 	
-		<h4 class="lined-heading"><span><?php _e( 'Billing Address', 'woocommerce' ); ?></span></h4>
+		<h4 class="lined-heading"><span><?php _e( 'Billing Address', 'swiftframework' ); ?></span></h4>
 	
 	<?php endif; ?>
 	
@@ -95,7 +95,7 @@ global $woocommerce;
 		<?php if ( $checkout->enable_guest_checkout ) : ?>
 	
 			<p class="form-row form-row-wide">
-				<input class="input-checkbox" id="createaccount" <?php checked($checkout->get_value('createaccount'), true) ?> type="checkbox" name="createaccount" value="1" /> <label for="createaccount" class="checkbox"><?php _e( 'Create an account?', 'woocommerce' ); ?></label>
+				<input class="input-checkbox" id="createaccount" <?php checked($checkout->get_value('createaccount'), true) ?> type="checkbox" name="createaccount" value="1" /> <label for="createaccount" class="checkbox"><?php _e( 'Create an account?', 'swiftframework' ); ?></label>
 			</p>
 	
 		<?php endif; ?>
@@ -104,7 +104,7 @@ global $woocommerce;
 	
 		<div class="create-account">
 	
-			<p><?php _e( 'Create an account by entering the information below. If you are a returning customer please login at the top of the page.', 'woocommerce' ); ?></p>
+			<p><?php _e( 'Create an account by entering the information below. If you are a returning customer please login at the top of the page.', 'swiftframework' ); ?></p>
 	
 			<?php foreach ($checkout->checkout_fields['account'] as $key => $field) : ?>
 	

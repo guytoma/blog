@@ -31,7 +31,7 @@
 			$ping_count = $comment_count = 0;
 			foreach ( $comments as $comment )
 		    get_comment_type() == "comment" ? ++$comment_count : ++$ping_count;
-			if ( ! empty($comments_by_type['comment']) ) : ?>
+			if ( ! empty($comments_by_type['comment']) ) { ?>
 					<?php $total_pages = get_comment_pages_count(); if ( $total_pages > 1 ) : ?>
 						<div id="comments-nav-above" class="comments-navigation">
 							<div class="paginated-comments-links clearfix"><?php paginate_comments_links(array('type'=>'list','prev_text'=> __('<i class="ss-navigateleft"></i> Previous', 'swiftframework'),
@@ -47,7 +47,21 @@
 								'next_text'    => __('Next <i class="ss-navigateright"></i>', 'swiftframework'))); ?></div>
 						</div><!-- #comments-nav-below -->
 					<?php endif; ?>                   
-			<?php endif; /* if ( $comment_count ) */ ?>
+			<?php } if (!empty($comments_by_type['pingback'])) { ?>
+			
+				<h3 class="spb-heading"><span><?php _e("Pingbacks", "swiftframework"); ?></span></h3>
+				<ol id="pingback-list">
+					<?php wp_list_comments('type=pingback&callback=sf_custom_comments'); ?>
+				</ol>
+			
+			<?php } if (!empty($comments_by_type['trackback'])) { ?>
+			
+				<h3 class="trackbacks-heading">Trackbacks</h3>
+				<ol id="trackback-list">
+					<?php wp_list_comments('type=trackback&callback=sf_custom_comments'); ?>
+				</ol>
+			
+			<?php } ?>
 		
 		<?php endif /* if ( $comments ) */ ?>
 	

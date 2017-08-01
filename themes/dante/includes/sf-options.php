@@ -209,7 +209,7 @@ function setup_framework_options(){
     						'id' => 'maintenance_mode_page',
     						'type' => 'pages_select',
     						'title' => __('Custom Maintenance Mode Page', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Select the page that is your maintenace page, if you would like to show a custom page instead of the standard WordPress message. You should use the Holding Page template for this page.', Redux_TEXT_DOMAIN),
+    						'sub_desc' => __('Select the page that is your maintenance page, if you would like to show a custom page instead of the standard WordPress message. You should use the Holding Page template for this page.', Redux_TEXT_DOMAIN),
     						'desc' => '',
     						'std' => '',
     						'args' => array()
@@ -326,6 +326,15 @@ function setup_framework_options(){
     						'std' => '0'
     						),
     					array(
+    						'id' => 'same_category_navigation',
+    						'type' => 'button_set',
+    						'title' => __('Same Category Navigation', Redux_TEXT_DOMAIN), 
+    						'sub_desc' => __('If you enable this option, then pagination on single article pages will only go between same category items. This is for all post types.', Redux_TEXT_DOMAIN),
+    						'desc' => '',
+    						'options' => array('1' => 'On','0' => 'Off'),
+    						'std' => '0'
+    						),
+    					array(
     						'id' => 'custom_favicon',
     						'type' => 'upload',
     						'title' => __('Custom favicon', Redux_TEXT_DOMAIN), 
@@ -423,6 +432,23 @@ function setup_framework_options(){
     						)
     					)
     				);
+//    $sections[] = array(
+//    				'icon' => 'dashboard',
+//    				'icon_class' => 'fa-lg',
+//    				'title' => __('Performance Options', "swiftframework"),
+//    				'desc' => __('<p class="description">These are the performance options for the theme</p>', "swiftframework"),
+//    				'fields' => array(	
+//    					array(
+//    						'id' => 'enable_min_scripts',
+//    						'type' => 'button_set',
+//    						'title' => __('Enable Performance', "swiftframework"), 
+//    						'sub_desc' => __('Enable this option to load pre-minified scripts, without the need for any plugins.', "swiftframework"),
+//    						'desc' => '',
+//    						'options' => array('1' => 'On','0' => 'Off'),
+//    						'std' => '0'
+//    						),
+//    					)
+//    				);
    	$sections[] = array(
    					'icon' => 'code',
    					'icon_class' => 'fa-lg',
@@ -610,8 +636,8 @@ function setup_framework_options(){
     							'tb-6'	=> 'Welcome + Super Search / Alt Menu',
     							'tb-7'	=> 'Super Search / Text',
     							'tb-8'  => 'Super Search / Alt Menu',
-    							'tb-9'	=> 'Links / Text',
-    							'tb-10'	=> 'Text / Links',
+    							'tb-9'	=> 'Text / Links',
+    							'tb-10'	=> 'Links / Text',
     							),
     						'desc' => '',
     						'std' => 'tb-5'
@@ -1400,6 +1426,15 @@ function setup_framework_options(){
     							),
     						'desc' => '',
     						'std' => 'none'
+    						),
+    					array(
+    						'id' => 'default_include_author_info',
+    						'type' => 'button_set',
+    						'title' => __('Default Include Author Info', Redux_TEXT_DOMAIN), 
+    						'sub_desc' => __('Choose the default state for including author info on each post.', Redux_TEXT_DOMAIN),
+    						'desc' => '',
+    						'options' => array('1' => 'On','0' => 'Off'),
+    						'std' => '1'
     						),
     					array(
     						'id' => 'default_divide_0',
@@ -2272,7 +2307,25 @@ function setup_framework_options(){
    								'desc' => '',
    								'options' => array('1' => 'On','0' => 'Off'),
    								'std' => '0'
-   								)
+   								),
+   							array(
+								'id' => 'related_article_thumb_width',
+								'type' => 'text',
+								'title' => __('Related Article Thumb Width', Redux_TEXT_DOMAIN),
+								'sub_desc' => __('Override the width for the related article thumb image here (numeric, no px).', Redux_TEXT_DOMAIN),
+								'desc' => '',
+								'std' => '300',
+								'class' => 'mini'
+								),
+   							array(
+   								'id' => 'related_article_thumb_height',
+   								'type' => 'text',
+   								'title' => __('Related Article Thumb Height', Redux_TEXT_DOMAIN),
+   								'sub_desc' => __('Override the height for the related article thumb image here (numeric, no px).', Redux_TEXT_DOMAIN),
+   								'desc' => '',
+   								'std' => '225',
+   								'class' => 'mini'
+   								),
    						)
    					);
    	$sections[] = array(

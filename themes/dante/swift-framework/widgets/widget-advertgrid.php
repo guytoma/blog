@@ -5,16 +5,16 @@
 	*	Custom Advert Grid Widget
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 
 	class sf_advert_grid_widget extends WP_Widget {
 		
-		function sf_advert_grid_widget() {			
+		function __construct() {		
 			$widget_ops = array( 'classname' => 'widget-advert-grid', 'description' => 'Styled advert grid of up to eight 125x125 adverts' );
 			$control_ops = array( 'width' => 250, 'height' => 200, 'id_base' => 'advert-grid-widget' ); //default width = 250
-			$this->WP_Widget( 'advert-grid-widget', 'Swift Framework Advert Grid Widget', $widget_ops, $control_ops );
+			parent::__construct( 'advert-grid-widget', 'Swift Framework Advert Grid Widget', $widget_ops, $control_ops );
 		}
 	
 		function form($instance) {

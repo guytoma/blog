@@ -38,26 +38,26 @@ $sf_carouselID++;
 
 if ( $products->have_posts() ) : ?>
 
-	<div class="related products product-carousel" data-columns="<?php echo $woocommerce_loop['columns']; ?>">
+	<div class="product-carousel spb_content_element">
 
 		<h4 class="lined-heading"><span><?php _e( 'Related Products', 'swiftframework' ); ?></span></h4>
+		
+		<div class="carousel-wrap">
+		
+			<ul class="related products carousel-items" id="carousel-<?php echo esc_attr($sf_carouselID); ?>" data-columns="<?php echo esc_attr($woocommerce_loop['columns']); ?>>">
+		
+				<?php while ( $products->have_posts() ) : $products->the_post(); ?>
+	
+					<?php woocommerce_get_template_part( 'content', 'product' ); ?>
+	
+				<?php endwhile; // end of the loop. ?>
+		
+			</ul>
+	
+			<a href="#" class="carousel-prev"><i class="fa-chevron-left"></i></a><a href="#" class="carousel-next"><i class="fa-chevron-right"></i></a>
 			
-		<div class="carousel-overflow">
-		
-		<?php woocommerce_product_loop_start(); ?>
-
-			<?php while ( $products->have_posts() ) : $products->the_post(); ?>
-								
-				<?php woocommerce_get_template_part( 'content', 'product-4col' ); ?>
-				
-			<?php endwhile; // end of the loop. ?>
-				
-		<?php woocommerce_product_loop_end(); ?>
-		
 		</div>
-		
-		<a href="#" class="prev"><i class="ss-navigateleft"></i></a><a href="#" class="next"><i class="ss-navigateright"></i></a>
-		
+
 	</div>
 
 <?php endif;

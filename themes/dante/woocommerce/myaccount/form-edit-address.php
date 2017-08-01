@@ -17,7 +17,7 @@ global $woocommerce, $current_user;
 
 get_currentuserinfo();
 
-$page_title = ( $load_address == 'billing' ) ? __( 'Billing Address', 'woocommerce' ) : __( 'Shipping Address', 'woocommerce' );
+$page_title = ( $load_address == 'billing' ) ? __( 'Billing Address', 'swiftframework' ) : __( 'Shipping Address', 'swiftframework' );
 
 $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
 $myaccount_page_url = "";
@@ -32,7 +32,7 @@ if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) < 0 ) {
 
 if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
 	
-	$page_title = ( $load_address == 'billing' ) ? __( 'Billing Address', 'woocommerce' ) : __( 'Shipping Address', 'woocommerce' );
+	$page_title = ( $load_address == 'billing' ) ? __( 'Billing Address', 'swiftframework' ) : __( 'Shipping Address', 'swiftframework' );
 	
 	get_currentuserinfo();
 	?>
@@ -70,7 +70,7 @@ if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
 			<?php endforeach; ?>
 	
 			<p>
-				<input type="submit" class="button" name="save_address" value="<?php _e( 'Save Address', 'woocommerce' ); ?>" />
+				<input type="submit" class="button" name="save_address" value="<?php _e( 'Save Address', 'swiftframework' ); ?>" />
 				<?php wp_nonce_field( 'woocommerce-edit_address' ); ?>
 				<input type="hidden" name="action" value="edit_address" />
 			</p>
@@ -106,7 +106,7 @@ if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
 		
 		<form action="<?php echo esc_url( add_query_arg( 'address', $load_address, get_permalink( $edit_address ) ) ); ?>" method="post" class="edit-address-form">
 	
-			<h3><?php if ($load_address=='billing') _e( 'Billing Address', 'woocommerce' ); else _e( 'Shipping Address', 'woocommerce' ); ?></h3>
+			<h3><?php if ($load_address=='billing') _e( 'Billing Address', 'swiftframework' ); else _e( 'Shipping Address', 'swiftframework' ); ?></h3>
 	
 			<?php
 			foreach ($address as $key => $field) :
@@ -122,7 +122,7 @@ if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
 			?>
 	
 			<p>
-				<input type="submit" class="button" name="save_address" value="<?php _e( 'Save Address', 'woocommerce' ); ?>" />
+				<input type="submit" class="button" name="save_address" value="<?php _e( 'Save Address', 'swiftframework' ); ?>" />
 				<?php $woocommerce->nonce_field('edit_address') ?>
 				<input type="hidden" name="action" value="edit_address" />
 			</p>

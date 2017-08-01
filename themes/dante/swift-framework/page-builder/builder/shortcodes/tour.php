@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Tour Shortcode
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
@@ -62,7 +62,7 @@
 	        $iner = '';
 	        foreach ($this->settings['params'] as $param) {
 	            $custom_markup = '';
-	            $param_value = isset($$param['param_name']) ? $$param['param_name'] : null;
+	            $param_value = isset(${$param['param_name']}) ? ${$param['param_name']} : null;
 	
 	            if ( is_array($param_value)) {
 	                // Get first element from the array
@@ -106,19 +106,32 @@
 	        $element = 'spb_tabs';
 	        if ( 'spb_tour' == $this->shortcode) $element = 'spb_tour';
 	
+	        $tab_titles = array();
+	        $tab_ids = array();
+			
 	        // Extract tab titles
 	        preg_match_all( '/spb_tab title="([^\"]+)"/i', $content, $matches, PREG_OFFSET_CAPTURE );
-	        $tab_titles = array();
 	        if ( isset($matches[1]) ) { $tab_titles = $matches[1]; }
+			
+			preg_match_all( '/spb_tab title="([^\"]+)" id="([^\"]+)"/i', $content, $matches, PREG_OFFSET_CAPTURE );
+	        if ( isset($matches[2]) ) { $tab_ids = $matches[2]; }
+	
 	        $tabs_nav = '';
 	        $tab_count = 0;
 	        
 	        $tabs_nav .= '<ul class="nav nav-tabs">';
 	        foreach ( $tab_titles as $tab ) {
-	        	if ($tab_count == 0) {
-	            $tabs_nav .= '<li class="active"><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))) .'" data-toggle="tab">' . $tab[0] . '</a></li>';
+		        if(isset($tab_ids[$tab_count][0])){
+						$tab_id = preg_replace('/\s+/', '-', $tab_ids[$tab_count][0]);
+				}
+				else{
+						$tab_id = preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0]))));
+				}
+				
+		        if ($tab_count == 0) {
+					$tabs_nav .= '<li class="active"><a href="#'. $tab_id.'" data-toggle="tab">' . $tab[0] . '</a></li>';
 	        	} else {
-	            $tabs_nav .= '<li><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))) .'" data-toggle="tab">' . $tab[0] . '</a></li>';        	
+	            	$tabs_nav .= '<li><a href="#'.  $tab_id .'" data-toggle="tab">' . $tab[0] . '</a></li>';
 	        	}
 	        	$tab_count++;
 	        }

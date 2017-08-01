@@ -1,20 +1,5 @@
 <?php get_header(); ?>
 
-<?php
-	$options = get_option('sf_dante_options');
-	$default_page_heading_bg_alt = $options['default_page_heading_bg_alt'];
-?>
-
-<div class="container">
-	<div class="row">
-	<div class="page-heading col-sm-12 clearfix alt-bg <?php echo $default_page_heading_bg_alt; ?>">
-		<div class="heading-text">
-			<h1><?php _e("404", "swiftframework"); ?></h1>
-		</div>
-	</div>
-	</div>
-</div>
-
 <div class="container">
 	<div class="inner-page-wrap row has-right-sidebar has-one-sidebar clearfix">
 	
@@ -27,7 +12,7 @@
 		</article>
 		
 		<aside class="sidebar right-sidebar col-sm-4">
-			<?php dynamic_sidebar('Sidebar-1'); ?>
+			<?php dynamic_sidebar('sidebar-1'); ?>
 		</aside>
 		
 	</div>

@@ -5,7 +5,7 @@
 	*	Swift Framework Media Functions
 	*	------------------------------------------------
 	*	Swift Framework v2.0
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_return_slider()
 	*	sf_video_embed()
@@ -260,4 +260,26 @@
 			echo $output;
 		}
 	}
+	
+
+	/* GET ATTACHMENT META
+	================================================== */
+	if ( ! function_exists( 'sf_get_attachment_meta' ) ) {
+	    function sf_get_attachment_meta( $attachment_id ) {
+	
+			$attachment = get_post( $attachment_id );
+	
+			if ( isset( $attachment ) ) {
+				return array(
+					'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
+					'caption' => $attachment->post_excerpt,
+					'description' => $attachment->post_content,
+					'href' => get_permalink( $attachment->ID ),
+					'src' => $attachment->guid,
+					'title' => $attachment->post_title
+				);
+			}
+		}
+	}
+		
 ?>

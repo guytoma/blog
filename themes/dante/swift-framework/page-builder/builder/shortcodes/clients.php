@@ -76,21 +76,24 @@ class SwiftPageBuilderShortcode_clients extends SwiftPageBuilderShortcode {
     			$columns = 6;
     			}	
     		} else {
-    		$columns = 6;
-    		}	
+    			$columns = 6;
+    		}
     		
-    		if ($carousel == "yes" || $carousel == "") {
-	    		if ($carousel_auto == "yes") {
-	    		$items .= '<div class="carousel-overflow"><ul id="carousel-'.$sf_carouselID.'" class="clients-items carousel-items clearfix" data-columns="'.$columns.'" data-auto="true">';    		
-	    		} else {
-	       		$items .= '<div class="carousel-overflow"><ul id="carousel-'.$sf_carouselID.'" class="clients-items carousel-items clearfix" data-columns="'.$columns.'" data-auto="false">';
-	    		}
+    		$auto = false;
+    		
+    		if ( $carousel_auto == "yes" ) {
+    			$auto = true;
+    		}
+    		
+    		if ($carousel == "yes" || $carousel == "") {    			
+    			$items .= '<div class="carousel-wrap">';
+    			$items .= '<div id="carousel-'.$sf_carouselID.'" class="clients carousel-items clearfix" data-columns="'.$columns.'" data-auto="'.$auto.'">';
     		} else {
-    			$items .= '<ul class="carousel-grid row">';
+    			$items .= '<div class="carousel-grid row">';
     		}	
     								
-			$client_width = 200;
-			$client_height = 200;
+			$client_width = apply_filters('sf_clients_image_width', 200);
+			$client_height = apply_filters('sf_clients_image_height', 200);
 			
 			// CLIENTS LOOP
 			
@@ -103,7 +106,7 @@ class SwiftPageBuilderShortcode_clients extends SwiftPageBuilderShortcode {
 				$image_alt = esc_attr( sf_get_post_meta($client_image, '_wp_attachment_image_alt', true) );
 				$target = "_blank";
 				    				
-				$items .= '<li class="clearfix carousel-item client-item '.$item_size_class.'">';
+				$items .= '<div class="clearfix carousel-item client-item '.$item_size_class.'">';
 				    				
 				$items .= '<figure>';
 					
@@ -125,16 +128,17 @@ class SwiftPageBuilderShortcode_clients extends SwiftPageBuilderShortcode {
 				}
 
 				$items .= '</figure>';
+				
+				$items .= '</div>';
 							
 			endwhile;
 			
 			wp_reset_postdata();
 			
-			if ($carousel == "yes" || $carousel == "") {
+			if ($carousel == "yes" || $carousel == "") {    			
+				$items .= '</div>';
 				
-				$items .= '</ul>';
-				
-				$items .= '<a href="#" class="prev"><i class="ss-navigateleft"></i></a><a href="#" class="next"><i class="ss-navigateright"></i></a>';
+				$items .= '<a href="#" class="carousel-prev"><i class="ss-navigateleft"></i></a><a href="#" class="carousel-next"><i class="ss-navigateright"></i></a>';
 				
 				$options = get_option('sf_dante_options');
 				if ($options['enable_swipe_indicators']) {
@@ -142,7 +146,6 @@ class SwiftPageBuilderShortcode_clients extends SwiftPageBuilderShortcode {
 				}
 				
 				$items .= '</div>';
-			
 			} else {
 				
 				$items .= '</ul>';
@@ -333,23 +336,25 @@ class SwiftPageBuilderShortcode_clients_featured extends SwiftPageBuilderShortco
 					
 			$items .= '</ul></div>';
 			
+			// Full width setup
+			$fullwidth = false;
+			if ($alt_background != "none" && $sidebars == "no-sidebars") {
+			$fullwidth = true;
+			}
+			
 			// PAGE BUILDER OUPUT
     		
     		$el_class = $this->getExtraClass($el_class);
             $width = spb_translateColumnWidthToSpan($width);
             
-            if ($alt_background == "none" || $sidebars != "no-sidebars") {
             $output .= "\n\t".'<div class="spb_featured_clients_widget spb_content_element '.$width.$el_class.'">';
-            } else {
-            $output .= "\n\t".'<div class="spb_featured_clients_widget spb_content_element alt-bg '.$alt_background.' '.$width.$el_class.'">';
-            }
-            
             $output .= "\n\t\t".'<div class="spb_wrapper clients-wrap row">';
             $output .= "\n\t\t\t\t".$items;
             $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
             $output .= "\n\t".'</div> '.$this->endBlockComment($width);
     
-            $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
+            $output = $this->startRow($el_position, $width, $fullwidth, "", $alt_background) . $output . $this->endRow($el_position, $width, $fullwidth);
+            
             return $output;
 		
     }

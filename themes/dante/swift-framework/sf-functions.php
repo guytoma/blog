@@ -5,7 +5,7 @@
 	*	Swift Framework Functions
 	*	------------------------------------------------
 	*	Swift Framework v2.0
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_content_filter()
 	*	sf_get_tweets()
@@ -475,7 +475,7 @@
 			<style type="text/css" media="screen">
 			<?php
 				echo "\n".'/*========== Asset Background Styles ==========*/'."\n";
-				echo '.alt-bg {border-color: '.$section_divide_color.';}'. "\n";
+				echo '.asset-bg {border-color: '.$section_divide_color.';}'. "\n";
 				echo '.alt-one {background-color: '.$alt_one_bg_color.';}'. "\n";
 				if (isset($options['alt_one_bg_image']) && $alt_one_bg_image != "") {
 					if ($alt_one_bg_image_size == "cover") {

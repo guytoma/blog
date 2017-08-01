@@ -6,6 +6,16 @@
 	<!--// OPEN HEAD //-->
 	<head>
 		<?php
+			
+			global $post;
+			$post_id = 0;
+			
+			if ( ( function_exists('is_shop') && is_shop() ) || ( function_exists('is_product_category') && is_product_category() ) ) {
+				$post_id = wc_get_page_id( 'shop' );
+			} else {
+				$post_id = $post->ID;
+			}
+			
 			$options = get_option('sf_dante_options');
 			$enable_responsive = $options['enable_responsive'];
 			$is_responsive = "responsive-fluid";
@@ -76,7 +86,7 @@
 				$ss_enable = true;
 			}
 			
-			global $post, $remove_promo_bar, $enable_one_page_nav;
+			global $remove_promo_bar, $enable_one_page_nav;
 			$extra_page_class = $description = "";
 			if ($post) {
 				$extra_page_class = sf_get_post_meta($post->ID, 'sf_extra_page_class', true);
@@ -199,6 +209,10 @@
 		<?php echo $fontdeck_js; ?>
 		<?php } ?>
 		
+		<?php if ($options['google_analytics'] != "") {
+			echo $options['google_analytics'];
+		} ?>
+		
 		<!--// WORDPRESS HEAD HOOK //-->
 		<?php wp_head(); ?>
 	
@@ -206,7 +220,7 @@
 	</head>
 	
 	<!--// OPEN BODY //-->
-	<body <?php body_class($page_class.' '.$is_responsive.' '.$extra_page_class.' '.$header_search_type); ?> ontouchstart="">
+	<body <?php body_class($page_class.' '.$is_responsive.' '.$extra_page_class.' '.$header_search_type); ?>>
 		
 		<div id="header-search">
 			<div class="container clearfix">
@@ -274,5 +288,65 @@
 					}
 				?>
 								
-				<!--// OPEN #page-wrap //-->
-				<div id="page-wrap">
+				<?php 
+					// Page Heading
+					sf_page_heading();
+				?>
+				
+				<?php
+					// Page container handling
+					$pb_fw_mode = false;
+					$fw_override = false;
+					
+					if ( $post && is_singular() ) {
+					
+						global $sf_pb_active;
+									
+						$sidebar_config = sf_get_post_meta($post_id, 'sf_sidebar_config', true);
+						if ( isset($_GET['sidebar']) ) {
+							$sidebar_config = $_GET['sidebar'];
+						}
+						
+						if ( is_singular('portfolio') ) {
+							$sidebar_config = "no-sidebars";
+						}
+						
+						$pb_active = sf_get_post_meta($post_id, '_spb_js_status', true);
+						
+						if ( $sidebar_config != "no-sidebars" || post_password_required() ) {
+							$pb_fw_mode = false;
+						} else if ( $pb_active == "true" ) {
+							$pb_fw_mode = true;
+						}
+						
+						if ( function_exists('is_product') && is_product() && $sidebar_config == "no-sidebars" ) {
+							$pb_fw_mode = true;
+						}
+						
+						if ( is_page_template( 'template-fw.php' ) || is_page_template( 'template-fw-alt.php' ) ) {
+							$pb_fw_mode = true;
+						}
+						
+						if ( is_singular( 'portfolio' ) ) {
+							$fw_media_display = sf_get_post_meta($post->ID, 'sf_fw_media_display', true);
+							if ( $fw_media_display == "fw-media" ) {
+								$fw_override = true;
+							}
+						}
+	
+						$sf_pb_active = $pb_fw_mode;
+					}
+					
+					
+					
+					// Check if page should be enabled in full width mode
+					if ($pb_fw_mode || $fw_override) { ?>
+					<!--// OPEN .pb-fw-wrap //-->
+					<div class="pb-fw-wrap">
+					<?php } else { ?>
+					<!--// OPEN .container //-->
+					<div class="container">
+				<?php } ?>
+				
+					<!--// OPEN #page-wrap //-->
+					<div id="page-wrap">

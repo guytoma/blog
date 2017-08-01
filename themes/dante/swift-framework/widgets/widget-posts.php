@@ -5,36 +5,37 @@
 	*	Custom Posts Widget
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
-	
+
 	// Register widget
 	add_action( 'widgets_init', 'init_sf_recent_posts' );
 	function init_sf_recent_posts() { return register_widget('sf_recent_posts'); }
-	
+
 	class sf_recent_posts extends WP_Widget {
-		function sf_recent_posts() {
-			parent::WP_Widget( 'sf_recent_custom_posts', $name = 'Swift Framework Recent Posts' );
-		}
 	
+		function __construct() {
+			parent::__construct( 'sf_recent_custom_posts', $name = 'Swift Framework Recent Posts' );
+		}
+
 		function widget( $args, $instance ) {
 			global $post;
 			extract($args);
-						
+
 			// Widget Options
-			$title 	 = apply_filters('widget_title', $instance['title'] ); // Title		
+			$title 	 = apply_filters('widget_title', $instance['title'] ); // Title
 			$number	 = $instance['number']; // Number of posts to show
 			$category	 = $instance['category']; // Category to show
-			
+
 			if ($category == "All") {$category = "all";}
 			if ($category == "all") {$category = '';}
 			$category_slug = str_replace('_', '-', $category);
 			$count = 0;
 			echo $before_widget;
-			
+
 		    if ( $title ) echo $before_title . $title . $after_title;
-				
+
 			$recent_posts = new WP_Query(
 				array(
 					'post_type' => 'post',
@@ -42,19 +43,26 @@
 					'category_name' => $category_slug,
 					)
 			);
-			
-			if( $recent_posts->have_posts() ) : 
-			
+
+			$options = get_option('sf_dante_options');
+			$single_author = $options['single_author'];
+			$remove_dates = false;
+			if (isset($options['remove_dates']) && $options['remove_dates'] == 1) {
+			$remove_dates = true;
+			}
+
+			if( $recent_posts->have_posts() ) :
+
 			?>
-			
+
 			<ul class="recent-posts-list">
-				
+
 				<?php while( $recent_posts->have_posts()) : $recent_posts->the_post();
-				
+
 				if ($count == $number) {
 					break;
 				}
-				
+
 				$post_title = get_the_title();
 				$post_author = get_the_author_link();
 				$post_date = get_the_date();
@@ -73,7 +81,13 @@
 					</a>
 					<div class="recent-post-details">
 						<a class="recent-post-title" href="<?php echo $post_permalink; ?>" title="<?php echo $post_title; ?>"><?php echo $post_title; ?></a>
+						<?php if ($single_author && !$remove_dates) { ?>
+						<span><?php printf(__('%1$s', 'swiftframework'), $post_date); ?></span>
+						<?php } else if (!$remove_dates) { ?>
 						<span><?php printf(__('By %1$s on %2$s', 'swiftframework'), $post_author, $post_date); ?></span>
+						<?php } else if (!$single_author) { ?>
+						<span><?php printf(__('By %1$s', 'swiftframework'), $post_author); ?></span>
+						<?php } ?>
 						<div class="comments-likes">
 							<?php if ( comments_open() ) { ?>
 								<a href="<?php echo $post_permalink; ?>#comment-area"><i class="ss-chat"></i><span><?php echo $post_comments; ?></span></a>
@@ -84,33 +98,33 @@
 						</div>
 					</div>
 				</li>
-				
-				<?php 
+
+				<?php
 					$count ++;
 					endwhile;
 				?>
 			</ul>
-				
-			<?php wp_reset_query(); endif; ?>			
-			
+
+			<?php wp_reset_query(); endif; ?>
+
 			<?php
-			
+
 			echo $after_widget;
 		}
-	
+
 		/* Widget control update */
 		function update( $new_instance, $old_instance ) {
 			$instance    = $old_instance;
-				
+
 			$instance['title']  = strip_tags( $new_instance['title'] );
 			$instance['number'] = strip_tags( $new_instance['number'] );
 			$instance['category'] = strip_tags( $new_instance['category'] );
 			return $instance;
 		}
-		
+
 		/* Widget settings */
-		function form( $instance ) {	
-		
+		function form( $instance ) {
+
 			    // Set defaults if instance doesn't already exist
 			    if ( $instance ) {
 					$title  = $instance['title'];
@@ -122,7 +136,7 @@
 			        $number = '5';
 			        $category = '';
 			    }
-				
+
 				// The widget form
 				?>
 				<p>
@@ -145,9 +159,9 @@
 					</select>
 					</p>
 				</p>
-		<?php 
+		<?php
 		}
-	
+
 	}
 
 ?>

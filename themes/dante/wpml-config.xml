@@ -19,6 +19,10 @@
 	</taxonomies>
     <admin-texts>
     	<key name="sf_dante_options">
+    		<key name="logo_upload" />
+    		<key name="retina_logo_upload" />
+    		<key name="light_logo_upload" />
+    		<key name="dark_logo_upload" />
 	        <key name="rss_feed_url" />
 	        <key name="tb_left_text" />
 	        <key name="tb_right_text" />

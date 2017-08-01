@@ -24,9 +24,12 @@ class SwiftPageBuilderShortcode_spb_icon_box extends SwiftPageBuilderShortcode {
         $output = '';
         
         if ($image != "") {
-        $img_url = wp_get_attachment_url( $image, 'full' );
-        $image_object = sf_aq_resize( $img_url, 70, 70, true, false);      
-        $image_url = $image_object[0];
+	        $img_url = wp_get_attachment_url( $image, 'full' );
+	        $image_oject = array();
+	        if ( function_exists('sf_aq_resize') ) {
+		        $image_object = sf_aq_resize( $img_url, 70, 70, true, false);      
+		    }
+		    $image_url = $image_object[0];
         }
         
        	$icon_box_output = do_shortcode('[sf_iconbox character="'.$character.'" image="'.$image.'" color="standard" type="'.$box_type.'" title="'.$title.'" animation="'.$animation.'" animation_delay="'.$animation_delay.'" color="'.$color.'" link="'.$link.'" target="'.$target.'"]'.$content.'[/sf_iconbox]');

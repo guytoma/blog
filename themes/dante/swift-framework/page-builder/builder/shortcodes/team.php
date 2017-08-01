@@ -74,6 +74,7 @@ class SwiftPageBuilderShortcode_team extends SwiftPageBuilderShortcode {
 				$member_skype = sf_get_post_meta($post->ID, 'sf_team_member_skype', true);
 				$member_instagram = sf_get_post_meta($post->ID, 'sf_team_member_instagram', true);
 				$member_dribbble = sf_get_post_meta($post->ID, 'sf_team_member_dribbble', true);
+				$member_xing = sf_get_post_meta($post->ID, 'sf_team_member_xing', true);
 				$member_image = get_post_thumbnail_id();
 				$member_link = get_permalink();
 				   	
@@ -92,7 +93,7 @@ class SwiftPageBuilderShortcode_team extends SwiftPageBuilderShortcode {
 				$items .= '<h5 class="team-member-name">'. $member_name .'</h5>';
 				$items .= '<h5 class="team-member-position">'. $member_position .'</h5>';
 				
-				if (($member_twitter) || ($member_facebook) || ($member_linkedin) || ($member_google_plus) || ($member_skype) || ($member_instagram) || ($member_dribbble)) {				
+				if (($member_twitter) || ($member_facebook) || ($member_linkedin) || ($member_google_plus) || ($member_skype) || ($member_instagram) || ($member_dribbble) || ($member_xing != "")) {				
 					$items .= '<ul class="social-icons">';
 					if ($member_twitter) {
 						$items .= '<li class="twitter"><a href="http://www.twitter.com/'.$member_twitter.'" target="_blank"><i class="fa-twitter"></i><i class="fa-twitter"></i></a></li>';
@@ -114,6 +115,9 @@ class SwiftPageBuilderShortcode_team extends SwiftPageBuilderShortcode {
 					}
 					if ($member_dribbble) {
 						$items .= '<li class="dribbble"><a href="http://www.dribbble.com/'.$member_dribbble.'" target="_blank"><i class="fa-dribbble"></i><i class="fa-dribbble"></i></a></li>';
+					}
+					if ($member_xing) {
+						$items .= '<li class="xing"><a href="'.$member_xing.'" target="_blank"><i class="fa-xing"></i><i class="fa-xing"></i></a></li>';
 					}
 					$items .= '</ul>';
 				}

@@ -13,7 +13,7 @@
 
 <?php
  
-global $wpdb, $yith_wcwl, $woocommerce, $sf_catalog_mode;
+global $wpdb, $yith_wcwl, $woocommerce, $catalog_mode;
 
 $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
 $myaccount_page_url = $shop_url = "";
@@ -45,7 +45,9 @@ if( $pagination == 'yes' ) {
     if( is_user_logged_in() ) {
         $count = $wpdb->get_results( $wpdb->prepare( 'SELECT COUNT(*) as `cnt` FROM `' . YITH_WCWL_TABLE . '` WHERE `user_id` = %d', $user_id  ), ARRAY_A );
         $count = $count[0]['cnt'];
-    } elseif( yith_usecookies() ) {
+  
+     } elseif( count( yith_getcookie( 'yith_wcwl_products' )) > 0 ) {
+   
         $count[0]['cnt'] = count( yith_getcookie( 'yith_wcwl_products' ) );
     } else {
         $count[0]['cnt'] = count( $_SESSION['yith_wcwl_products'] );
@@ -71,7 +73,7 @@ if ($user_id != "") {
 $wishlist = $wpdb->get_results(
 				$wpdb->prepare( "SELECT * FROM `" . YITH_WCWL_TABLE . "` WHERE `user_id` = %s" . $limit_sql, $user_id ),
 			ARRAY_A );
-} elseif( yith_usecookies() ) {
+} elseif(  count( yith_getcookie( 'yith_wcwl_products' )) > 0 ) {
 	$wishlist = yith_getcookie( 'yith_wcwl_products' );
 } else {
 	$wishlist = isset( $_SESSION['yith_wcwl_products'] ) ? $_SESSION['yith_wcwl_products'] : array(); }
@@ -81,8 +83,8 @@ if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
 wc_print_notices();
 } else {
 $woocommerce->show_messages();
-} 
-?>
+}
+ ?>
 	<div id="yith-wcwl-messages"></div>
 	
 	<?php sf_woo_help_bar(); ?>
@@ -120,7 +122,7 @@ $woocommerce->show_messages();
 		    			<th class="product-name"><span class="nobr"><?php _e( 'Product Name', 'swiftframework' ) ?></span></th>
 		    			<?php if( get_option( 'yith_wcwl_price_show' ) == 'yes' ) { ?><th class="product-price"><span class="nobr"><?php _e( 'Unit Price', 'swiftframework' ) ?></span></th><?php } ?>
 		    			<?php if( get_option( 'yith_wcwl_stock_show' ) == 'yes' ) { ?><th class="product-stock-status"><span class="nobr"><?php _e( 'Stock Status', 'swiftframework' ) ?></span></th><?php } ?>
-		                <?php if (!$sf_catalog_mode && get_option( 'yith_wcwl_add_to_cart_show' ) == 'yes') { ?>
+		                <?php if (!$catalog_mode && get_option( 'yith_wcwl_add_to_cart_show' ) == 'yes') { ?>
 		                <th class="product-add-to-bag"><span class="nobr"><?php _e( 'Actions', 'swiftframework' ) ?></span></th>
 		                <?php } ?>
 		    			<th class="product-remove"></th>
@@ -141,9 +143,12 @@ $woocommerce->show_messages();
 		        			}
 		                                     
 		                    $product_obj = get_product( $values['prod_id'] );
+							global $product;
+							$product = $product_obj;
+
 		                    
 		                    if( $product_obj !== false && $product_obj->exists() ) : ?>
-		                    <tr id="yith-wcwl-row-<?php echo $values['ID'] ?>">
+							 <tr id="yith-wcwl-row-<?php echo $values['prod_id'] ?>" data-row-id="<?php echo $values['prod_id'] ?>">
 		                        <td class="product-thumbnail">
 		                            <a href="<?php echo esc_url( get_permalink( apply_filters( 'woocommerce_in_cart_product', $values['prod_id'] ) ) ) ?>">
 		                                <?php echo $product_obj->get_image() ?>
@@ -182,12 +187,31 @@ $woocommerce->show_messages();
 		                            ?>
 		                        </td>
 		                        <?php } ?>
-		                        <?php if (!$sf_catalog_mode && get_option( 'yith_wcwl_add_to_cart_show' ) == 'yes') { ?>
+		                        <?php if (!$catalog_mode && get_option( 'yith_wcwl_add_to_cart_show' ) == 'yes') { ?>
 		                        <td class="product-add-to-cart">
-		                            <?php echo YITH_WCWL_UI::add_to_cart_button( $values['prod_id'], $availability['class'] ) ?>
+		                          <?php 
+		                          
+		                              if ( version_compare( get_option('yith_wcwl_version'), "2.0" ) >= 0 ) {   
+		                        	      if ( isset( $stock_status ) && $stock_status != 'Out' ){
+								
+                                    		if ( function_exists( 'wc_get_template' ) ) {
+                                        		wc_get_template( 'loop/add-to-cart.php' );
+                                    		}
+                                    		else{
+                                        		woocommerce_get_template( 'loop/add-to-cart.php' );
+                                    		}
+                                    	}
+									 }else{
+									 	 echo YITH_WCWL_UI::add_to_cart_button( $values['prod_id'], $availability['class'] );
+									 } ?>
 		                        </td>
 		                        <?php } ?>
-		                        <td class="product-remove"><div><a href="javascript:void(0)" onclick="remove_item_from_wishlist( '<?php echo esc_url( $yith_wcwl->get_remove_url( $values['ID'] ) )?>', 'yith-wcwl-row-<?php echo $values['ID'] ?>');" class="remove" title="<?php _e( 'Remove this product', 'swiftframework' ) ?>"><i class="ss-delete"></i></a></td>
+		                        
+		                        <?php if ( version_compare( get_option('yith_wcwl_version'), "2.0" ) >= 0 ) {    ?>
+		                        			<td class="product-remove"><div> <a href="<?php echo esc_url( add_query_arg( 'remove_from_wishlist', $values['prod_id']) ) ?>" class="remove remove_from_wishlist" title="<?php _e( 'Remove this product', 'swiftframework' ) ?>"><i class="fa-times"></i></a></div></td>
+		                        <?php } else { ?>	
+		                        			<td class="product-remove"><div><a href="javascript:void(0)" onclick="remove_item_from_wishlist( '<?php echo esc_url( $yith_wcwl->get_remove_url( $values['ID'] ) )?>', 'yith-wcwl-row-<?php echo $values['prod_id'] ?>');" class="remove"  data-product-id="<?php echo $values['prod_id']; ?>" title="<?php _e( 'Remove this product', 'swiftframework' ) ?>"><i class="fa-times"></i></a></td>
+		                        <?php } ?>
 		                    </tr>
 		                    <?php
 		                    endif;

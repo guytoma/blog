@@ -32,21 +32,23 @@ class SwiftPageBuilderShortcode_fullwidth_text extends SwiftPageBuilderShortcode
         $sidebars = 'no-sidebars';
         }
                         
-        if ($alt_background == "none" || $sidebars != "no-sidebars") {
-        $output .= "\n\t".'<div class="full-width-text spb_content_element '.$width.$el_class.'">';
-        $title_heading_class = "spb-text-heading";
-        } else {
-        $output .= "\n\t".'<div class="full-width-text spb_content_element alt-bg '.$alt_background.' '.$width.$el_class.'">';
-        $title_heading_class = "spb-center-heading";
+        // Full width setup
+        $fullwidth = false;
+        if ($alt_background != "none" && $sidebars == "no-sidebars") {
+        $fullwidth = true;
         }
-
+        
+        $title_heading_class = 'spb-center-heading';
+                        
+        $output .= "\n\t".'<div class="full-width-text spb_content_element '.$width.$el_class.'">';
         $output .= "\n\t\t".'<div class="spb_wrapper clearfix">';
         $output .= ($title != '' ) ? "\n\t\t\t".'<div class="heading-wrap"><h3 class="spb-heading '.$title_heading_class.'"><span>'.$title.'</span></h3></div>' : '';
         $output .= "\n\t\t\t".do_shortcode($content);
         $output .= "\n\t\t".'</div> ' . $this->endBlockComment('.spb_wrapper');
         $output .= "\n\t".'</div> ' . $this->endBlockComment($width);
 
-        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
+        $output = $this->startRow($el_position, $width, $fullwidth, "", $alt_background) . $output . $this->endRow($el_position, $width, $fullwidth, "fw-text");
+
         return $output;
     }
 }

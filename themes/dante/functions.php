@@ -5,7 +5,7 @@
 	*	Dante Functions
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	VARIABLE DEFINITIONS
 	*	PLUGIN INCLUDES
@@ -34,6 +34,19 @@
 	define('SF_LOCAL_PATH', get_template_directory_uri());
 	
 	
+	/* CHECK WPML IS ACTIVE
+	================================================== */ 
+	if ( ! function_exists( 'sf_wpml_activated' ) ) {
+		function sf_wpml_activated() {
+			if ( function_exists('icl_object_id') ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	
 	/* PLUGIN INCLUDES
 	================================================== */
 	$options = get_option('sf_dante_options');
@@ -44,12 +57,22 @@
 	require_once(SF_INCLUDES_PATH . '/plugins/aq_resizer.php');
 	include_once(SF_INCLUDES_PATH . '/plugin-includes.php');
 	
+	// Love it
 	if (!$disable_loveit) {
 	include_once(SF_INCLUDES_PATH . '/plugins/love-it-pro/love-it-pro.php');
 	}
 	
-	require_once(SF_INCLUDES_PATH . '/wp-updates-theme.php');
-	new WPUpdatesThemeUpdater_445( 'http://wp-updates.com/api/2/theme', basename(get_template_directory()));
+	// Auto-update
+	require_once(SF_INCLUDES_PATH . '/theme_update_check.php');
+	$NeighborhoodUpdateChecker = new ThemeUpdateChecker(
+	    'dante',
+	    'https://kernl.us/api/v1/theme-updates/5667fe730a25612471e649f2/'
+	);
+	
+	// Revslider
+	if ( function_exists('set_revslider_as_theme') ) {
+		set_revslider_as_theme();
+	}
 	
 	
 	/* THEME SETUP
@@ -91,14 +114,21 @@
 		add_action( 'after_setup_theme', 'sf_dante_setup' );
 	}
 	
+	/* META BOX FRAMEWORK
+	================================================== */
+	include_once(SF_FRAMEWORK_PATH . '/meta-box/meta-box.php');
+	include_once(SF_FRAMEWORK_PATH . '/meta-boxes.php');
+	
 	
 	/* CONTENT FUNCTIONS
 	================================================== */
 	if (!function_exists('sf_custom_content')) {
 		function sf_custom_content_functions() {
 			include_once(SF_INCLUDES_PATH . '/sf-header.php');
+			include_once(SF_INCLUDES_PATH . '/sf-page-heading.php');
 			include_once(SF_INCLUDES_PATH . '/sf-blog.php');
 			include_once(SF_INCLUDES_PATH . '/sf-portfolio.php');
+			include_once(SF_INCLUDES_PATH . '/sf-portfolio-detail.php');
 			include_once(SF_INCLUDES_PATH . '/sf-products.php');
 			include_once(SF_INCLUDES_PATH . '/sf-post-formats.php');
 		}
@@ -133,7 +163,7 @@
 		function sf_include_theme_options() {
 			require_once(SF_INCLUDES_PATH . '/sf-options.php');
 		}
-		add_action('after_setup_theme', 'sf_include_theme_options', 0);
+		add_action('after_setup_theme', 'sf_include_theme_options', 10);
 	}
 	
 	
@@ -170,58 +200,61 @@
 	if (!function_exists('sf_enqueue_scripts')) {
 		function sf_enqueue_scripts() {
 			
+			$options = get_option('sf_dante_options');
+			$enable_min_scripts = false;
+			if (isset($options['enable_min_scripts'])) {	
+			$enable_min_scripts = $options['enable_min_scripts'];
+			}
+			if (isset($options['enable_product_zoom'])) {	
+				$enable_product_zoom = $options['enable_product_zoom'];	
+			}
 			$post_type = get_query_var('post_type');
 			
-		    wp_register_script('sf-bootstrap-js', SF_LOCAL_PATH . '/js/bootstrap.min.js', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-flexslider', SF_LOCAL_PATH . '/js/jquery.flexslider-min.js', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-isotope', SF_LOCAL_PATH . '/js/jquery.isotope.min.js', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-imagesLoaded', SF_LOCAL_PATH . '/js/imagesloaded.js', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-easing', SF_LOCAL_PATH . '/js/jquery.easing.js', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-carouFredSel', SF_LOCAL_PATH . '/js/jquery.carouFredSel.min.js', 'jquery', NULL, TRUE); 
-			wp_register_script('sf-jquery-ui', SF_LOCAL_PATH . '/js/jquery-ui-1.10.2.custom.min.js', 'jquery', NULL, TRUE);
-			wp_register_script('sf-viewjs', SF_LOCAL_PATH . '/js/view.min.js?auto', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-fitvids', SF_LOCAL_PATH . '/js/jquery.fitvids.js', 'jquery', NULL , TRUE);
-		    wp_register_script('sf-maps', '//maps.google.com/maps/api/js?sensor=false', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-elevatezoom', SF_LOCAL_PATH . '/js/jquery.elevateZoom.min.js', 'jquery', NULL, TRUE);
-		    wp_register_script('sf-infinite-scroll',  SF_LOCAL_PATH . '/js/jquery.infinitescroll.min.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-bootstrap-js', SF_LOCAL_PATH . '/js/combine/bootstrap.min.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-flexslider', SF_LOCAL_PATH . '/js/combine/jquery.flexslider-min.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-isotope', SF_LOCAL_PATH . '/js/combine/jquery.isotope.min.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-imagesLoaded', SF_LOCAL_PATH . '/js/combine/imagesloaded.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-easing', SF_LOCAL_PATH . '/js/combine/jquery.easing.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-owlcarousel', SF_LOCAL_PATH . '/js/combine/owl.carousel.min.js', 'jquery', NULL, TRUE); 
+			wp_register_script('sf-jquery-ui', SF_LOCAL_PATH . '/js/combine/jquery-ui-1.10.2.custom.min.js', 'jquery', NULL, TRUE);
+			wp_register_script('sf-ilightbox', SF_LOCAL_PATH . '/js/combine/ilightbox.min.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-fitvids', SF_LOCAL_PATH . '/js/combine/jquery.fitvids.js', 'jquery', NULL , TRUE);
+		    wp_register_script('sf-maps', '//maps.google.com/maps/api/js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-elevatezoom', SF_LOCAL_PATH . '/js/combine/jquery.elevateZoom.min.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-infinite-scroll',  SF_LOCAL_PATH . '/js/combine/jquery.infinitescroll.min.js', 'jquery', NULL, TRUE);
 		    wp_register_script('sf-theme-scripts', SF_LOCAL_PATH . '/js/theme-scripts.js', 'jquery', NULL, TRUE);
 		    wp_register_script('sf-functions', SF_LOCAL_PATH . '/js/functions.js', 'jquery', NULL, TRUE);
+		    wp_register_script('sf-functions-min', SF_LOCAL_PATH . '/js/functions.min.js', 'jquery', NULL, TRUE);
 			
 		    wp_enqueue_script('jquery');
-			wp_enqueue_script('sf-bootstrap-js');
-		    wp_enqueue_script('sf-jquery-ui');
-		    wp_enqueue_script('sf-flexslider');
-			wp_enqueue_script('sf-easing');
-	   	    wp_enqueue_script('sf-carouFredSel');
-		    wp_enqueue_script('sf-theme-scripts');
 		    
-		    if (sf_woocommerce_activated()) {
-		    	if (!is_account_page()) {
-		    		wp_enqueue_script('sf-viewjs');
-		    	}
-		    } else {
-		   		wp_enqueue_script('sf-viewjs');
+    		wp_enqueue_script('sf-bootstrap-js');
+    	    wp_enqueue_script('sf-jquery-ui');
+    	    wp_enqueue_script('sf-flexslider');
+    		wp_enqueue_script('sf-easing');
+    		wp_enqueue_script('sf-owlcarousel');
+    	    wp_enqueue_script('sf-theme-scripts');
+    	    wp_enqueue_script('sf-ilightbox');
+    	    
+		    if ( !is_singular('tribe_events') && $post_type != 'tribe_events' && !is_post_type_archive('events') && !is_post_type_archive('tribe_events')) {
+		    	wp_enqueue_script('sf-maps');
 		    }
-		   	
-	   	    if ( !is_singular('tribe_events') && $post_type != 'tribe_events' && !is_post_type_archive('events') && !is_post_type_archive('tribe_events')) {
-	   	    	wp_enqueue_script('sf-maps');
-	   	    }
-	   	    wp_enqueue_script('sf-isotope');
-	   	    wp_enqueue_script('sf-imagesLoaded');
-	   	    wp_enqueue_script('sf-infinite-scroll');
+		    wp_enqueue_script('sf-isotope');
+		    wp_enqueue_script('sf-imagesLoaded');
+		    wp_enqueue_script('sf-infinite-scroll');
+		
+		
+			if ($enable_product_zoom) {
+				wp_enqueue_script('sf-elevatezoom');
+			}
 	   	
-	   		$options = get_option('sf_dante_options');
-	   		
-	   		if (isset($options['enable_product_zoom'])) {	
-	   			$enable_product_zoom = $options['enable_product_zoom'];	
-	   			if ($enable_product_zoom) {
-	   				wp_enqueue_script('sf-elevatezoom');
-	   			}
-	   		}
-		   	
-		    if (!is_admin()) {
-		    	wp_enqueue_script('sf-functions');
-		    }
+    	    if (!is_admin()) {
+    	    	if (isset($options['enable_min_scripts'])) {
+    	    	wp_enqueue_script('sf-functions');
+    	    	} else {
+    	    	wp_enqueue_script('sf-functions');
+    	    	}
+    	    }
 		    
 		   	if (is_singular() && comments_open()) {
 		    	wp_enqueue_script('comment-reply');
@@ -241,6 +274,7 @@
 	        $ie_scripts .= '<script data-cfasync="false" src="'.$theme_url.'/js/respond.min.js"></script>';
 	        $ie_scripts .= '<script data-cfasync="false" src="'.$theme_url.'/js/html5shiv.js"></script>';
 	        $ie_scripts .= '<script data-cfasync="false" src="'.$theme_url.'/js/excanvas.compiled.js"></script>';
+	        $ie_scripts .= '<script data-cfasync="false" src="'.$theme_url.'/js/background_size_emu.js"></script>';
 	        $ie_scripts .= '<![endif]-->';
 	        echo $ie_scripts;
 	    }
@@ -265,60 +299,45 @@
 	add_action('layerslider_ready', 'sf_layerslider_overrides');
 	
 	
-	/* THEME UPDATES
-	================================================== */
-	function sf_envato_toolkit_admin_init() {
-	 	
-	    // Include the Toolkit Library
-	    include_once( SF_INCLUDES_PATH .'/envato-wordpress-toolkit-library/class-envato-wordpress-theme-upgrader.php' );
-	    
-	    // Display a notice in the admin to remind the user to enter their credentials
-	    function sf_envato_toolkit_credentials_admin_notices() {
-	        $message = sprintf( __( "To enable Dante update notifications, please enter your Envato Marketplace credentials in the %s", "swift-framework-admin" ),
-	            "<a href='" . admin_url() . "admin.php?page=envato-wordpress-toolkit'>Envato WordPress Toolkit Plugin</a>" );
-	        echo "<div id='message' class='updated below-h2'><p>{$message}</p></div>";
-	    }
-	    
-	    // Use credentials used in toolkit plugin so that we don't have to show our own forms anymore
-	    $credentials = get_option( 'envato-wordpress-toolkit' );
-	    if ( empty( $credentials['user_name'] ) || empty( $credentials['api_key'] ) ) {
-	        add_action( 'admin_notices', 'sf_envato_toolkit_credentials_admin_notices' );
-	        return;
-	    }
-	    
-	    // Check updates only after a while
-	    $lastCheck = get_option( 'toolkit-last-toolkit-check' );
-	    if ( false === $lastCheck ) {
-	        update_option( 'toolkit-last-toolkit-check', time() );
-	        return;
-	    }
-	     
-	    // Check for an update every 3 hours
-	    if ( (time() - $lastCheck) < 10800 ) {
-	        return;
-	    }
-	     
-	    // Update the time we last checked
-	    update_option( 'toolkit-last-toolkit-check', time() );
-	    
-	    // Check for updates
-	    $upgrader = new Envato_WordPress_Theme_Upgrader( $credentials['user_name'], $credentials['api_key'] );
-	    $updates = $upgrader->check_for_theme_update();
-	    
-	    // Add update alert, to update the theme
-	    if ( $updates->updated_themes_count ) {
-	        add_action( 'admin_notices', 'sf_envato_toolkit_admin_notices' );
-	    }
-	    
-	    // Display a notice in the admin that an update is available	    
-	    function sf_envato_toolkit_admin_notices() {
-	        $message = sprintf( __( "An update to Dante is available! Head over to %s to update it now.", "swift-framework-admin" ),
-	            "<a href='" . admin_url() . "admin.php?page=envato-wordpress-toolkit'>Envato WordPress Toolkit Plugin</a>" );
-	        echo "<div id='message' class='updated below-h2'><p>{$message}</p></div>";
-	    }
+	/* PERFORMANCE FRIENDLY GET META FUNCTION
+    ================================================== */
+    if ( !function_exists( 'sf_get_post_meta' ) ) {
+	    function sf_get_post_meta( $id, $key = "", $single = false ) {
 
-	}
-	if (class_exists('Envato_WP_Toolkit')) {
-		add_action( 'admin_init', 'sf_envato_toolkit_admin_init' );
-	}
-?>
+	        $GLOBALS['sf_post_meta'] = isset( $GLOBALS['sf_post_meta'] ) ? $GLOBALS['sf_post_meta'] : array();
+	        if ( ! isset( $id ) ) {
+	            return;
+	        }
+	        if ( ! is_array( $id ) ) {
+	            if ( ! isset( $GLOBALS['sf_post_meta'][ $id ] ) ) {
+	                //$GLOBALS['sf_post_meta'][ $id ] = array();
+	                $GLOBALS['sf_post_meta'][ $id ] = get_post_meta( $id );
+	            }
+	            if ( ! empty( $key ) && isset( $GLOBALS['sf_post_meta'][ $id ][ $key ] ) && ! empty( $GLOBALS['sf_post_meta'][ $id ][ $key ] ) ) {
+	                if ( $single ) {
+	                    return maybe_unserialize( $GLOBALS['sf_post_meta'][ $id ][ $key ][0] );
+	                } else {
+	                    return array_map( 'maybe_unserialize', $GLOBALS['sf_post_meta'][ $id ][ $key ] );
+	                }
+	            }
+
+	            if ( $single ) {
+	                return '';
+	            } else {
+	                return array();
+	            }
+
+	        }
+
+	        return get_post_meta( $id, $key, $single );
+	    }
+    }
+    
+	
+	/* SIDEKICK INTEGRATION
+	================================================== */
+	define('SK_SUBSCRIPTION_ID', 1699);
+	define('SK_ENVATO_PARTNER', 'fsvfcYeV+/o2Fuah92iLO99cU0KXi3EpbTcYYZ2PSsY=');
+	define('SK_ENVATO_SECRET', 'RqjBt/YyaTOjDq+lKLWhL10sFCMCJciT9SPUKLBBmso=');
+	
+	

@@ -72,14 +72,14 @@ class SwiftPageBuilderShortcode_portfolio_showcase extends SwiftPageBuilderShort
 					$link_config = 'href="'.$thumb_link_url.'" class="link-to-url" target="_blank"';
 					$item_icon = "ss-link";
 				} else if ($thumb_link_type == "lightbox_thumb") {
-					$link_config = 'href="'.$thumb_img_url.'" class="view"';
+					$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_image") {
 					$lightbox_image_url = '';
 					foreach ($thumb_lightbox_image as $image) {
 						$lightbox_image_url = $image['full_url'];
 					}
-					$link_config = 'href="'.$lightbox_image_url.'" class="view"';	
+					$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';	
 					$item_icon = "ss-view";
 				} else if ($thumb_link_type == "lightbox_video") {
 					$link_config = 'data-video="'.$thumb_lightbox_video_url.'" href="#" class="fw-video-link"';
@@ -144,12 +144,13 @@ class SwiftPageBuilderShortcode_portfolio_showcase extends SwiftPageBuilderShort
             $sidebars = 'no-sidebars';
             }
             
-            if ($alt_background == "none" || $sidebars != "no-sidebars") {
-            $output .= "\n\t".'<div class="spb_portfolio_showcase_widget spb_content_element no-bg '.$width.$el_class.'">';
-            } else {
-            $output .= "\n\t".'<div class="spb_portfolio_showcase_widget spb_content_element alt-bg '.$alt_background.' '.$width.$el_class.'">';
-            }     
-                        
+            // Full width setup
+            $fullwidth = false;
+            if ($sidebars == "no-sidebars") {
+            $fullwidth = true;
+            }
+            
+            $output .= "\n\t".'<div class="spb_portfolio_showcase_widget spb_content_element no-bg '.$width.$el_class.'">';                        
             $output .= "\n\t\t".'<div class="spb_wrapper">';
             if ($title != '') {
             $output .= "\n\t\t\t".'<div class="heading-wrap"><h3 class="spb-heading spb-center-heading"><span>'.$title.'</span></h3></div>';
@@ -158,7 +159,7 @@ class SwiftPageBuilderShortcode_portfolio_showcase extends SwiftPageBuilderShort
             $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
             $output .= "\n\t".'</div> '.$this->endBlockComment($width);
     
-            $output = $this->startRow($el_position, '', true) . $output . $this->endRow($el_position, '', true);
+            $output = $this->startRow($el_position, $width, $fullwidth, "full-width", $alt_background) . $output . $this->endRow($el_position, $width, $fullwidth);
             
             global $sf_has_portfolio_showcase;
             $sf_has_portfolio_showcase = true;

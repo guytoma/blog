@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Default Shortcodes Config
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
@@ -259,7 +259,7 @@
 	        
 	        $output = '';
 	        if ($full_width == "yes") {
-	        $output .= '<div class="spb_divider '. $type .' spb_content_element alt-bg '.$width.' '.$el_class.'">';
+	        $output .= '<div class="spb_divider '. $type .' spb_content_element asset-bg '.$width.' '.$el_class.'">';
 	        } else {
 	        $output .= '<div class="divider-wrap"><div class="spb_divider '. $type .' spb_content_element '.$width.' '.$el_class.'">';
 	        }
@@ -274,7 +274,13 @@
 	        $output .= '</div>';
 	        }
 	        $output .= '</div>'.$this->endBlockComment('divider')."\n";
+	        
+	        if ($full_width == "yes") {
+	        $output = $this->startRow($el_position, '', true, "full-width") . $output . $this->endRow($el_position, '', true);
+	        } else {
 	        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
+	        }
+	     
 	        return $output;
 	    }
 	}
@@ -463,9 +469,9 @@
 	
 	        $el_class = $this->getExtraClass($el_class);
 	        $open = ( $open == 'true' ) ? ' spb_toggle_title_active' : '';
-	        $el_class .= ( $open == ' spb_toggle_title_active' ) ? ' spb_toggle_open' : '';
-			$output .= '<div class="toggle-wrap '.$width.'">';
-	        $output .= '<div class="spb_toggle'.$open.'">'.$title.'</div><div class="spb_toggle_content'.$el_class.'">'.spb_format_content($content).'</div>'.$this->endBlockComment('toggle')."\n";
+	        $toggle_class = ( $open == ' spb_toggle_title_active' ) ? ' spb_toggle_open' : '';
+			$output .= '<div class="toggle-wrap '.$width.' '.$el_class.'">';
+	        $output .= '<div class="spb_toggle'.$open.'">'.$title.'</div><div class="spb_toggle_content'.$toggle_class.'">'.spb_format_content($content).'</div>'.$this->endBlockComment('toggle')."\n";
 	        $output .= '</div>';
 			$output = $this->startRow($el_position) . $output . $this->endRow($el_position);
 	        return $output;

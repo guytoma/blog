@@ -5,7 +5,7 @@
 	*	Swift Shortcodes & Generator Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
@@ -187,33 +187,44 @@
 		}
 				
 		if ($type == "animated") {
-		if ($link != "") {
-		$icon_box .= '<a class="box-link" href="'.$link.'" target="'.$target.'"></a>';
-		}
-		$icon_box .= '<div class="inner">';
-		$icon_box .= '<div class="front">';
-		$icon_box .= do_shortcode('[icon size="large" image="'.$image.'" character="'.$character.'" float="none" cont="no" color="'.$color.'"]');
+			if ($link != "") {
+				$icon_box .= '<a class="box-link" href="'.$link.'" target="'.$target.'"></a>';
+			}
+			$icon_box .= '<div class="inner">';
+			$icon_box .= '<div class="front">';
+			$icon_box .= do_shortcode('[icon size="large" image="'.$image.'" character="'.$character.'" float="none" cont="no" color="'.$color.'"]');
 		}
 		
 		if ($type == "left-icon-alt") {
-		$icon_box .= do_shortcode('[icon size="medium" image="'.$image.'" character="'.$character.'" float="none" cont="no" color="'.$color.'" link="'.$link.'" target="'.$target.'"]');		
+			$icon_box .= do_shortcode('[icon size="medium" image="'.$image.'" character="'.$character.'" float="none" cont="no" color="'.$color.'" link="'.$link.'" target="'.$target.'"]');		
 		} else if ($type != "boxed-two" && $type != "boxed-four" && $type != "standard-title" && $type != "animated") {
-		$icon_box .= do_shortcode('[icon size="small" image="'.$image.'" character="'.$character.'" float="none" cont="yes" color="'.$color.'" link="'.$link.'" target="'.$target.'"]');
+			$icon_box .= do_shortcode('[icon size="small" image="'.$image.'" character="'.$character.'" float="none" cont="yes" color="'.$color.'" link="'.$link.'" target="'.$target.'"]');
 		}
+		
 		$icon_box .= '<div class="sf-icon-box-content-wrap clearfix">';
 		
 		if ($type == "boxed-two") {
-		$icon_box .= do_shortcode('[icon size="medium" image="'.$image.'" character="'.$character.'" float="none" cont="no" color="'.$color.'" link="'.$link.'" target="'.$target.'"]');
+			$icon_box .= do_shortcode('[icon size="medium" image="'.$image.'" character="'.$character.'" float="none" cont="no" color="'.$color.'" link="'.$link.'" target="'.$target.'"]');
 		}
 		
 		if ($type == "boxed-four" || $type == "standard-title") {
+			
+			if ($link != "") {
+				$title = '<a href="'.$link.'" target="'.$target.'">' . $title . '</a>';
+			}
+			
 			if ($character != "") {
 				$icon_box .= '<h3><span class="sf-icon-character sf-icon-'.$color.'">'.$character.'</span> '.$title.'</h3>';	
 			} else {
 				$icon_box .= '<h3><i class="'.$image.' sf-icon-'.$color.'"></i> '.$title.'</h3>';	
 			}
 		} else {
-		$icon_box .= '<h3>'.$title.'</h3>';	
+			
+			if ($link != "" && $type != "animated") {
+				$title = '<a href="'.$link.'" target="'.$target.'">' . $title . '</a>';
+			}
+			
+			$icon_box .= '<h3>'.$title.'</h3>';	
 		}
 		
 		if ($type == "standard") {
@@ -226,16 +237,16 @@
 		$icon_box .= '</div>';
 		
 		if ($type == "animated") {
-		$icon_box .= '</div>';
-		$icon_box .= '<div class="back sf-icon-'.$color.'"><table>';
-		$icon_box .= '<tbody><tr>';
-		$icon_box .= '<td>';
-		$icon_box .= '<h3>'.$title.'</h3>';	
-		$icon_box .= '<div class="sf-icon-box-content">'.do_shortcode($content).'</div>';
-		$icon_box .= '</td>';
-		$icon_box .= '</tr>';
-		$icon_box .= '</tbody></table></div>';
-		$icon_box .= '</div>';
+			$icon_box .= '</div>';
+			$icon_box .= '<div class="back sf-icon-'.$color.'"><table>';
+			$icon_box .= '<tbody><tr>';
+			$icon_box .= '<td>';
+			$icon_box .= '<h3>'.$title.'</h3>';	
+			$icon_box .= '<div class="sf-icon-box-content">'.do_shortcode($content).'</div>';
+			$icon_box .= '</td>';
+			$icon_box .= '</tr>';
+			$icon_box .= '</tbody></table></div>';
+			$icon_box .= '</div>';
 		}
 		
 		$icon_box .= '</div>';	
@@ -1183,13 +1194,13 @@
 		$share_output .= '<div class="share-text">'.__("Share this:", "swiftframework").'</div>';
 		$share_output .= '<ul class="social-icons">';
 		$share_output .= '<li class="facebook"><a href="http://www.facebook.com/sharer.php?u='.$permalink.'" class="post_share_facebook" onclick="javascript:window.open(this.href,
-			      "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=220,width=600");return false;"><i class="fa-facebook"></i><i class="fa-facebook"></i></a></li>';
+			      \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=220,width=600\');return false;"><i class="fa-facebook"></i><i class="fa-facebook"></i></a></li>';
 		$share_output .= '<li class="twitter"><a href="https://twitter.com/share?url='.$permalink.'" onclick="javascript:window.open(this.href,
-			      "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=260,width=600");return false;" class="product_share_twitter"><i class="fa-twitter"></i><i class="fa-twitter"></i></a></li>  '; 
+			      \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=260,width=600\');return false;" class="product_share_twitter"><i class="fa-twitter"></i><i class="fa-twitter"></i></a></li>  '; 
 		$share_output .= '<li class="googleplus"><a href="https://plus.google.com/share?url='.$permalink.'" onclick="javascript:window.open(this.href,
-			      "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");return false;"><i class="fa-google-plus"></i><i class="fa-google-plus"></i></a></li>';
+			      \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600\');return false;"><i class="fa-google-plus"></i><i class="fa-google-plus"></i></a></li>';
 		$share_output .= '<li class="pinterest"><a href="http://pinterest.com/pin/create/button/?url='.$permalink.'&media='.$image.'&description='.$title.'" onclick="javascript:window.open(this.href,
-		  "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=320,width=600");return false;"><i class="fa-pinterest"></i><i class="fa-pinterest"></i></a></li>';
+		  \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=320,width=600\');return false;"><i class="fa-pinterest"></i><i class="fa-pinterest"></i></a></li>';
 		$share_output .= '<li class="mail"><a href="mailto:?subject='.urlencode($title).'&body='.$excerpt.' '.$permalink.'" class="product_share_email"><i class="ss-mail"></i><i class="ss-mail"></i></a></li>';
 		$share_output .= '</ul>';			
 		$share_output .= '</div>';
@@ -1340,7 +1351,7 @@
 			$image_output .= '<img src="'.$image_file_url[0].'" alt="'.$image_alt.'" />';
 			
 			if ( ! empty( $attr['link'] ) && 'file' === $attr['link'] ) {
-				$image_output .= '<a href="'.$image_file_lightbox_url.'" class="view" rel="'.$selector.'" title="'.$image_alt.'"></a>';
+				$image_output .= '<a href="'.$image_file_lightbox_url.'" class="lightbox" data-rel="ilightbox['.$selector.']" title="'.$image_alt.'"></a>';
 			} elseif ( ! empty( $attr['link'] ) && 'none' === $attr['link'] ) {
 			} else {
 				$image_output .= '<a href="'.get_attachment_link( $id ).'"></a>';

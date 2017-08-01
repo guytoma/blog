@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $product, $woocommerce, $woocommerce_loop;
+global $product, $woocommerce, $woocommerce_loop, $sf_carouselID;
 
 $upsells = $product->get_upsells();
 
@@ -33,24 +33,40 @@ $products = new WP_Query( $args );
 //$woocommerce_loop['columns'] 	= $columns;
 $woocommerce_loop['columns'] = 4;
 
+if ($sf_carouselID == "") {
+$sf_carouselID = 1;
+} else {
+$sf_carouselID++;
+}
+
 if ( $products->have_posts() ) : ?>
-
-	<div class="upsells products">
+	
+	<div class="product-carousel spb_content_element">
+	
+		<h4 class="lined-heading"><span><?php _e( 'You may also like&hellip;', 'swiftframework' ) ?></span></h4>
 		
-		<h4 class="lined-heading"><span><?php _e( 'You may also like&hellip;', 'woocommerce' ) ?></span></h4>
-				
-		<?php woocommerce_product_loop_start(); ?>
-
-			<?php while ( $products->have_posts() ) : $products->the_post(); ?>
-
-				<?php woocommerce_get_template_part( 'content', 'product-4col' ); ?>
-
-			<?php endwhile; // end of the loop. ?>
-
-		<?php woocommerce_product_loop_end(); ?>
+		<div class="carousel-wrap">
 		
+			<ul class="upsells products carousel-items" id="carousel-<?php echo esc_attr($sf_carouselID); ?>" data-columns="<?php echo esc_attr($woocommerce_loop['columns']); ?>>">
+		
+				<?php while ( $products->have_posts() ) : $products->the_post(); ?>
+	
+					<?php woocommerce_get_template_part( 'content', 'product' ); ?>
+	
+				<?php endwhile; // end of the loop. ?>
+		
+			</ul>
+	
+			<a href="#" class="carousel-prev"><i class="fa-chevron-left"></i></a><a href="#" class="carousel-next"><i class="fa-chevron-right"></i></a>
+			
+		</div>
+	
 	</div>
-
+	
 <?php endif;
+
+global $sf_include_carousel, $sf_include_isotope;
+$sf_include_carousel = true;
+$sf_include_isotope = true;
 
 wp_reset_postdata();

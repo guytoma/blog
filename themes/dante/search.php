@@ -3,10 +3,9 @@
 <?php 
 
 	$options = get_option('sf_dante_options');
-	$default_page_heading_bg_alt = $options['default_page_heading_bg_alt'];
 	$sidebar_config = $options['archive_sidebar_config'];
-	$left_sidebar = $options['archive_sidebar_left'];
-	$right_sidebar = $options['archive_sidebar_right'];
+	$left_sidebar = strtolower($options['archive_sidebar_left']);
+	$right_sidebar = strtolower($options['archive_sidebar_right']);
 	$blog_type = $options['archive_display_type'];
 	
 	$page_wrap_class = '';
@@ -23,24 +22,6 @@
 	sf_set_sidebar_global($sidebar_config);
 
 ?>
-<div class="container">
-	<div class="row">
-		<div class="page-heading col-sm-12 clearfix alt-bg <?php echo $default_page_heading_bg_alt; ?>">
-			<div class="heading-text">
-			<?php $allsearch = new WP_Query("s=$s&showposts=-1"); $key = esc_html($s, 1); $count = $allsearch->post_count; _e('', "swiftframework"); wp_reset_query(); ?>
-			<?php if ($count == 1) : ?>
-				<?php printf(__('<h1>%1$s result for <span>%2$s</span></h1>', 'swiftframework'), $count, $key ); ?>
-			<?php else : ?>
-				<?php printf(__('<h1>%1$s results for <span>%2$s</span></h1>', 'swiftframework'), $count, $key ); ?>	
-			<?php endif; ?>
-			</div>
-			<?php 
-				// BREADCRUMBS
-				echo sf_breadcrumbs();
-			?>
-		</div>
-	</div>
-</div>
 
 <div class="container">
 

@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Build Class
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2013 - http://www.swiftideas.net
 	*
 	*/
 
@@ -21,9 +21,12 @@
 	
 	    public function init($settings) {
 	        parent::init($settings);
+	
 	        $this->swift_page_builder = SwiftPageBuilder::getInstance();
+						
 	        $this->swift_page_builder->setTheme();
 	        $this->setUpTheme();
+	
 	    }
 	
 	    public function setUpPlugin() {
@@ -68,6 +71,7 @@
 	        $this->swift_page_builder->addAction( 'wp_ajax_spb_get_element_backend_html', 'elementBackendHtmlJavascript_callback' );
 	        $this->swift_page_builder->addAction( 'wp_ajax_spb_shortcodes_to_builder', 'spbShortcodesJS_callback' );
 	        $this->swift_page_builder->addAction( 'wp_ajax_spb_show_edit_form', 'showEditFormJavascript_callback' );
+	        $this->swift_page_builder->addAction( 'wp_ajax_spb_show_small_edit_form', 'showSmallEditFormJavascript_callback' );
 	        $this->swift_page_builder->addAction( 'wp_ajax_spb_save_template', 'saveTemplateJavascript_callback' );
 	        $this->swift_page_builder->addAction( 'wp_ajax_spb_load_template', 'loadTemplateJavascript_callback' );
 	        $this->swift_page_builder->addAction( 'wp_ajax_sf_load_template', 'loadSFTemplateJavascript_callback' );
@@ -85,6 +89,9 @@
 	
 	        $this->addAction( 'admin_print_scripts-post.php', 'swiftPageBuilderScripts' );
 	        $this->addAction( 'admin_print_scripts-post-new.php', 'swiftPageBuilderScripts' );
+	
+	        /* Create Media tab for images */
+	        $this->swift_page_builder->createImagesMediaTab();
 	    }
 	
 	    public function pageBuilderBodyClass($classes) {
@@ -98,45 +105,50 @@
 	    }
 	
 	    public function swiftPageBuilderScripts() {
-	        wp_enqueue_style('bootstrap');
-	        wp_enqueue_style('ui-custom-theme');
-	        wp_enqueue_style('page-builder-css');
-			wp_enqueue_style('colorpicker-css');
-			wp_enqueue_style('uislider-css');
-			wp_enqueue_style('ssgizmo');
-			wp_enqueue_style('fontawesome');
+			wp_enqueue_style( 'bootstrap' );
+			wp_enqueue_style( 'ui-custom-theme' );
+			wp_enqueue_style( 'page-builder-css' );
+			wp_enqueue_style( 'colorpicker-css' );
+			wp_enqueue_style( 'uislider-css' );
+			wp_enqueue_style( 'chosen-css' );
+			wp_enqueue_style( 'ss-gizmo' );
+			wp_enqueue_style( 'fontawesome' );
 			
-	        wp_enqueue_script('jquery-ui-tabs');
-	        wp_enqueue_script('jquery-ui-droppable');
-	        wp_enqueue_script('jquery-ui-draggable');
-	        wp_enqueue_script('jquery-ui-accordion');
-	
-	        wp_enqueue_script('bootstrap-js');
-	        wp_enqueue_script('page-builder-js');
-	        wp_enqueue_script('colorpicker-js');
-	        wp_enqueue_script('uislider-js');
+			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_script( 'jquery-ui-droppable' );
+			wp_enqueue_script( 'jquery-ui-draggable' );
+			wp_enqueue_script( 'jquery-ui-accordion' );
+			wp_enqueue_script( 'jquery-ui-button' );
+			
+			wp_enqueue_script( 'bootstrap-js' );
+			wp_enqueue_script( 'page-builder-js' );
+			wp_enqueue_script( 'colorpicker-js' );
+			wp_enqueue_script( 'uislider-js' );
+			wp_enqueue_script( 'chosen-js' );
 	    }
 	
 	    public function registerJavascript() {
-	        wp_register_script('page-builder-js', $this->assetURL( 'js/page-builder.js' ), array('jquery'), SPB_VERSION, true);
-	        wp_register_script('bootstrap-js', $this->assetURL( 'js/bootstrap.min.js' ), false, SPB_VERSION, true);
-	        wp_register_script('colorpicker-js', $this->assetURL( 'js/jquery.minicolors.min.js' ), array('jquery'), SPB_VERSION, true);
-	        wp_register_script('uislider-js', $this->assetURL( 'js/jquery.nouislider.min.js' ), array('jquery'), SPB_VERSION, true);
+	        wp_register_script( 'page-builder-js', $this->assetURL( 'js/page-builder.js' ), array( 'jquery' ), SPB_VERSION, true );
+            wp_register_script( 'bootstrap-js', $this->assetURL( 'js/bootstrap.min.js' ), false, SPB_VERSION, true );
+            wp_register_script( 'colorpicker-js', $this->assetURL( 'js/jquery.minicolors.min.js' ), array( 'jquery' ), SPB_VERSION, true );
+            wp_register_script( 'uislider-js', $this->assetURL( 'js/jquery.nouislider.min.js' ), array( 'jquery' ), SPB_VERSION, true );
+            wp_register_script( 'chosen-js', $this->assetURL( 'js/chosen.jquery.min.js' ), array( 'jquery' ), SPB_VERSION, true );
 	    }
 	
 	    public function registerCss() {
-	        wp_register_style('bootstrap', $this->assetURL( 'css/bootstrap.css' ), false, SPB_VERSION, false );
-	        wp_register_style('page-builder-css', $this->assetURL( 'css/page-builder.css' ), false, NULL, false );
-	        wp_register_style('colorpicker-css', $this->assetURL( 'css/jquery.minicolors.css' ), false, NULL, false );
-	        wp_register_style('uislider-css', $this->assetURL( 'css/jquery.nouislider.min.css' ), false, NULL, false );
-	        wp_register_style('ssgizmo', get_template_directory_uri() .'/css/ss-gizmo.css', array(), NULL, 'all');
-	        wp_register_style('fontawesome', get_template_directory_uri() .'/css/font-awesome.min.css', array(), NULL, 'all');
+	        wp_register_style( 'bootstrap', $this->assetURL( 'css/bootstrap.css' ), false, SPB_VERSION, false );
+	        wp_register_style( 'page-builder-css', $this->assetURL( 'css/page-builder.css' ), false, null, false );
+	        wp_register_style( 'colorpicker-css', $this->assetURL( 'css/jquery.minicolors.css' ), false, null, false );
+	        wp_register_style( 'uislider-css', $this->assetURL( 'css/jquery.nouislider.min.css' ), false, null, false );
+	        wp_register_style( 'chosen-css', $this->assetURL( 'css/chosen.min.css' ), false, null, false );
+	        wp_register_style( 'ss-gizmo', get_template_directory_uri() . '/css/ss-gizmo.css', array(), null, 'all' );
+            wp_register_style( 'fontawesome', get_template_directory_uri() . '/css/font-awesome.min.css', array(), null, 'all' );
 	    }
 	    
 	    public function swiftPageBuilderEditPage() {
 	        $pt_array = $this->swift_page_builder->getPostTypes();
 	        foreach ($pt_array as $pt) {
-	            add_meta_box( 'swift_page_builder', __('Swift Page Builder', "swift-framework-admin"), Array($this->swift_page_builder->getLayout(), 'output'), $pt, 'normal', 'high');
+	            add_meta_box( 'swift_page_builder', __('Swift Page Builder', "swiftframework"), Array($this->swift_page_builder->getLayout(), 'output'), $pt, 'normal', 'high');
 	        }
 	    }
 	

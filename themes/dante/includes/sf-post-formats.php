@@ -5,7 +5,7 @@
 	*	Swift Page Builder - Post Format Output Functions
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*	sf_get_post_media()
 	*	sf_get_post_format_image_src()
@@ -320,7 +320,7 @@
 			}
 											
 			if (!$thumb_image) {
-				$thumb_image = get_post_thumbnail_id();
+				$thumb_image = get_post_thumbnail_id($postID);
 				$image_id = $thumb_image;
 				$thumb_img_url = wp_get_attachment_url( $thumb_image, 'full' );
 			}
@@ -337,14 +337,14 @@
 				$link_config = 'href="'.$thumb_link_url.'" class="link-to-url" target="_blank"';
 				$item_icon = "ss-link";
 			} else if ($thumb_link_type == "lightbox_thumb") {
-				$link_config = 'href="'.$thumb_img_url.'" class="view"';
+				$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox['.$postID.']"';
 				$item_icon = "ss-view";
 			} else if ($thumb_link_type == "lightbox_image") {
 				$lightbox_image_url = '';
 				foreach ($thumb_lightbox_image as $image) {
 					$lightbox_image_url = $image['full_url'];
 				}
-				$link_config = 'href="'.$lightbox_image_url.'" class="view"';	
+				$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox['.$postID.']"';	
 				$item_icon = "ss-view";
 			} else if ($thumb_link_type == "lightbox_video") {
 				$link_config = 'data-video="'.$thumb_lightbox_video_url.'" href="#" class="fw-video-link"';
@@ -368,14 +368,14 @@
 				
 			} else if ($thumb_type == "slider") {
 				
-				$item_figure .= '<div class="flexslider thumb-slider"><ul class="slides">';
+				$item_figure .= '<div class="flexslider thumb-slider"><a '.$link_config.'><ul class="slides">';
 							
 				foreach ( $thumb_gallery as $image )
 				{
-				    $item_figure .= "<li><a ".$link_config."><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' /></a></li>";
+				    $item_figure .= "<li><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' /></li>";
 				}
 																
-				$item_figure .= '</ul></div>';
+				$item_figure .= '</ul></a></div>';
 				
 			} else {
 				
@@ -467,6 +467,8 @@
 					$post_item .= '</div>';
 				}
 				
+				$post_item .= '<meta itemprop="datePublished" content="' . get_the_date( 'Y-m-d' ) . '"/>';
+				
 				$post_item .= '</div>';
 							
 				$post_item .= '</div>';
@@ -545,6 +547,8 @@
 					
 					$post_item .= '</div>';
 				}
+				
+				$post_item .= '<meta itemprop="datePublished" content="' . get_the_date( 'Y-m-d' ) . '"/>';
 				
 				$post_item .= '</div>';
 				
@@ -628,6 +632,8 @@
 					
 					$post_item .= '</div>';
 				}
+				
+				$post_item .= '<meta itemprop="datePublished" content="' . get_the_date( 'Y-m-d' ) . '"/>';
 			
 				$post_item .= '</div>'; // close standard-post-content
 										

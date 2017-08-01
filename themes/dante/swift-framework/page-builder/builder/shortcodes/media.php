@@ -1,19 +1,19 @@
 <?php
-	
+
 	/*
 	*
 	*	Swift Page Builder - Media Shortcodes Config
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
-	
+
 
 	/* VIDEO ASSET
-	================================================== */ 
+	================================================== */
 	class SwiftPageBuilderShortcode_spb_video extends SwiftPageBuilderShortcode {
-	
+
 	    protected function content( $atts, $content = null ) {
 	        $title = $link = $size = $el_position = $full_width = $width = $el_class = '';
 	        extract(shortcode_atts(array(
@@ -26,7 +26,7 @@
 	            'el_class' => ''
 	        ), $atts));
 	        $output = '';
-	
+
 	        if ( $link == '' ) { return null; }
 	        $video_h = '';
 	        $el_class = $this->getExtraClass($el_class);
@@ -37,27 +37,27 @@
 	        if ( count($size) > 1 ) {
 	            $video_h = ' height="'.$size[1].'"';
 	        }
-	
+
 	        global $wp_embed;
 	        $embed = $wp_embed->run_shortcode('[embed width="'.$video_w.'"'.$video_h.']'.$link.'[/embed]');
-			
+
 			if ($full_width == "yes") {
 	        $output .= "\n\t".'<div class="spb_video_widget full-width spb_content_element '.$width.$el_class.'">';
 			} else {
 	        $output .= "\n\t".'<div class="spb_video_widget spb_content_element '.$width.$el_class.'">';
 			}
-			
+
 	        $output .= "\n\t\t".'<div class="spb_wrapper">';
 	        $output .= ($title != '' ) ? "\n\t\t\t".'<h3 class="spb-heading spb_video_heading"><span>'.$title.'</span></h3>' : '';
 	        $output .= '<div class="sf-video-wrap">'.$embed.'</div>';
 	        $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
 	        $output .= "\n\t".'</div> '.$this->endBlockComment($width);
-	
+
 	        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
 	        return $output;
 	    }
 	}
-	
+
 	SPBMap::map( 'spb_video', array(
 	    "name"		=> __("Video Player", "swift-framework-admin"),
 	    "base"		=> "spb_video",
@@ -101,16 +101,16 @@
 	        )
 	    )
 	) );
-	
-	
+
+
 	/* SINGLE IMAGE ASSET
-	================================================== */ 
+	================================================== */
 	class SwiftPageBuilderShortcode_spb_single_image extends SwiftPageBuilderShortcode {
-	
+
 	    public function content( $atts, $content = null ) {
-	
+
 	        $el_class = $width = $image_size = $animation = $frame = $lightbox = $image_link = $link_target = $caption = $el_position = $el_class = $image = '';
-	
+
 	        extract(shortcode_atts(array(
 	            'width' => '1/1',
 	            'image' => $image,
@@ -124,9 +124,9 @@
 	            'el_position' => '',
 	            'el_class' => ''
 	        ), $atts));
-			
+
 			if ($image_size == "") { $image_size = "large"; }
-			
+
 	        $output = '';
 	        $img = spb_getImageBySize(array( 'attach_id' => preg_replace('/[^\d]/', '', $image), 'thumb_size' => $image_size ));
 	        $img_url = wp_get_attachment_image_src($image, 'large');
@@ -134,13 +134,13 @@
 	        $width = spb_translateColumnWidthToSpan($width);
 	        // $content =  !empty($image) ? '<img src="'..'" alt="">' : '';
 	        $content = '';
-	        
+
 	        if ($intro_animation != "none") {
-	        $output .= "\n\t".'<div class="spb_content_element spb_single_image sf-animation '. $frame .' '.$width.$el_class.'" data-animation="'.$intro_animation.'" data-delay="200">';           	        
+	        $output .= "\n\t".'<div class="spb_content_element spb_single_image sf-animation '. $frame .' '.$width.$el_class.'" data-animation="'.$intro_animation.'" data-delay="200">';
 	        } else {
-	        $output .= "\n\t".'<div class="spb_content_element spb_single_image '. $frame .' '.$width.$el_class.'">';           
+	        $output .= "\n\t".'<div class="spb_content_element spb_single_image '. $frame .' '.$width.$el_class.'">';
 			}
-			
+
 	        $output .= "\n\t\t".'<div class="spb_wrapper">';
 	        if ($lightbox == "yes") {
 	        $output .= '<figure class="lightbox animated-overlay overlay-alt clearfix">';
@@ -151,38 +151,39 @@
 		        $output .= "\n\t\t\t".'<a class="img-link" href="'.$image_link.'" target="'.$link_target.'"></a>';
 		        $output .= $img['thumbnail'];
 		        $output .= '<figcaption>';
-		        $output .= '<div class="thumb-info thumb-info-alt">';	 
+		        $output .= '<div class="thumb-info thumb-info-alt">';
 		        $output .= '<i class="ss-navigateright"></i>';
 		        $output .= '</div></figcaption>';
 	        } else if ($lightbox == "yes") {
 		        $output .= $img['thumbnail'];
-		        $output .= '<a class="view" href="'.$img_url[0].'" rel="image-gallery"></a>';
+		        $output .= '<a class="lightbox" data-rel="ilightbox[image-gallery]" href="'.$img_url[0].'"></a>';
 		        $output .= '<figcaption>';
 		        if ($caption != "") {
-			        $output .= '<div class="thumb-info">';	
-			        $output .= '<h4>'.$caption.'</h4>';			
+			        $output .= '<div class="thumb-info">';
+			        $output .= '<h4>'.$caption.'</h4>';
 		        } else {
-		      		$output .= '<div class="thumb-info thumb-info-alt">';	 
+		      		$output .= '<div class="thumb-info thumb-info-alt">';
 		        }
 		        $output .= '<i class="ss-view"></i>';
+		        $output .= '</div>';
 		        $output .= '</figcaption>';
-	        } else { 
+	        } else {
 	        	$output .= "\n\t\t\t".$img['thumbnail'];
 	        }
 	        $output .= '</figure>';
 	        if ($caption != "") {
 	            $output .= '<div class="image-caption">';
-	            $output .= '<h4>'.$caption.'</h4>';			
+	            $output .= '<h4>'.$caption.'</h4>';
 	        	$output .= '</div>';
 	        }
 	        $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
 	        $output .= "\n\t".'</div> '.$this->endBlockComment($width);
-	
+
 	        //
 	        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
 	        return $output;
 	    }
-	
+
 	    public function singleParamHtmlHolder($param, $value) {
 	        $output = '';
 	        // Compatibility fixes
@@ -194,7 +195,7 @@
 	        $param_name = isset($param['param_name']) ? $param['param_name'] : '';
 	        $type = isset($param['type']) ? $param['type'] : '';
 	        $class = isset($param['class']) ? $param['class'] : '';
-	
+
 	        if ( isset($param['holder']) == false || $param['holder'] == 'hidden' ) {
 	            $output .= '<input type="hidden" class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '" value="'.$value.'" />';
 	            if(($param['type'])=='attach_image') {
@@ -208,7 +209,7 @@
 	        return $output;
 	    }
 	}
-	
+
 	SPBMap::map( 'spb_single_image', array(
 		"name"		=> __("Image", "swift-framework-admin"),
 		"base"		=> "spb_single_image",
@@ -302,14 +303,14 @@
 			)
 	    )
 	));
-	
-	
+
+
 	/* GOOGLE MAPS ASSET
-	================================================== */ 
+	================================================== */
 	class SwiftPageBuilderShortcode_spb_gmaps extends SwiftPageBuilderShortcode {
-	
+
 	    protected function content( $atts, $content = null ) {
-	
+
 	        $title = $address = $size = $zoom = $color = $saturation = $pin_image = $type = $el_position = $width = $el_class = '';
 	        extract(shortcode_atts(array(
 	            'title' => '',
@@ -327,39 +328,39 @@
 	            'el_class' => ''
 	        ), $atts));
 	        $output = '';
-	
+
 	        if ( $address == '' ) { return null; }
-	
+
 	        $el_class = $this->getExtraClass($el_class);
 	        $width = spb_translateColumnWidthToSpan($width);
-			
+
 	        $size = str_replace(array( 'px', ' ' ), array( '', '' ), $size);
-	                
+
 	        $img_url = wp_get_attachment_image_src($pin_image, 'full');
-			
+
 			if ($fullscreen == "yes" && $width == "col-sm-12") {
-			$output .= "\n\t".'<div class="spb_gmaps_widget fullscreen-map spb_content_element '.$width.$el_class.'">';	          
+			$output .= "\n\t".'<div class="spb_gmaps_widget fullscreen-map spb_content_element '.$width.$el_class.'">';
 	        } else {
-	        $output .= "\n\t".'<div class="spb_gmaps_widget spb_content_element '.$width.$el_class.'">';	          
+	        $output .= "\n\t".'<div class="spb_gmaps_widget spb_content_element '.$width.$el_class.'">';
 	        }
 	        $output .= "\n\t\t".'<div class="spb_wrapper">';
 	        $output .= ($title != '' ) ? "\n\t\t\t".'<h3 class="spb-heading"><span>'.$title.'</span></h3>' : '';
 	        $output .= '<div class="spb_map_wrapper"><div class="map-canvas" style="width:100%;height:'.$size.'px;" data-address="'.$address.'" data-zoom="'.$zoom.'" data-maptype="'.$type.'" data-mapcolor="'.$color.'" data-mapsaturation="'.$saturation.'" data-pinimage="'.$img_url[0].'" data-pinlink="'.$pinlink.'"></div></div>';
 	        $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
 	        $output .= "\n\t".'</div> '.$this->endBlockComment($width);
-	        
+
 			if ($fullscreen == "yes") {
-	        $output = $this->startRow($el_position, '', true) . $output . $this->endRow($el_position, '', true);
+	        $output = $this->startRow($el_position, '', true, "full-width") . $output . $this->endRow($el_position, '', true);
 	        } else {
-	        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);	        
+	        $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
 	        }
 	        global $sf_include_maps;
 	        $sf_include_maps = true;
-	        
+
 	        return $output;
 	    }
 	}
-	
+
 	SPBMap::map( 'spb_gmaps',  array(
 	    "name"		=> __("Google Map", "swift-framework-admin"),
 	    "base"		=> "spb_gmaps",

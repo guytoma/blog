@@ -4,7 +4,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.1.0
+ * @version     2.5.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -14,7 +14,7 @@ global $product;
 
 <?php if ( ! $product->is_in_stock() ) : ?>
 
-	<a href="<?php echo apply_filters( 'out_of_stock_add_to_cart_url', get_permalink( $product->id ) ); ?>" class=""><i class="ss-info"></i><span><?php echo apply_filters( 'out_of_stock_add_to_cart_text', __( 'Read More', 'woocommerce' ) ); ?></span></a>
+	<a href="<?php echo apply_filters( 'out_of_stock_add_to_cart_url', get_permalink( $product->id ) ); ?>" class=""><i class="ss-info"></i><span><?php echo apply_filters( 'out_of_stock_add_to_cart_text', __( 'Read More', 'swiftframework' ) ); ?></span></a>
 	<?php echo sf_wishlist_button(); ?>
 	
 <?php else : ?>
@@ -32,15 +32,15 @@ global $product;
 		switch ( $handler ) {
 			case "variable" :
 				$link['url'] 	= apply_filters( 'variable_add_to_cart_url', get_permalink( $product->id ) );
-				$link['label'] 	= '<i class="ss-sugarpackets"></i><span>' . apply_filters( 'variable_add_to_cart_text', __( 'Select options', 'woocommerce' ) ) . '</span>';
+				$link['label'] 	= '<i class="ss-sugarpackets"></i><span>' . apply_filters( 'variable_add_to_cart_text', __( 'Select options', 'swiftframework' ) ) . '</span>';
 			break;
 			case "grouped" :
 				$link['url'] 	= apply_filters( 'grouped_add_to_cart_url', get_permalink( $product->id ) );
-				$link['label'] 	= '<i class="ss-sugarpackets"></i><span>' . apply_filters( 'grouped_add_to_cart_text', __( 'View options', 'woocommerce' ) ) . '</span>';
+				$link['label'] 	= '<i class="ss-sugarpackets"></i><span>' . apply_filters( 'grouped_add_to_cart_text', __( 'View options', 'swiftframework' ) ) . '</span>';
 			break;
 			case "external" :
 				$link['url'] 	= apply_filters( 'external_add_to_cart_url', get_permalink( $product->id ) );
-				$link['label'] 	= '<i class="ss-info"></i><span>' . apply_filters( 'external_add_to_cart_text', __( 'Read More', 'woocommerce' ) ) . '</span>';
+				$link['label'] 	= '<i class="ss-info"></i><span>' . apply_filters( 'external_add_to_cart_text', __( 'Read More', 'swiftframework' ) ) . '</span>';
 			break;
 			default :
 				if ( $product->is_purchasable() ) {
@@ -49,7 +49,7 @@ global $product;
 					$link['class']  = apply_filters( 'add_to_cart_class', 'add_to_cart_button' );
 				} else {
 					$link['url'] 	= apply_filters( 'not_purchasable_url', get_permalink( $product->id ) );
-					$link['label'] 	= '<i class="ss-info"></i><span>' . apply_filters( 'not_purchasable_text', __( 'Read More', 'woocommerce' ) ) . '</span>';
+					$link['label'] 	= '<i class="ss-info"></i><span>' . apply_filters( 'not_purchasable_text', __( 'Read More', 'swiftframework' ) ) . '</span>';
 				}
 			break;
 		}

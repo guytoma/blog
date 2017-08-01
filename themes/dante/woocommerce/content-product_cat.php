@@ -6,7 +6,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.1.2
+ * @version     2.5.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -31,13 +31,18 @@ if ($sf_sidebar_config == "no-sidebars") {
 
 // Increase loop count
 $woocommerce_loop['loop']++;
+
+// Classes
+$classes[] = 'product-category product';
+if ( ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] == 0 || $woocommerce_loop['columns'] == 1 ) {
+    $classes[] = 'first';
+}
+if ( $woocommerce_loop['loop'] % $woocommerce_loop['columns'] == 0 ) {
+    $classes[] =  'last';
+}
+    
 ?>
-<li class="product-category product<?php
-    if ( ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] == 0 || $woocommerce_loop['columns'] == 1)
-        echo ' first';
-	if ( $woocommerce_loop['loop'] % $woocommerce_loop['columns'] == 0 )
-		echo ' last';
-	?>">
+<li <?php wc_product_cat_class( $classes, $category ); ?>>
 
 	<?php do_action( 'woocommerce_before_subcategory', $category ); ?>
 

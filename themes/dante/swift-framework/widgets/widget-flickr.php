@@ -5,15 +5,15 @@
 	*	Custom Flickr Widget
 	*	------------------------------------------------
 	*	Swift Framework
-	* 	Copyright Swift Ideas 2014 - http://www.swiftideas.net
+	* 	Copyright Swift Ideas 2015 - http://www.swiftideas.net
 	*
 	*/
 	
 	class sf_flickr_widget extends WP_Widget {
 	
-		function sf_flickr_widget() {	
+		function __construct() {
 			$widget_ops = array( 'classname' => 'flickr-widget', 'description' => 'Show off your favorite Flickr photos' );
-			$this->WP_Widget( 'flickr-widget', 'Swift Framework Flickr Widget', $widget_ops);
+			parent::__construct( 'flickr-widget', 'Swift Framework Flickr Widget', $widget_ops);
 		}
 		
 		function form($instance) {
@@ -48,7 +48,7 @@
 	
 		function update($new_instance, $old_instance) {
 	       
-			$instance=$old_instance;
+			$instance = $old_instance;
 	
 	        $instance['title'] = strip_tags($new_instance['title']);
 			$instance['flickr_api']=$new_instance['flickr_api'];
@@ -81,7 +81,7 @@
 				<script type="text/javascript">
 					jQuery(document).ready(function($){
 						var count = parseInt(<?php echo $count; ?>,10);
-						$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?ids=<?php echo $flickrid; ?>&lang=en-us&format=json&jsoncallback=?", function(data){
+						$.getJSON("//api.flickr.com/services/feeds/photos_public.gne?ids=<?php echo $flickrid; ?>&lang=en-us&format=json&jsoncallback=?", function(data){
 					          $.each(data.items, function(index, item){
 					                $("<img class='flickr'/>").attr("src", item.media.m).appendTo('#<?php echo $widget_id; ?>')
 					                  .wrap("<li><a href='" + item.link + "' class='flickr-img-link' target='_blank'></a></li>");

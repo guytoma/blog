@@ -3,11 +3,11 @@
 class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
 
     protected function content($atts, $content = null) {
-    		
+
     		$options = get_option('sf_dante_options');
 
 		    $title = $width = $excerpt_length = $item_class = $offset = $el_class = $output = $items = $el_position = '';
-		
+
 	        extract(shortcode_atts(array(
 	        	'title' => '',
 	        	'item_columns' => '3',
@@ -20,14 +20,14 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
 	        	'width' => '1/1',
 	        	'el_class' => ''
 	        ), $atts));
-	        
+
 	        // CATEGORY SLUG MODIFICATION
 	        if ($category == "All") {$category = "all";}
 	        if ($category == "all") {$category = '';}
 	        $category_slug = str_replace('_', '-', $category);
-		    
+
     		global $post, $wp_query;
-    		
+
     		$blog_args = array();
     		$category_array = explode(",", $category_slug);
     		if (isset($category_array) && $category_array[0] != "") {
@@ -44,7 +44,7 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
     								'terms' => $category_array
     							)
     						)
-    				
+
     			);
     		} else {
     			$blog_args = array(
@@ -52,12 +52,12 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
     				'post_status' => 'publish',
     				'posts_per_page' => $item_count,
     				'offset' => $offset,
-    				'order' => $posts_order,	
+    				'order' => $posts_order,
     			);
     		}
-    		
+
     		$blog_items = query_posts($blog_args);
-    		
+
     		if ($item_columns == "1") {
     		$item_class = 'col-sm-12';
     		} else if ($item_columns == "2") {
@@ -67,15 +67,15 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
     		} else {
     		$item_class = 'col-sm-3';
     		}
-    		
+
     		if( have_posts() ) {
-    		
+
     			$items .= '<ul class="recent-posts row clearfix">';
-    	
+
     			while ( have_posts() ) {
-    				
+
     				the_post();
-    				
+
     				$thumb_type = sf_get_post_meta($post->ID, 'sf_thumbnail_type', true);
 					$thumb_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full');
     				$thumb_video = sf_get_post_meta($post->ID, 'sf_thumbnail_video_url', true);
@@ -85,12 +85,12 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
     					$thumb_img_url = $detail_image['url'];
     					break;
     				}
-    												
+
     				if (!$thumb_image) {
     					$thumb_image = get_post_thumbnail_id();
     					$thumb_img_url = wp_get_attachment_url( $thumb_image, 'full' );
     				}
-    					    				
+
     				$item_title = get_the_title();
     				$post_author = get_the_author_link();
     				$post_date = get_the_date();
@@ -103,18 +103,18 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
     				} else {
     				$post_excerpt = sf_excerpt($excerpt_length);
     				}
-    				
+
     				$thumb_link_type = sf_get_post_meta($post->ID, 'sf_thumbnail_link_type', true);
     				$thumb_link_url = sf_get_post_meta($post->ID, 'sf_thumbnail_link_url', true);
     				$thumb_lightbox_thumb = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=large' );
     				$thumb_lightbox_image = rwmb_meta( 'sf_thumbnail_link_image', 'type=image&size=large' );
     				$thumb_lightbox_video_url = sf_get_post_meta($post->ID, 'sf_thumbnail_link_video_url', true);
     				$thumb_lightbox_video_url = sf_get_embed_src($thumb_lightbox_video_url);
-    				
+
     				$thumb_lightbox_img_url = wp_get_attachment_url( $thumb_lightbox_image, 'full' );
-    				
+
     				$link_config = "";
-    				
+
     				if ($thumb_link_type == "link_to_url") {
     					$link_config = 'href="'.$thumb_link_url.'" class="link-to-url"';
     					$item_icon = "ss-link";
@@ -122,37 +122,37 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
     					$link_config = 'href="'.$thumb_link_url.'" class="link-to-url" target="_blank"';
     					$item_icon = "ss-link";
     				} else if ($thumb_link_type == "lightbox_thumb") {
-    					$link_config = 'href="'.$thumb_img_url.'" class="view"';
+    					$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox['.$post_ID.']"';
     					$item_icon = "ss-view";
     				} else if ($thumb_link_type == "lightbox_image") {
     					$lightbox_image_url = '';
     					foreach ($thumb_lightbox_image as $image) {
     						$lightbox_image_url = $image['full_url'];
     					}
-    					$link_config = 'href="'.$lightbox_image_url.'" class="view"';	
+    					$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox['.$post_ID.']"';
     					$item_icon = "ss-view";
     				} else if ($thumb_link_type == "lightbox_video") {
     					$link_config = 'data-video="'.$thumb_lightbox_video_url.'" href="#" class="fw-video-link"';
-    					$item_icon = "ss-video";				
+    					$item_icon = "ss-video";
     				} else {
     					$link_config = 'href="'.$post_permalink.'" class="link-to-post"';
     					$item_icon = "ss-navigateright";
     				}
-    				
+
     				$items .= '<li itemscope class="recent-post '.$item_class.' clearfix">';
-    				
+
     				$items .= '<figure class="animated-overlay overlay-alt">';
-    								
+
     				if ($thumb_type == "video") {
-    					
+
     					$video = sf_video_embed($thumb_video, 270, 202);
-    					
+
     					$items .= $video;
-    					
+
     				} else if ($thumb_type == "slider") {
-    					
+
     					$items .= '<div class="flexslider thumb-slider"><ul class="slides">';
-    								
+
     					foreach ( $thumb_gallery as $image )
     					{
     						$alt = $image['alt'];
@@ -161,30 +161,30 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
     						}
     					    $items .= "<li><a '.$link_config.'><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$alt}' /></a></li>";
     					}
-    																	
+
     					$items .= '</ul></div>';
-    					
+
     				} else {
-    					
+
     					if ($thumb_img_url == "" && $thumb_type != "none") {
     						$thumb_img_url = "default";
     					}
-    				
+
     					$image = sf_aq_resize( $thumb_img_url, 420, 315, true, false);
-    						    					
+
     					if ($image) {
     					$items .= '<img itemprop="image" src="'.$image[0].'" width="'.$image[1].'" height="'.$image[2].'" alt="'.$item_title.'" />';
     					$items .= '<a '.$link_config.'></a>';
     					$items .= '<figcaption><div class="thumb-info thumb-info-alt">';
     					$items .= '<i class="'.$item_icon.'"></i>';
-    					$items .= '</div></figcaption>';	
+    					$items .= '</div></figcaption>';
     					}
     				}
-    				
+
     				$items .= '</figure>';
-    				
+
     				$items .= '<div class="details-wrap">';
-    				$items .= '<h5><a href="'.$post_permalink.'">'.$item_title.'</a></h5>';    				
+    				$items .= '<h5><a href="'.$post_permalink.'">'.$item_title.'</a></h5>';
     				if ($excerpt_length != "0") {
     				$items .= '<div class="excerpt">'. $post_excerpt .'</div>';
     				}
@@ -198,31 +198,31 @@ class SwiftPageBuilderShortcode_recent_posts extends SwiftPageBuilderShortcode {
 					if (function_exists( 'lip_love_it_link' )) {
 					$items .= lip_love_it_link(get_the_ID(), '<i class="ss-heart"></i>', '<i class="ss-heart"></i>', false);
 					}
-					$items .= '</div>';				
+					$items .= '</div>';
 					$items .= '</div>';
 					$items .= '</li>';
-    			
+
     			}
-    			
+
     			wp_reset_query();
-    					
+
     			$items .= '</ul>';
-    
+
     		}
-    		
+
     		$el_class = $this->getExtraClass($el_class);
             $width = spb_translateColumnWidthToSpan($width);
-            
+
             $output .= "\n\t".'<div class="spb_recent_posts_widget spb_content_element '.$width.$el_class.'">';
             $output .= "\n\t\t".'<div class="spb_wrapper recent-posts-wrap">';
             $output .= ($title != '' ) ? "\n\t\t\t".'<h3 class="spb-heading"><span>'.$title.'</span></h3>' : '';
             $output .= "\n\t\t\t\t".$items;
             $output .= "\n\t\t".'</div> '.$this->endBlockComment('.spb_wrapper');
             $output .= "\n\t".'</div> '.$this->endBlockComment($width);
-    
+
             $output = $this->startRow($el_position) . $output . $this->endRow($el_position);
             return $output;
-		
+
     }
 }
 
