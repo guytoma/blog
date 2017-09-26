@@ -7,7 +7,7 @@
 <!-- Begin uitgelichte posts -->
 <div id="uitgelicht">
 	<div id="hoofdpost">
-		<?php query_posts('posts_per_page=1&cat=2553'); /*1, 2*/
+		<?php query_posts('posts_per_page=1&cat=2553,2567'); /*1, 2*/
 		if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 		<a href="<?php the_permalink(); ?>">
 			<img src="<?php the_post_thumbnail_url(); ?> ">
@@ -26,6 +26,7 @@
 <!-- begin laatste posts -->
 <div id="laatsteposts">
 	<?php rewind_posts(); ?>
+	<?php query_posts('post_type=post&paged='.$paged.'&cat=-2553,-2567');  ?>
 	<?php while ( have_posts() ) : the_post(); ?>
 		<div class="post">
 			<a href="<?php the_permalink(); ?>">
