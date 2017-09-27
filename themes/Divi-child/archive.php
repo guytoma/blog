@@ -11,7 +11,9 @@
 	<?php while ( have_posts() ) : the_post(); ?>
 		<div class="post">
 			<a href="<?php the_permalink(); ?>">
-				<img src="<?php the_post_thumbnail_url(); ?> ">
+				<div class="imageholder">
+					<img src="<?php the_post_thumbnail_url(); ?> ">
+				</div>
 				<div class="content">
 					<h2><?php the_title();/*3*/ ?></h2>
 					<p><?php the_excerpt(); ?></p>
