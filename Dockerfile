@@ -1,4 +1,4 @@
-FROM wordpress:4.8.0
+FROM wordpress:4.8.2
 
 COPY themes /usr/src/wordpress/wp-content/themes
 
