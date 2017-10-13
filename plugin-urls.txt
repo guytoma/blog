@@ -10,5 +10,5 @@ https://downloads.wordpress.org/plugin/selection-sharer.0.4.zip
 https://downloads.wordpress.org/plugin/shareaholic.8.5.0.zip
 https://downloads.wordpress.org/plugin/sumome.zip
 https://downloads.wordpress.org/plugin/w3-total-cache.0.9.5.4.zip
-https://downloads.wordpress.org/plugin/wordpress-seo.5.5.1.zip
+https://downloads.wordpress.org/plugin/wordpress-seo.5.6.1.zip
 https://downloads.wordpress.org/plugin/my-custom-functions.4.10.zip
