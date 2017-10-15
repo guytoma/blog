@@ -17,7 +17,7 @@ FROM wordpress:4.8.2
 
 COPY themes /usr/src/wordpress/wp-content/themes
 
-COPY --from=downloader /wp-plugins/* /usr/src/wordpress/wp-content/plugins/
+COPY --from=downloader /wp-plugins/ /usr/src/wordpress/wp-content/plugins/
 
 COPY cache.conf /etc/apache2/conf-enabled/
 
