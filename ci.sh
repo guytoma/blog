@@ -11,8 +11,8 @@ mkdir -p private-blog-plugins
 rm -rf private-blog-plugins/*
 aws s3 cp --recursive s3://partops/private-blog-plugins/ private-blog-plugins/
 
-docker build --pull -t partup/blog:$imgtag .
-docker build --pull -t partup/blogcache:$imgtag cache
+docker build --squash --pull -t partup/blog:$imgtag .
+docker build --squash --pull -t partup/blogcache:$imgtag cache
 
 tag=$(git describe --exact-match 2>/dev/null || echo "")
 if [ $tag ]; then
